@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "893777894200",
+    "project_id": "store-e9omk8",
+    "storage_bucket": "store-e9omk8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893777894200:android:f0a1d7e2bb78522fbe7fcd",
+        "android_client_info": {
+          "package_name": "st.snapli.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893777894200-bp2t11odohsr6vajlpl721q3r6t2i8r8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "st.snapli.app",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "893777894200-jjbak52294qp44d8fqvrcob587sh991n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_XiKWk-59-n2Ta4G6nyPU31T_sfT-ihM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "893777894200-jjbak52294qp44d8fqvrcob587sh991n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "893777894200-1efp3542smhdelb87gvtolelknqpe6ru.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "st.snapli.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
