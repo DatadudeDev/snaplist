@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -6,7 +7,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'login_model.dart';
 export 'login_model.dart';
 
@@ -135,8 +135,6 @@ class _LoginWidgetState extends State<LoginWidget>
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -149,18 +147,9 @@ class _LoginWidgetState extends State<LoginWidget>
           children: [
             Container(
               width: double.infinity,
-              height: 300.0,
+              height: 250.0,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    FlutterFlowTheme.of(context).warning,
-                    FlutterFlowTheme.of(context).error,
-                    FlutterFlowTheme.of(context).tertiary
-                  ],
-                  stops: const [0.0, 0.5, 1.0],
-                  begin: const AlignmentDirectional(-1.0, -1.0),
-                  end: const AlignmentDirectional(1.0, 1.0),
-                ),
+                color: FlutterFlowTheme.of(context).primary,
               ),
               child: Container(
                 width: 100.0,
@@ -180,27 +169,22 @@ class _LoginWidgetState extends State<LoginWidget>
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      width: 100.0,
-                      height: 100.0,
-                      decoration: BoxDecoration(
-                        color: const Color(0x00FFFFFF),
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(0.0),
-                        child: Image.asset(
-                          'assets/images/logo_tmp.png',
-                          width: 300.0,
-                          height: 200.0,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ).animateOnPageLoad(
-                        animationsMap['containerOnPageLoadAnimation']!),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 45.0, 0.0, 0.0),
+                      child: Container(
+                        width: 100.0,
+                        height: 100.0,
+                        decoration: BoxDecoration(
+                          color: const Color(0x00FFFFFF),
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                      ).animateOnPageLoad(
+                          animationsMap['containerOnPageLoadAnimation']!),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 0.0),
                       child: Text(
                         'Sign In',
                         style: FlutterFlowTheme.of(context).headlineSmall,
@@ -211,7 +195,7 @@ class _LoginWidgetState extends State<LoginWidget>
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                       child: Text(
-                        'Use the account below to sign in.',
+                        'or create an account below:',
                         style: FlutterFlowTheme.of(context).labelMedium,
                       ).animateOnPageLoad(
                           animationsMap['textOnPageLoadAnimation2']!),
@@ -230,7 +214,7 @@ class _LoginWidgetState extends State<LoginWidget>
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
                       child: SizedBox(
                         width: double.infinity,
                         child: TextFormField(
@@ -362,7 +346,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                 25.0, 0.0, 0.0, 12.0),
                             child: FFButtonWidget(
                               onPressed: () async {
-                                GoRouter.of(context).prepareAuthEvent();
+                                GoRouter.of(context).prepareAuthEvent(true);
 
                                 final user =
                                     await authManager.createAccountWithEmail(
@@ -374,8 +358,23 @@ class _LoginWidgetState extends State<LoginWidget>
                                   return;
                                 }
 
-                                context.pushNamedAuth(
-                                    'onboarding', context.mounted);
+                                await UsersRecord.collection
+                                    .doc(user.uid)
+                                    .update(createUsersRecordData(
+                                      email: '',
+                                      createdTime: getCurrentTimestamp,
+                                    ));
+
+                                context.goNamedAuth(
+                                  'spotify',
+                                  context.mounted,
+                                  ignoreRedirect: true,
+                                );
+
+                                setState(() {
+                                  _model.emailAddressController?.clear();
+                                  _model.passwordController?.clear();
+                                });
                               },
                               text: 'Sign Up',
                               options: FFButtonOptions(
@@ -385,7 +384,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                     0.0, 0.0, 0.0, 0.0),
                                 iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).primary,
+                                color: FlutterFlowTheme.of(context).secondary,
                                 textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall
                                     .override(
@@ -420,13 +419,13 @@ class _LoginWidgetState extends State<LoginWidget>
                                   return;
                                 }
 
+                                context.goNamedAuth(
+                                    'HomePage', context.mounted);
+
                                 setState(() {
                                   _model.emailAddressController?.clear();
                                   _model.passwordController?.clear();
                                 });
-
-                                context.pushNamedAuth(
-                                    'HomePage', context.mounted);
                               },
                               text: 'Sign In',
                               options: FFButtonOptions(
@@ -459,7 +458,7 @@ class _LoginWidgetState extends State<LoginWidget>
                       alignment: const AlignmentDirectional(0.0, 0.0),
                       child: Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                         child: FFButtonWidget(
                           onPressed: () async {
                             context.pushNamed('forgot');
@@ -467,7 +466,7 @@ class _LoginWidgetState extends State<LoginWidget>
                           text: 'Forgot Password',
                           options: FFButtonOptions(
                             width: 230.0,
-                            height: 44.0,
+                            height: 34.0,
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
                             iconPadding: const EdgeInsetsDirectional.fromSTEB(
@@ -495,133 +494,267 @@ class _LoginWidgetState extends State<LoginWidget>
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 16.0, 0.0, 16.0, 14.0),
                             child: Text(
-                              'Or sign up with',
+                              'Or sign up with: ',
                               textAlign: TextAlign.center,
                               style: FlutterFlowTheme.of(context).labelMedium,
                             ),
                           ),
                         ),
-                        Align(
-                          alignment: const AlignmentDirectional(0.0, 0.0),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 16.0),
-                            child: Wrap(
-                              spacing: 16.0,
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 10.0, 0.0, 0.0),
+                              child: Wrap(
+                                spacing: 0.0,
+                                runSpacing: 0.0,
+                                alignment: WrapAlignment.start,
+                                crossAxisAlignment: WrapCrossAlignment.start,
+                                direction: Axis.horizontal,
+                                runAlignment: WrapAlignment.start,
+                                verticalDirection: VerticalDirection.down,
+                                clipBehavior: Clip.none,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 10.0, 16.0),
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: const Text('Coming soon'),
+                                              content: const Text(
+                                                  'This feature is not yet available. Please sign up with Email/Password'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: const Text('👍👍'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                      text: 'Spotify',
+                                      icon: const FaIcon(
+                                        FontAwesomeIcons.spotify,
+                                        size: 20.0,
+                                      ),
+                                      options: FFButtonOptions(
+                                        width: 120.0,
+                                        height: 44.0,
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                        iconPadding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
+                                        color: const Color(0xFF1DB954),
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Open Sans',
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                        elevation: 0.0,
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                        hoverColor: FlutterFlowTheme.of(context)
+                                            .primaryBackground,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        10.0, 0.0, 0.0, 16.0),
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: const Text('Coming soon'),
+                                              content: const Text(
+                                                  'This feature is not yet available. Please sign up with Email/Password'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: const Text('👍👍'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                      text: 'Apple   ',
+                                      icon: const FaIcon(
+                                        FontAwesomeIcons.apple,
+                                        size: 20.0,
+                                      ),
+                                      options: FFButtonOptions(
+                                        width: 120.0,
+                                        height: 44.0,
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                        iconPadding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Open Sans',
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                        elevation: 0.0,
+                                        borderSide: const BorderSide(
+                                          color: Color(0x794A4A4A),
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                        hoverColor:
+                                            (Theme.of(context).brightness ==
+                                                        Brightness.dark) ==
+                                                    true
+                                                ? Colors.white
+                                                : Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Wrap(
+                              spacing: 0.0,
                               runSpacing: 0.0,
-                              alignment: WrapAlignment.center,
-                              crossAxisAlignment: WrapCrossAlignment.center,
+                              alignment: WrapAlignment.start,
+                              crossAxisAlignment: WrapCrossAlignment.start,
                               direction: Axis.horizontal,
-                              runAlignment: WrapAlignment.center,
+                              runAlignment: WrapAlignment.start,
                               verticalDirection: VerticalDirection.down,
                               clipBehavior: Clip.none,
                               children: [
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 16.0),
+                                      0.0, 0.0, 10.0, 16.0),
                                   child: FFButtonWidget(
-                                    onPressed: () {
-                                      print('Button pressed ...');
+                                    onPressed: () async {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: const Text('Coming soon'),
+                                            content: const Text(
+                                                'This feature is not yet available. Please sign up with Email/Password'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext),
+                                                child: const Text('👍👍'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
                                     },
-                                    text: 'Continue with Spotify',
-                                    icon: const FaIcon(
-                                      FontAwesomeIcons.spotify,
-                                      size: 20.0,
-                                    ),
-                                    options: FFButtonOptions(
-                                      width: 230.0,
-                                      height: 44.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 0.0),
-                                      iconPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 0.0, 0.0),
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                      elevation: 0.0,
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                      hoverColor: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 16.0),
-                                  child: FFButtonWidget(
-                                    onPressed: () {
-                                      print('Button pressed ...');
-                                    },
-                                    text: 'Continue with Apple   ',
-                                    icon: const FaIcon(
-                                      FontAwesomeIcons.apple,
-                                      size: 20.0,
-                                    ),
-                                    options: FFButtonOptions(
-                                      width: 230.0,
-                                      height: 44.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 0.0),
-                                      iconPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 0.0, 0.0),
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                      elevation: 0.0,
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                      hoverColor: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 16.0),
-                                  child: FFButtonWidget(
-                                    onPressed: () {
-                                      print('Button pressed ...');
-                                    },
-                                    text: 'Continue with Amazon',
+                                    text: 'Amazon',
                                     icon: const FaIcon(
                                       FontAwesomeIcons.amazon,
                                       size: 20.0,
                                     ),
                                     options: FFButtonOptions(
-                                      width: 230.0,
+                                      width: 120.0,
                                       height: 44.0,
                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 0.0),
                                       iconPadding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 0.0, 0.0),
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
+                                      color: const Color(0xFFFF9900),
                                       textStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                            fontFamily: 'Readex Pro',
+                                            fontFamily: 'Open Sans',
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                      elevation: 0.0,
+                                      borderSide: BorderSide(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12.0),
+                                      hoverColor: FlutterFlowTheme.of(context)
+                                          .primaryBackground,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      10.0, 0.0, 0.0, 16.0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: const Text('Coming soon'),
+                                            content: const Text(
+                                                'This feature is not yet available. Please sign up with Email/Password'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext),
+                                                child: const Text('👍👍'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    text: 'Google',
+                                    icon: const FaIcon(
+                                      FontAwesomeIcons.google,
+                                      color: Colors.white,
+                                      size: 20.0,
+                                    ),
+                                    options: FFButtonOptions(
+                                      width: 120.0,
+                                      height: 44.0,
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 0.0),
+                                      iconPadding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color: const Color(0xFFDB4437),
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            color: Colors.white,
+                                            fontSize: 14.0,
                                             fontWeight: FontWeight.bold,
                                           ),
                                       elevation: 0.0,
@@ -638,7 +771,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                 ),
                               ],
                             ),
-                          ),
+                          ],
                         ),
                       ],
                     ),

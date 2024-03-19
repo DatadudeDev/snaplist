@@ -1,27 +1,26 @@
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import 'dart:async';
+import '/custom_code/actions/index.dart' as actions;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:provider/provider.dart';
-import 'onboarding_model.dart';
-export 'onboarding_model.dart';
+import 'spotify_model.dart';
+export 'spotify_model.dart';
 
-class OnboardingWidget extends StatefulWidget {
-  const OnboardingWidget({super.key});
+class SpotifyWidget extends StatefulWidget {
+  const SpotifyWidget({super.key});
 
   @override
-  State<OnboardingWidget> createState() => _OnboardingWidgetState();
+  State<SpotifyWidget> createState() => _SpotifyWidgetState();
 }
 
-class _OnboardingWidgetState extends State<OnboardingWidget>
+class _SpotifyWidgetState extends State<SpotifyWidget>
     with TickerProviderStateMixin {
-  late OnboardingModel _model;
+  late SpotifyModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -214,7 +213,24 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => OnboardingModel());
+    _model = createModel(context, () => SpotifyModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      while (_model.pageViewCurrentIndex == 0) {
+        await Future.delayed(const Duration(milliseconds: 3000));
+        await _model.pageViewController?.nextPage(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.ease,
+        );
+        await Future.delayed(const Duration(milliseconds: 3000));
+        await _model.pageViewController?.nextPage(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.ease,
+        );
+        await Future.delayed(const Duration(milliseconds: 3000));
+      }
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -228,8 +244,6 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -252,9 +266,9 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                   children: [
                     Container(
                       width: double.infinity,
-                      height: 600.0,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
+                      height: 420.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
                       ),
                       child: MasonryGridView.builder(
                         physics: const NeverScrollableScrollPhysics(),
@@ -408,8 +422,8 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                   constraints: const BoxConstraints(
                     maxWidth: 670.0,
                   ),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
@@ -442,7 +456,9 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                               .displaySmall
                                               .override(
                                                 fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF101213),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
                                                 fontSize: 36.0,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -579,14 +595,16 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                     );
                                   },
                                   effect:
-                                      const smooth_page_indicator.ExpandingDotsEffect(
+                                      smooth_page_indicator.ExpandingDotsEffect(
                                     expansionFactor: 3.0,
                                     spacing: 8.0,
                                     radius: 16.0,
                                     dotWidth: 8.0,
                                     dotHeight: 8.0,
-                                    dotColor: Color(0xFFE0E3E7),
-                                    activeDotColor: Color(0xFF101213),
+                                    dotColor: FlutterFlowTheme.of(context)
+                                        .primaryBackground,
+                                    activeDotColor: FlutterFlowTheme.of(context)
+                                        .primaryText,
                                     paintStyle: PaintingStyle.fill,
                                   ),
                                 ),
@@ -597,77 +615,31 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                       ),
                       Row(
                         mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Stack(
-                            children: [
-                              if (_model.sotifyAuth == true)
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 20.0, 0.0, 0.0),
-                                  child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      unawaited(
-                                        () async {
-                                          await launchURL(
-                                              'https://spotify.com');
-                                        }(),
-                                      );
-                                      await Future.delayed(
-                                          const Duration(milliseconds: 1500));
-                                      setState(() {
-                                        _model.sotifyAuth = false;
-                                      });
-                                    },
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.asset(
-                                        'assets/images/image-asset.png',
-                                        width: 300.0,
-                                        height: 60.0,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 20.0, 0.0, 0.0),
+                            child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                await actions.launchInExternalBrowser(
+                                  'https://accounts.spotify.com/authorize?response_type=code&client_id=66735975625f4a9cbd385f15504e4ee8&scope=user-read-private+user-read-email+playlist-modify-private+playlist-modify-public+playlist-read-private+playlist-read-collaborative+user-read-recently-played&redirect_uri=snaplist://snaplist.com/spotify&show_dialog=true',
+                                );
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: Image.asset(
+                                  'assets/images/image-asset.png',
+                                  width: 300.0,
+                                  height: 60.0,
+                                  fit: BoxFit.cover,
                                 ),
-                              if (_model.sotifyAuth == false)
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 20.0, 0.0, 0.0),
-                                  child: FFButtonWidget(
-                                    onPressed: () async {
-                                      context.pushNamed('HomePage');
-                                    },
-                                    text: '🫰🫰Let\'s get snapping!  🫰🫰',
-                                    options: FFButtonOptions(
-                                      width: 300.0,
-                                      height: 60.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          24.0, 0.0, 24.0, 0.0),
-                                      iconPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 0.0, 0.0),
-                                      color: Colors.black,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            color: Colors.white,
-                                          ),
-                                      elevation: 3.0,
-                                      borderSide: const BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                  ),
-                                ),
-                            ],
+                              ),
+                            ),
                           ),
                         ],
                       ),

@@ -1,3 +1,5 @@
+import '/backend/api_requests/api_calls.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'home_page_widget.dart' show HomePageWidget;
 import 'package:flutter/material.dart';
@@ -7,19 +9,41 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
 
   bool isMenu = false;
 
+  bool isPhotoTaken = false;
+
+  String? playlistUrl;
+
+  bool isSettings = false;
+
+  bool isProfile = false;
+
+  bool isRecents = false;
+
+  bool isFeedback = false;
+
+  bool isExplore = false;
+
+  bool isLeftHanded = false;
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // State field(s) for MouseRegion widget.
-  bool mouseRegionHovered1 = false;
-  // State field(s) for MouseRegion widget.
-  bool mouseRegionHovered2 = false;
-  // State field(s) for MouseRegion widget.
-  bool mouseRegionHovered3 = false;
-  // State field(s) for MouseRegion widget.
-  bool mouseRegionHovered4 = false;
-  // State field(s) for MouseRegion widget.
-  bool mouseRegionHovered5 = false;
+  // Stores action output result for [Backend Call - API (get Moods)] action in HomePage widget.
+  ApiCallResponse? getMoods;
+  // Stores action output result for [Backend Call - API (Get Playlists)] action in HomePage widget.
+  ApiCallResponse? getPlaylists;
+  // Stores action output result for [Custom Action - getDocUsingFilter] action in HomePage widget.
+  SpotifyRecord? spotifyDocDev;
+  // Stores action output result for [Backend Call - API (Access Token)] action in HomePage widget.
+  ApiCallResponse? accessTokenResDev;
+  // Stores action output result for [Backend Call - API (Get Playlists)] action in HomePage widget.
+  ApiCallResponse? getPlaylist2;
+  // Stores action output result for [Firestore Query - Query a collection] action in HomePage widget.
+  SongsRecord? lastPlayedTrack2;
+  // State field(s) for TabBar widget.
+  TabController? tabBarController;
+  int get tabBarCurrentIndex =>
+      tabBarController != null ? tabBarController!.index : 0;
 
   /// Initialization and disposal methods.
 
@@ -29,6 +53,7 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   @override
   void dispose() {
     unfocusNode.dispose();
+    tabBarController?.dispose();
   }
 
   /// Action blocks are added here.

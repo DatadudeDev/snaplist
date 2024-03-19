@@ -93,7 +93,7 @@ BEGIN
             VALUE "FileDescription", "A new Flutter project." "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "Snaplist" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2022 Snaplist. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 Snaplist. All rights reserved." "\0"
             VALUE "OriginalFilename", "snaplist.exe" "\0"
             VALUE "ProductName", "Snaplist" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"

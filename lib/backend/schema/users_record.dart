@@ -45,6 +45,16 @@ class UsersRecord extends FirestoreRecord {
   String get phoneNumber => _phoneNumber ?? '';
   bool hasPhoneNumber() => _phoneNumber != null;
 
+  // "acces_token" field.
+  String? _accesToken;
+  String get accesToken => _accesToken ?? '';
+  bool hasAccesToken() => _accesToken != null;
+
+  // "refresh_token" field.
+  String? _refreshToken;
+  String get refreshToken => _refreshToken ?? '';
+  bool hasRefreshToken() => _refreshToken != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -52,6 +62,8 @@ class UsersRecord extends FirestoreRecord {
     _uid = snapshotData['uid'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
     _phoneNumber = snapshotData['phone_number'] as String?;
+    _accesToken = snapshotData['acces_token'] as String?;
+    _refreshToken = snapshotData['refresh_token'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -94,6 +106,8 @@ Map<String, dynamic> createUsersRecordData({
   String? uid,
   DateTime? createdTime,
   String? phoneNumber,
+  String? accesToken,
+  String? refreshToken,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -103,6 +117,8 @@ Map<String, dynamic> createUsersRecordData({
       'uid': uid,
       'created_time': createdTime,
       'phone_number': phoneNumber,
+      'acces_token': accesToken,
+      'refresh_token': refreshToken,
     }.withoutNulls,
   );
 
@@ -119,7 +135,9 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.photoUrl == e2?.photoUrl &&
         e1?.uid == e2?.uid &&
         e1?.createdTime == e2?.createdTime &&
-        e1?.phoneNumber == e2?.phoneNumber;
+        e1?.phoneNumber == e2?.phoneNumber &&
+        e1?.accesToken == e2?.accesToken &&
+        e1?.refreshToken == e2?.refreshToken;
   }
 
   @override
@@ -129,7 +147,9 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.photoUrl,
         e?.uid,
         e?.createdTime,
-        e?.phoneNumber
+        e?.phoneNumber,
+        e?.accesToken,
+        e?.refreshToken
       ]);
 
   @override

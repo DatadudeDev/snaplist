@@ -32,5 +32,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:893777894200:ios:5dbafd539b7b7ba3be7fcd</string>
+	<key>DATABASE_URL</key>
+	<string>https://store-e9omk8-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

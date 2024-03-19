@@ -1,11 +1,13 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'onboarding_widget.dart' show OnboardingWidget;
+import 'spotify_widget.dart' show SpotifyWidget;
 import 'package:flutter/material.dart';
 
-class OnboardingModel extends FlutterFlowModel<OnboardingWidget> {
+class SpotifyModel extends FlutterFlowModel<SpotifyWidget> {
   ///  Local state fields for this page.
 
   bool sotifyAuth = true;
+
+  String? redirectUrl;
 
   ///  State fields for stateful widgets in this page.
 

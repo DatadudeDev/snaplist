@@ -17,3 +17,17 @@ FFUploadedFile? base64toFile(String base64Img) {
   final file = FFUploadedFile(bytes: bytes);
   return file;
 }
+
+FFUploadedFile? base64toFileCopy(String base64Img) {
+  final bytes = base64Decode(base64Img);
+  final file = FFUploadedFile(bytes: bytes, name: 'photo.png');
+  return file;
+}
+
+String? toBase64(String? input) {
+  // null safety
+  input ??= '';
+
+  var bytes = utf8.encode(input);
+  return base64.encode(bytes);
+}

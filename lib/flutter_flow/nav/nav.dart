@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import '/auth/base_auth_user_provider.dart';
 
 import '/index.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 export 'package:go_router/go_router.dart';
@@ -67,30 +66,27 @@ class AppStateNotifier extends ChangeNotifier {
   }
 }
 
-GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
+GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
+    GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const HomePageWidget() : const LoginWidget(),
+      errorBuilder: (context, state) => appStateNotifier.loggedIn
+          ? entryPage ?? const HomePageWidget()
+          : const LoginWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) =>
-              appStateNotifier.loggedIn ? const HomePageWidget() : const LoginWidget(),
+          builder: (context, _) => appStateNotifier.loggedIn
+              ? entryPage ?? const HomePageWidget()
+              : const LoginWidget(),
         ),
         FFRoute(
-          name: 'HomePage',
-          path: '/homePage',
+          name: 'spotify',
+          path: '/spotifyAuth',
           requireAuth: true,
-          builder: (context, params) => const HomePageWidget(),
-        ),
-        FFRoute(
-          name: 'onboarding',
-          path: '/onboarding',
-          requireAuth: true,
-          builder: (context, params) => const OnboardingWidget(),
+          builder: (context, params) => const SpotifyWidget(),
         ),
         FFRoute(
           name: 'login',
@@ -101,6 +97,44 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'forgot',
           path: '/forgot',
           builder: (context, params) => const ForgotWidget(),
+        ),
+        FFRoute(
+          name: 'onboarding',
+          path: '/spotify',
+          requireAuth: true,
+          builder: (context, params) => OnboardingWidget(
+            code: params.getParam('code', ParamType.String),
+          ),
+        ),
+        FFRoute(
+          name: 'HomePage',
+          path: '/homePage',
+          requireAuth: true,
+          builder: (context, params) => HomePageWidget(
+            mood: params.getParam('mood', ParamType.String),
+          ),
+        ),
+        FFRoute(
+          name: 'devz',
+          path: '/devz',
+          requireAuth: true,
+          builder: (context, params) => DevzWidget(
+            playlistUrl: params.getParam('playlistUrl', ParamType.String),
+          ),
+        ),
+        FFRoute(
+          name: 'loading',
+          path: '/loading',
+          requireAuth: true,
+          builder: (context, params) => const LoadingWidget(),
+        ),
+        FFRoute(
+          name: 'loadingMood',
+          path: '/loadingMood',
+          requireAuth: true,
+          builder: (context, params) => LoadingMoodWidget(
+            mood: params.getParam('mood', ParamType.String),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -282,9 +316,9 @@ class FFRoute {
               : builder(context, ffParams);
           final child = appStateNotifier.loading
               ? Container(
-                  color: FlutterFlowTheme.of(context).primaryText,
+                  color: Colors.transparent,
                   child: Image.asset(
-                    'assets/images/splash.png',
+                    'assets/images/output-onlinepngtools_(1).png',
                     fit: BoxFit.cover,
                   ),
                 )

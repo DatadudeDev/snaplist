@@ -10,7 +10,8 @@ Future initFirebase() async {
             projectId: "store-e9omk8",
             storageBucket: "store-e9omk8.appspot.com",
             messagingSenderId: "893777894200",
-            appId: "1:893777894200:web:a01b94a1e8fbc000be7fcd"));
+            appId: "1:893777894200:web:a01b94a1e8fbc000be7fcd",
+            measurementId: "G-WKMRFN98BS"));
   } else {
     await Firebase.initializeApp();
   }
