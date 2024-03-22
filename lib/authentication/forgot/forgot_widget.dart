@@ -40,7 +40,7 @@ class _ForgotWidgetState extends State<ForgotWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -48,7 +48,7 @@ class _ForgotWidgetState extends State<ForgotWidget> {
             width: double.infinity,
             height: 100.0,
             decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).primaryBackground,
+              color: FlutterFlowTheme.of(context).secondaryBackground,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -228,6 +228,7 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                           setState(() {
                             _model.emailAddressController?.clear();
                           });
+                          context.safePop();
                         },
                         text: 'Send Link',
                         options: FFButtonOptions(

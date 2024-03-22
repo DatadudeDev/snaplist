@@ -135,6 +135,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
           builder: (context, params) => LoadingMoodWidget(
             mood: params.getParam('mood', ParamType.String),
           ),
+        ),
+        FFRoute(
+          name: 'fail',
+          path: '/fail',
+          requireAuth: true,
+          builder: (context, params) => const FailWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

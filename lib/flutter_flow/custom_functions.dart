@@ -20,7 +20,7 @@ FFUploadedFile? base64toFile(String base64Img) {
 
 FFUploadedFile? base64toFileCopy(String base64Img) {
   final bytes = base64Decode(base64Img);
-  final file = FFUploadedFile(bytes: bytes, name: 'photo.png');
+  final file = FFUploadedFile(bytes: bytes, name: 'photo.jpeg');
   return file;
 }
 

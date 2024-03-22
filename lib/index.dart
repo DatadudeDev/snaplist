@@ -7,3 +7,4 @@ export '/pages/home_page/home_page_widget.dart' show HomePageWidget;
 export '/pages/devz/devz_widget.dart' show DevzWidget;
 export '/pages/loading/loading_widget.dart' show LoadingWidget;
 export '/pages/loading_mood/loading_mood_widget.dart' show LoadingMoodWidget;
+export '/pages/fail/fail_widget.dart' show FailWidget;

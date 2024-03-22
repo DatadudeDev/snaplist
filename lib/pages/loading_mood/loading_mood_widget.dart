@@ -1,10 +1,12 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'loading_mood_model.dart';
@@ -22,10 +24,79 @@ class LoadingMoodWidget extends StatefulWidget {
   State<LoadingMoodWidget> createState() => _LoadingMoodWidgetState();
 }
 
-class _LoadingMoodWidgetState extends State<LoadingMoodWidget> {
+class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
+    with TickerProviderStateMixin {
   late LoadingMoodModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  var hasTextTriggered1 = false;
+  final animationsMap = {
+    'textOnActionTriggerAnimation1': AnimationInfo(
+      trigger: AnimationTrigger.onActionTrigger,
+      applyInitialState: false,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 1.0,
+          end: 0.0,
+        ),
+      ],
+    ),
+    'textOnActionTriggerAnimation2': AnimationInfo(
+      trigger: AnimationTrigger.onActionTrigger,
+      applyInitialState: true,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 1.0,
+          end: 0.0,
+        ),
+      ],
+    ),
+    'textOnActionTriggerAnimation3': AnimationInfo(
+      trigger: AnimationTrigger.onActionTrigger,
+      applyInitialState: true,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 1.0,
+          end: 0.0,
+        ),
+      ],
+    ),
+    'textOnActionTriggerAnimation4': AnimationInfo(
+      trigger: AnimationTrigger.onActionTrigger,
+      applyInitialState: true,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 1.0,
+          end: 0.0,
+        ),
+      ],
+    ),
+    'textOnActionTriggerAnimation5': AnimationInfo(
+      trigger: AnimationTrigger.onActionTrigger,
+      applyInitialState: true,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 1.0,
+          end: 0.0,
+        ),
+      ],
+    ),
+  };
 
   @override
   void initState() {
@@ -35,7 +106,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       setState(() {
-        FFAppState().cameraOn = false;
+        _model.ten = true;
       });
       _model.sendPhotoURLLoading = await DatacenterAPIGroup.postMooodCall.call(
         mood: widget.mood,
@@ -45,30 +116,54 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget> {
         ),
       );
       if ((_model.sendPhotoURLLoading?.succeeded ?? true)) {
-        setState(() {
-          _model.ten = true;
-        });
-        await Future.delayed(const Duration(milliseconds: 4000));
+        await Future.delayed(const Duration(milliseconds: 3000));
+        if (animationsMap['textOnActionTriggerAnimation1'] != null) {
+          setState(() => hasTextTriggered1 = true);
+          SchedulerBinding.instance.addPostFrameCallback((_) async =>
+              await animationsMap['textOnActionTriggerAnimation1']!
+                  .controller
+                  .forward(from: 0.0));
+        }
         setState(() {
           _model.ten = false;
           _model.twentyNine = true;
         });
-        await Future.delayed(const Duration(milliseconds: 4000));
+        await Future.delayed(const Duration(milliseconds: 3000));
+        if (animationsMap['textOnActionTriggerAnimation2'] != null) {
+          await animationsMap['textOnActionTriggerAnimation2']!
+              .controller
+              .forward(from: 0.0);
+        }
         setState(() {
           _model.twentyNine = false;
           _model.thirtySeven = true;
         });
         await Future.delayed(const Duration(milliseconds: 4000));
+        if (animationsMap['textOnActionTriggerAnimation3'] != null) {
+          await animationsMap['textOnActionTriggerAnimation3']!
+              .controller
+              .forward(from: 0.0);
+        }
         setState(() {
           _model.thirtySeven = false;
           _model.sixtyFive = true;
         });
-        await Future.delayed(const Duration(milliseconds: 4500));
+        await Future.delayed(const Duration(milliseconds: 4000));
+        if (animationsMap['textOnActionTriggerAnimation4'] != null) {
+          await animationsMap['textOnActionTriggerAnimation4']!
+              .controller
+              .forward(from: 0.0);
+        }
         setState(() {
           _model.sixtyFive = false;
           _model.eightyThree = true;
         });
-        await Future.delayed(const Duration(milliseconds: 4000));
+        await Future.delayed(const Duration(milliseconds: 3000));
+        if (animationsMap['textOnActionTriggerAnimation5'] != null) {
+          await animationsMap['textOnActionTriggerAnimation5']!
+              .controller
+              .forward(from: 0.0);
+        }
         setState(() {
           _model.eightyThree = false;
           _model.oneHundred = true;
@@ -129,8 +224,14 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget> {
             FFAppState().playlistUrl = '';
           });
 
+          await FeedbackRecord.collection.doc().set(createFeedbackRecordData(
+                userRef: currentUserReference,
+                feedback: 'get_playlist fucked up ',
+                isBug: true,
+              ));
+
           context.goNamed(
-            'HomePage',
+            'fail',
             extra: <String, dynamic>{
               kTransitionInfoKey: const TransitionInfo(
                 hasTransition: true,
@@ -149,8 +250,14 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget> {
           FFAppState().playlistUrl = '';
         });
 
+        await FeedbackRecord.collection.doc().set(createFeedbackRecordData(
+              userRef: currentUserReference,
+              feedback: 'post_image fucked up ',
+              isBug: true,
+            ));
+
         context.goNamed(
-          'HomePage',
+          'fail',
           extra: <String, dynamic>{
             kTransitionInfoKey: const TransitionInfo(
               hasTransition: true,
@@ -163,6 +270,13 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget> {
         return;
       }
     });
+
+    setupAnimations(
+      animationsMap.values.where((anim) =>
+          anim.trigger == AnimationTrigger.onActionTrigger ||
+          !anim.applyInitialState),
+      this,
+    );
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -208,7 +322,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget> {
                               child: Image.asset(
                                 'assets/images/f9a037eb45548f6f79d1f73fae94f701.gif',
                                 width: double.infinity,
-                                height: 320.0,
+                                height: 340.0,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -232,13 +346,198 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget> {
                                     return 0.0;
                                   }
                                 }(),
-                                radius: 180.0,
-                                lineWidth: 3.0,
+                                radius: 182.5,
+                                lineWidth: 2.0,
                                 animation: true,
                                 animateFromLastPercent: true,
-                                progressColor: const Color(0xFFE01E7B),
+                                progressColor: () {
+                                  if (_model.ten == true) {
+                                    return const Color(0xFFEA42B3);
+                                  } else if (_model.twentyNine == true) {
+                                    return const Color(0xFF41E7F6);
+                                  } else if (_model.thirtySeven == true) {
+                                    return const Color(0xFFF2E645);
+                                  } else if (_model.sixtyFive == true) {
+                                    return const Color(0xFF3DD1A9);
+                                  } else if (_model.eightyThree == true) {
+                                    return const Color(0xFFEA42B3);
+                                  } else if (_model.oneHundred == true) {
+                                    return const Color(0xFF41E7F6);
+                                  } else {
+                                    return Colors.white;
+                                  }
+                                }(),
                                 backgroundColor:
                                     FlutterFlowTheme.of(context).info,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 300.0,
+                              decoration: const BoxDecoration(),
+                              child: Stack(
+                                children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      if (_model.ten == true)
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 20.0, 0.0, 0.0),
+                                          child: Text(
+                                            'Analyzing Photo',
+                                            textAlign: TextAlign.center,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Readex Pro',
+                                                  color: Colors.white,
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                          ).animateOnActionTrigger(
+                                              animationsMap[
+                                                  'textOnActionTriggerAnimation1']!,
+                                              hasBeenTriggered:
+                                                  hasTextTriggered1),
+                                        ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      if (_model.twentyNine == true)
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 20.0, 0.0, 0.0),
+                                          child: Text(
+                                            'Thinking about some music I like ',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Readex Pro',
+                                                  color: Colors.white,
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                          ).animateOnActionTrigger(
+                                            animationsMap[
+                                                'textOnActionTriggerAnimation2']!,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      if (_model.thirtySeven == true)
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 20.0, 0.0, 0.0),
+                                          child: Text(
+                                            'Searching Spotify for some tracks',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Readex Pro',
+                                                  color: Colors.white,
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                          ).animateOnActionTrigger(
+                                            animationsMap[
+                                                'textOnActionTriggerAnimation3']!,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      if (_model.sixtyFive == true)
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 20.0, 0.0, 0.0),
+                                          child: Text(
+                                            'Curating your Snaplist',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Readex Pro',
+                                                  color: Colors.white,
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                          ).animateOnActionTrigger(
+                                            animationsMap[
+                                                'textOnActionTriggerAnimation4']!,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      if (_model.eightyThree == true)
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 20.0, 0.0, 0.0),
+                                          child: Text(
+                                            'Generating a snappy name',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Readex Pro',
+                                                  color: Colors.white,
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                          ).animateOnActionTrigger(
+                                            animationsMap[
+                                                'textOnActionTriggerAnimation5']!,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      if (_model.oneHundred == true)
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 20.0, 0.0, 0.0),
+                                          child: Text(
+                                            'Wrapping up...',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Readex Pro',
+                                                  color: Colors.white,
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
                           ],
