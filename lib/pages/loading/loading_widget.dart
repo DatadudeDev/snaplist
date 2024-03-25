@@ -1,13 +1,10 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
-import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/upload_data.dart';
 import 'dart:async';
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -17,7 +14,12 @@ import 'loading_model.dart';
 export 'loading_model.dart';
 
 class LoadingWidget extends StatefulWidget {
-  const LoadingWidget({super.key});
+  const LoadingWidget({
+    super.key,
+    required this.imageUrl,
+  });
+
+  final String? imageUrl;
 
   @override
   State<LoadingWidget> createState() => _LoadingWidgetState();
@@ -95,6 +97,19 @@ class _LoadingWidgetState extends State<LoadingWidget>
         ),
       ],
     ),
+    'textOnActionTriggerAnimation6': AnimationInfo(
+      trigger: AnimationTrigger.onActionTrigger,
+      applyInitialState: true,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 1.0,
+          end: 0.0,
+        ),
+      ],
+    ),
   };
 
   @override
@@ -104,209 +119,193 @@ class _LoadingWidgetState extends State<LoadingWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        _model.ten = true;
-      });
-      await Future.delayed(const Duration(milliseconds: 1000));
-      {
-        setState(() => _model.isDataUploading = true);
-        var selectedUploadedFiles = <FFUploadedFile>[];
-        var selectedMedia = <SelectedFile>[];
-        var downloadUrls = <String>[];
-        try {
-          selectedUploadedFiles = functions
-                  .base64toFileCopy(FFAppState().fileBase64)!
-                  .bytes!
-                  .isNotEmpty
-              ? [functions.base64toFileCopy(FFAppState().fileBase64)!]
-              : <FFUploadedFile>[];
-          selectedMedia = selectedFilesFromUploadedFiles(
-            selectedUploadedFiles,
-          );
-          downloadUrls = (await Future.wait(
-            selectedMedia.map(
-              (m) async => await uploadData(m.storagePath, m.bytes),
-            ),
-          ))
-              .where((u) => u != null)
-              .map((u) => u!)
-              .toList();
-        } finally {
-          _model.isDataUploading = false;
-        }
-        if (selectedUploadedFiles.length == selectedMedia.length &&
-            downloadUrls.length == selectedMedia.length) {
+      await Future.wait([
+        Future(() async {
           setState(() {
-            _model.uploadedLocalFile = selectedUploadedFiles.first;
-            _model.uploadedFileUrl = downloadUrls.first;
+            _model.ten = true;
           });
-        } else {
-          setState(() {});
-          return;
-        }
-      }
-
-      _model.sendPhotoURL =
-          await DatacenterAPIGroup.sendUploadedImageCopyCall.call(
-        imageUrl: _model.uploadedFileUrl,
-        userRef: currentUserReference?.id,
-      );
-      if ((_model.sendPhotoURL?.succeeded ?? true)) {
-        await Future.delayed(const Duration(milliseconds: 4000));
-        if (animationsMap['textOnActionTriggerAnimation1'] != null) {
-          setState(() => hasTextTriggered1 = true);
-          SchedulerBinding.instance.addPostFrameCallback((_) async =>
-              await animationsMap['textOnActionTriggerAnimation1']!
+        }),
+        Future(() async {
+          _model.sendPhotoURL =
+              await DatacenterAPIGroup.sendUploadedImageCopyCall.call(
+            imageUrl: widget.imageUrl,
+            userRef: currentUserReference?.id,
+          );
+          if ((_model.sendPhotoURL?.succeeded ?? true)) {
+            await Future.delayed(const Duration(milliseconds: 4000));
+            if (animationsMap['textOnActionTriggerAnimation1'] != null) {
+              setState(() => hasTextTriggered1 = true);
+              SchedulerBinding.instance.addPostFrameCallback((_) async =>
+                  await animationsMap['textOnActionTriggerAnimation1']!
+                      .controller
+                      .forward(from: 0.0));
+            }
+            setState(() {
+              _model.ten = false;
+              _model.twentyNine = true;
+            });
+            await Future.delayed(const Duration(milliseconds: 4000));
+            if (animationsMap['textOnActionTriggerAnimation2'] != null) {
+              await animationsMap['textOnActionTriggerAnimation2']!
                   .controller
-                  .forward(from: 0.0));
-        }
-        setState(() {
-          _model.ten = false;
-          _model.twentyNine = true;
-        });
-        await Future.delayed(const Duration(milliseconds: 4000));
-        if (animationsMap['textOnActionTriggerAnimation2'] != null) {
-          await animationsMap['textOnActionTriggerAnimation2']!
-              .controller
-              .forward(from: 0.0);
-        }
-        setState(() {
-          _model.twentyNine = false;
-          _model.thirtySeven = true;
-        });
-        await Future.delayed(const Duration(milliseconds: 4000));
-        if (animationsMap['textOnActionTriggerAnimation3'] != null) {
-          await animationsMap['textOnActionTriggerAnimation3']!
-              .controller
-              .forward(from: 0.0);
-        }
-        setState(() {
-          _model.thirtySeven = false;
-          _model.sixtyFive = true;
-        });
-        await Future.delayed(const Duration(milliseconds: 4500));
-        if (animationsMap['textOnActionTriggerAnimation4'] != null) {
-          await animationsMap['textOnActionTriggerAnimation4']!
-              .controller
-              .forward(from: 0.0);
-        }
-        setState(() {
-          _model.sixtyFive = false;
-          _model.eightyThree = true;
-        });
-        await Future.delayed(const Duration(milliseconds: 4000));
-        if (animationsMap['textOnActionTriggerAnimation5'] != null) {
-          await animationsMap['textOnActionTriggerAnimation5']!
-              .controller
-              .forward(from: 0.0);
-        }
-        setState(() {
-          _model.eightyThree = false;
-          _model.oneHundred = true;
-        });
-        _model.getPlaylist = await DatacenterAPIGroup.getPlaylistURLCall.call(
-          timestamp: DatacenterAPIGroup.sendUploadedImageCopyCall.timestamp(
-            (_model.sendPhotoURL?.jsonBody ?? ''),
-          ),
-          userRef: currentUserReference?.id,
-        );
-        if ((_model.getPlaylist?.succeeded ?? true)) {
-          await SnaplistsRecord.collection.doc().set(createSnaplistsRecordData(
-                userRef: currentUserReference,
-                name: DatacenterAPIGroup.getPlaylistURLCall.name(
-                  (_model.getPlaylist?.jsonBody ?? ''),
-                ),
-                description: DatacenterAPIGroup.getPlaylistURLCall.description(
-                  (_model.getPlaylist?.jsonBody ?? ''),
-                ),
-                imageUrl: DatacenterAPIGroup.getPlaylistURLCall.imageUrl(
-                  (_model.getPlaylist?.jsonBody ?? ''),
-                ),
-                createdTime: getCurrentTimestamp,
-                url: DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
-                  (_model.getPlaylist?.jsonBody ?? ''),
-                ),
-                id: DatacenterAPIGroup.getPlaylistURLCall.id(
-                  (_model.getPlaylist?.jsonBody ?? ''),
-                ),
-              ));
-          setState(() {
-            FFAppState().makePhoto = false;
-            FFAppState().fileBase64 = '';
-            FFAppState().playlistUrl = '';
-          });
-          unawaited(
-            () async {
-              await launchURL(DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
-                (_model.getPlaylist?.jsonBody ?? ''),
-              )!);
-            }(),
-          );
-
-          context.goNamed(
-            'HomePage',
-            extra: <String, dynamic>{
-              kTransitionInfoKey: const TransitionInfo(
-                hasTransition: true,
-                transitionType: PageTransitionType.fade,
-                duration: Duration(milliseconds: 0),
+                  .forward(from: 0.0);
+            }
+            setState(() {
+              _model.twentyNine = false;
+              _model.thirtySeven = true;
+            });
+            await Future.delayed(const Duration(milliseconds: 4000));
+            if (animationsMap['textOnActionTriggerAnimation3'] != null) {
+              await animationsMap['textOnActionTriggerAnimation3']!
+                  .controller
+                  .forward(from: 0.0);
+            }
+            setState(() {
+              _model.thirtySeven = false;
+              _model.fifty = true;
+            });
+            await Future.delayed(const Duration(milliseconds: 4000));
+            if (animationsMap['textOnActionTriggerAnimation4'] != null) {
+              await animationsMap['textOnActionTriggerAnimation4']!
+                  .controller
+                  .forward(from: 0.0);
+            }
+            setState(() {
+              _model.fifty = false;
+              _model.sixtyFive = true;
+            });
+            await Future.delayed(const Duration(milliseconds: 4500));
+            if (animationsMap['textOnActionTriggerAnimation5'] != null) {
+              await animationsMap['textOnActionTriggerAnimation5']!
+                  .controller
+                  .forward(from: 0.0);
+            }
+            setState(() {
+              _model.sixtyFive = false;
+              _model.eightyThree = true;
+            });
+            await Future.delayed(const Duration(milliseconds: 4000));
+            if (animationsMap['textOnActionTriggerAnimation6'] != null) {
+              await animationsMap['textOnActionTriggerAnimation6']!
+                  .controller
+                  .forward(from: 0.0);
+            }
+            setState(() {
+              _model.eightyThree = false;
+              _model.oneHundred = true;
+            });
+            _model.getPlaylist =
+                await DatacenterAPIGroup.getPlaylistURLCall.call(
+              timestamp: DatacenterAPIGroup.sendUploadedImageCopyCall.timestamp(
+                (_model.sendPhotoURL?.jsonBody ?? ''),
               ),
-            },
-          );
+              userRef: currentUserReference?.id,
+            );
+            if ((_model.getPlaylist?.succeeded ?? true)) {
+              await SnaplistsRecord.collection
+                  .doc()
+                  .set(createSnaplistsRecordData(
+                    userRef: currentUserReference,
+                    name: DatacenterAPIGroup.getPlaylistURLCall.name(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                    description:
+                        DatacenterAPIGroup.getPlaylistURLCall.description(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                    imageUrl: DatacenterAPIGroup.getPlaylistURLCall.imageUrl(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                    createdTime: getCurrentTimestamp,
+                    url: DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                    id: DatacenterAPIGroup.getPlaylistURLCall.id(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                  ));
+              setState(() {
+                FFAppState().makePhoto = false;
+                FFAppState().fileBase64 = '';
+                FFAppState().playlistUrl = '';
+              });
+              unawaited(
+                () async {
+                  await launchURL(
+                      DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
+                    (_model.getPlaylist?.jsonBody ?? ''),
+                  )!);
+                }(),
+              );
 
-          return;
-        } else {
-          setState(() {
-            FFAppState().makePhoto = false;
-            FFAppState().fileBase64 = '';
-            FFAppState().playlistUrl = '';
-          });
+              context.goNamed(
+                'HomePage',
+                extra: <String, dynamic>{
+                  kTransitionInfoKey: const TransitionInfo(
+                    hasTransition: true,
+                    transitionType: PageTransitionType.fade,
+                    duration: Duration(milliseconds: 0),
+                  ),
+                },
+              );
 
-          await FeedbackRecord.collection.doc().set(createFeedbackRecordData(
-                userRef: currentUserReference,
-                feedback: 'gt_playlist fucked up',
-                isBug: true,
-              ));
+              return;
+            } else {
+              setState(() {
+                FFAppState().makePhoto = false;
+                FFAppState().fileBase64 = '';
+                FFAppState().playlistUrl = '';
+              });
 
-          context.goNamed(
-            'fail',
-            extra: <String, dynamic>{
-              kTransitionInfoKey: const TransitionInfo(
-                hasTransition: true,
-                transitionType: PageTransitionType.fade,
-                duration: Duration(milliseconds: 0),
-              ),
-            },
-          );
+              await FeedbackRecord.collection
+                  .doc()
+                  .set(createFeedbackRecordData(
+                    userRef: currentUserReference,
+                    feedback: 'gt_playlist fucked up',
+                    isBug: true,
+                  ));
 
-          return;
-        }
-      } else {
-        setState(() {
-          FFAppState().makePhoto = false;
-          FFAppState().fileBase64 = '';
-          FFAppState().playlistUrl = '';
-        });
+              context.goNamed(
+                'fail',
+                extra: <String, dynamic>{
+                  kTransitionInfoKey: const TransitionInfo(
+                    hasTransition: true,
+                    transitionType: PageTransitionType.fade,
+                    duration: Duration(milliseconds: 0),
+                  ),
+                },
+              );
 
-        await FeedbackRecord.collection.doc().set(createFeedbackRecordData(
-              userRef: currentUserReference,
-              feedback: 'post_image fucked up ',
-              isBug: true,
-            ));
+              return;
+            }
+          } else {
+            setState(() {
+              FFAppState().makePhoto = false;
+              FFAppState().fileBase64 = '';
+              FFAppState().playlistUrl = '';
+            });
 
-        context.pushNamed(
-          'fail',
-          extra: <String, dynamic>{
-            kTransitionInfoKey: const TransitionInfo(
-              hasTransition: true,
-              transitionType: PageTransitionType.fade,
-              duration: Duration(milliseconds: 0),
-            ),
-          },
-        );
+            await FeedbackRecord.collection.doc().set(createFeedbackRecordData(
+                  userRef: currentUserReference,
+                  feedback: 'post_image fucked up ',
+                  isBug: true,
+                ));
 
-        return;
-      }
+            context.pushNamed(
+              'fail',
+              extra: <String, dynamic>{
+                kTransitionInfoKey: const TransitionInfo(
+                  hasTransition: true,
+                  transitionType: PageTransitionType.fade,
+                  duration: Duration(milliseconds: 0),
+                ),
+              },
+            );
+
+            return;
+          }
+        }),
+      ]);
     });
 
     setupAnimations(
@@ -380,6 +379,8 @@ class _LoadingWidgetState extends State<LoadingWidget>
                                     return 0.83;
                                   } else if (_model.oneHundred == true) {
                                     return 1.0;
+                                  } else if (_model.fifty == true) {
+                                    return 0.5;
                                   } else {
                                     return 0.0;
                                   }
@@ -398,9 +399,11 @@ class _LoadingWidgetState extends State<LoadingWidget>
                                   } else if (_model.sixtyFive == true) {
                                     return const Color(0xFF3DD1A9);
                                   } else if (_model.eightyThree == true) {
-                                    return const Color(0xFFEA42B3);
+                                    return const Color(0xFFF2E645);
                                   } else if (_model.oneHundred == true) {
                                     return const Color(0xFF41E7F6);
+                                  } else if (_model.fifty == true) {
+                                    return const Color(0xFFEA42B3);
                                   } else {
                                     return Colors.white;
                                   }
@@ -504,6 +507,32 @@ class _LoadingWidgetState extends State<LoadingWidget>
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
+                                      if (_model.fifty == true)
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 20.0, 0.0, 0.0),
+                                          child: Text(
+                                            'Searching Spotify for some tracks',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Readex Pro',
+                                                  color: Colors.white,
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                          ).animateOnActionTrigger(
+                                            animationsMap[
+                                                'textOnActionTriggerAnimation4']!,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
                                       if (_model.sixtyFive == true)
                                         Padding(
                                           padding:
@@ -521,7 +550,7 @@ class _LoadingWidgetState extends State<LoadingWidget>
                                                 ),
                                           ).animateOnActionTrigger(
                                             animationsMap[
-                                                'textOnActionTriggerAnimation4']!,
+                                                'textOnActionTriggerAnimation5']!,
                                           ),
                                         ),
                                     ],
@@ -547,7 +576,7 @@ class _LoadingWidgetState extends State<LoadingWidget>
                                                 ),
                                           ).animateOnActionTrigger(
                                             animationsMap[
-                                                'textOnActionTriggerAnimation5']!,
+                                                'textOnActionTriggerAnimation6']!,
                                           ),
                                         ),
                                     ],

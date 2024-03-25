@@ -1,9 +1,9 @@
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'loading_mood_widget.dart' show LoadingMoodWidget;
+import 'loading_input_widget.dart' show LoadingInputWidget;
 import 'package:flutter/material.dart';
 
-class LoadingMoodModel extends FlutterFlowModel<LoadingMoodWidget> {
+class LoadingInputModel extends FlutterFlowModel<LoadingInputWidget> {
   ///  Local state fields for this page.
 
   bool analyzingPhoto = false;
@@ -33,9 +33,9 @@ class LoadingMoodModel extends FlutterFlowModel<LoadingMoodWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // Stores action output result for [Backend Call - API (Post Mood)] action in loadingMood widget.
+  // Stores action output result for [Backend Call - API (Post Input)] action in loadingInput widget.
   ApiCallResponse? sendPhotoURLLoading;
-  // Stores action output result for [Backend Call - API (get Playlist URL)] action in loadingMood widget.
+  // Stores action output result for [Backend Call - API (get Playlist URL)] action in loadingInput widget.
   ApiCallResponse? getPlaylist;
 
   /// Initialization and disposal methods.

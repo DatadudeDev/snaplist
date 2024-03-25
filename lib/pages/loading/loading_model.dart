@@ -30,14 +30,11 @@ class LoadingModel extends FlutterFlowModel<LoadingWidget> {
 
   bool oneHundred = false;
 
+  bool fifty = false;
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  bool isDataUploading = false;
-  FFUploadedFile uploadedLocalFile =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
-  String uploadedFileUrl = '';
-
   // Stores action output result for [Backend Call - API (Send Uploaded Image Copy)] action in loading widget.
   ApiCallResponse? sendPhotoURL;
   // Stores action output result for [Backend Call - API (get Playlist URL)] action in loading widget.

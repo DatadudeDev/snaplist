@@ -212,7 +212,9 @@ class DatacenterAPIGroup {
       SendUploadedImageCopyCall();
   static GetPlaylistURLCall getPlaylistURLCall = GetPlaylistURLCall();
   static GetMoodsCall getMoodsCall = GetMoodsCall();
-  static PostMooodCall postMooodCall = PostMooodCall();
+  static PostMoodCall postMoodCall = PostMoodCall();
+  static PostInputCall postInputCall = PostInputCall();
+  static PostVoiceCall postVoiceCall = PostVoiceCall();
 }
 
 class SendUploadedImageCall {
@@ -256,7 +258,7 @@ class SendUploadedImageCopyCall {
   }) async {
     final ffApiRequestBody = '''
 {
-  "image": "$imageUrl",
+  "imageUrl": "$imageUrl",
   "userRef": "$userRef"
 }''';
     return ApiManager.instance.makeApiCall(
@@ -385,7 +387,7 @@ class GetMoodsCall {
       ) as List?;
 }
 
-class PostMooodCall {
+class PostMoodCall {
   Future<ApiCallResponse> call({
     String? mood = '',
     String? userRef = '',
@@ -396,8 +398,66 @@ class PostMooodCall {
   "userRef": "$userRef"
 }''';
     return ApiManager.instance.makeApiCall(
-      callName: 'post moood',
+      callName: 'Post Mood',
       apiUrl: '${DatacenterAPIGroup.baseUrl}/v1/post_mood',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class PostInputCall {
+  Future<ApiCallResponse> call({
+    String? input = '',
+    String? userRef = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "input": "$input",
+  "userRef": "$userRef"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Post Input',
+      apiUrl: '${DatacenterAPIGroup.baseUrl}/v1/post_input',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class PostVoiceCall {
+  Future<ApiCallResponse> call({
+    String? voice = '',
+    String? userRef = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "voice": "$voice",
+  "userRef": "$userRef"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Post Voice',
+      apiUrl: '${DatacenterAPIGroup.baseUrl}/v1/post_voice',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '/auth/base_auth_user_provider.dart';
 
 import '/index.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 export 'package:go_router/go_router.dart';
@@ -126,7 +127,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
           name: 'loading',
           path: '/loading',
           requireAuth: true,
-          builder: (context, params) => const LoadingWidget(),
+          builder: (context, params) => LoadingWidget(
+            imageUrl: params.getParam('imageUrl', ParamType.String),
+          ),
         ),
         FFRoute(
           name: 'loadingMood',
@@ -141,6 +144,30 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
           path: '/fail',
           requireAuth: true,
           builder: (context, params) => const FailWidget(),
+        ),
+        FFRoute(
+          name: 'loadingInput',
+          path: '/loadingInput',
+          requireAuth: true,
+          builder: (context, params) => LoadingInputWidget(
+            input: params.getParam('input', ParamType.String),
+          ),
+        ),
+        FFRoute(
+          name: 'loadingUpload',
+          path: '/loadingUpload',
+          requireAuth: true,
+          builder: (context, params) => LoadingUploadWidget(
+            url: params.getParam('url', ParamType.String),
+          ),
+        ),
+        FFRoute(
+          name: 'loadingVoice',
+          path: '/loadingVoice',
+          requireAuth: true,
+          builder: (context, params) => LoadingVoiceWidget(
+            url: params.getParam('url', ParamType.String),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -322,10 +349,10 @@ class FFRoute {
               : builder(context, ffParams);
           final child = appStateNotifier.loading
               ? Container(
-                  color: Colors.transparent,
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
                   child: Image.asset(
-                    'assets/images/output-onlinepngtools_(1).png',
-                    fit: BoxFit.cover,
+                    'assets/images/output-onlinegiftools_(3).gif',
+                    fit: BoxFit.contain,
                   ),
                 )
               : page;

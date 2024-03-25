@@ -9,29 +9,27 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'loading_mood_model.dart';
-export 'loading_mood_model.dart';
+import 'loading_input_model.dart';
+export 'loading_input_model.dart';
 
-class LoadingMoodWidget extends StatefulWidget {
-  const LoadingMoodWidget({
+class LoadingInputWidget extends StatefulWidget {
+  const LoadingInputWidget({
     super.key,
-    required this.mood,
+    required this.input,
   });
 
-  final String? mood;
+  final String? input;
 
   @override
-  State<LoadingMoodWidget> createState() => _LoadingMoodWidgetState();
+  State<LoadingInputWidget> createState() => _LoadingInputWidgetState();
 }
 
-class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
+class _LoadingInputWidgetState extends State<LoadingInputWidget>
     with TickerProviderStateMixin {
-  late LoadingMoodModel _model;
+  late LoadingInputModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   var hasTextTriggered1 = false;
-  var hasTextTriggered2 = false;
-  var hasTextTriggered3 = false;
   final animationsMap = {
     'textOnActionTriggerAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onActionTrigger,
@@ -48,7 +46,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
     ),
     'textOnActionTriggerAnimation2': AnimationInfo(
       trigger: AnimationTrigger.onActionTrigger,
-      applyInitialState: false,
+      applyInitialState: true,
       effects: [
         FadeEffect(
           curve: Curves.easeOut,
@@ -61,7 +59,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
     ),
     'textOnActionTriggerAnimation3': AnimationInfo(
       trigger: AnimationTrigger.onActionTrigger,
-      applyInitialState: false,
+      applyInitialState: true,
       effects: [
         FadeEffect(
           curve: Curves.easeOut,
@@ -98,50 +96,21 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
         ),
       ],
     ),
-    'textOnActionTriggerAnimation6': AnimationInfo(
-      trigger: AnimationTrigger.onActionTrigger,
-      applyInitialState: true,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 1.0,
-          end: 0.0,
-        ),
-      ],
-    ),
-    'textOnActionTriggerAnimation7': AnimationInfo(
-      trigger: AnimationTrigger.onActionTrigger,
-      applyInitialState: true,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 1.0,
-          end: 0.0,
-        ),
-      ],
-    ),
   };
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => LoadingMoodModel());
+    _model = createModel(context, () => LoadingInputModel());
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       setState(() {
         _model.ten = true;
       });
-      _model.sendPhotoURLLoading = await DatacenterAPIGroup.postMoodCall.call(
-        mood: widget.mood,
-        userRef: valueOrDefault<String>(
-          currentUserReference?.id,
-          'gabe2091',
-        ),
+      _model.sendPhotoURLLoading = await DatacenterAPIGroup.postInputCall.call(
+        input: widget.input,
+        userRef: currentUserReference?.id,
       );
       if ((_model.sendPhotoURLLoading?.succeeded ?? true)) {
         await Future.delayed(const Duration(milliseconds: 3000));
@@ -157,8 +126,8 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
           _model.twentyNine = true;
         });
         await Future.delayed(const Duration(milliseconds: 3000));
-        if (animationsMap['textOnActionTriggerAnimation4'] != null) {
-          await animationsMap['textOnActionTriggerAnimation4']!
+        if (animationsMap['textOnActionTriggerAnimation2'] != null) {
+          await animationsMap['textOnActionTriggerAnimation2']!
               .controller
               .forward(from: 0.0);
         }
@@ -167,8 +136,8 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
           _model.thirtySeven = true;
         });
         await Future.delayed(const Duration(milliseconds: 3000));
-        if (animationsMap['textOnActionTriggerAnimation5'] != null) {
-          await animationsMap['textOnActionTriggerAnimation5']!
+        if (animationsMap['textOnActionTriggerAnimation3'] != null) {
+          await animationsMap['textOnActionTriggerAnimation3']!
               .controller
               .forward(from: 0.0);
         }
@@ -177,8 +146,8 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
           _model.sixtyFive = true;
         });
         await Future.delayed(const Duration(milliseconds: 3000));
-        if (animationsMap['textOnActionTriggerAnimation6'] != null) {
-          await animationsMap['textOnActionTriggerAnimation6']!
+        if (animationsMap['textOnActionTriggerAnimation4'] != null) {
+          await animationsMap['textOnActionTriggerAnimation4']!
               .controller
               .forward(from: 0.0);
         }
@@ -187,8 +156,8 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
           _model.eightyThree = true;
         });
         await Future.delayed(const Duration(milliseconds: 3000));
-        if (animationsMap['textOnActionTriggerAnimation7'] != null) {
-          await animationsMap['textOnActionTriggerAnimation7']!
+        if (animationsMap['textOnActionTriggerAnimation5'] != null) {
+          await animationsMap['textOnActionTriggerAnimation5']!
               .controller
               .forward(from: 0.0);
         }
@@ -420,7 +389,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Feeling ',
+                                            'hmmm let\'s see here...',
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
@@ -435,53 +404,6 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                                   'textOnActionTriggerAnimation1']!,
                                               hasBeenTriggered:
                                                   hasTextTriggered1),
-                                        ),
-                                      if (_model.ten == true)
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 20.0, 0.0, 0.0),
-                                          child: Text(
-                                            valueOrDefault<String>(
-                                              widget.mood,
-                                              '123',
-                                            ),
-                                            textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  color: Colors.white,
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                          ).animateOnActionTrigger(
-                                              animationsMap[
-                                                  'textOnActionTriggerAnimation2']!,
-                                              hasBeenTriggered:
-                                                  hasTextTriggered2),
-                                        ),
-                                      if (_model.ten == true)
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 20.0, 0.0, 0.0),
-                                          child: Text(
-                                            ', eh',
-                                            textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  color: Colors.white,
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                          ).animateOnActionTrigger(
-                                              animationsMap[
-                                                  'textOnActionTriggerAnimation3']!,
-                                              hasBeenTriggered:
-                                                  hasTextTriggered3),
                                         ),
                                     ],
                                   ),
@@ -506,7 +428,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                                 ),
                                           ).animateOnActionTrigger(
                                             animationsMap[
-                                                'textOnActionTriggerAnimation4']!,
+                                                'textOnActionTriggerAnimation2']!,
                                           ),
                                         ),
                                     ],
@@ -532,7 +454,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                                 ),
                                           ).animateOnActionTrigger(
                                             animationsMap[
-                                                'textOnActionTriggerAnimation5']!,
+                                                'textOnActionTriggerAnimation3']!,
                                           ),
                                         ),
                                     ],
@@ -558,7 +480,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                                 ),
                                           ).animateOnActionTrigger(
                                             animationsMap[
-                                                'textOnActionTriggerAnimation6']!,
+                                                'textOnActionTriggerAnimation4']!,
                                           ),
                                         ),
                                     ],
@@ -584,7 +506,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                                 ),
                                           ).animateOnActionTrigger(
                                             animationsMap[
-                                                'textOnActionTriggerAnimation7']!,
+                                                'textOnActionTriggerAnimation5']!,
                                           ),
                                         ),
                                     ],

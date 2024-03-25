@@ -1,21 +1,27 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
+import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/upload_data.dart';
 import '/pages/feedback_modal/feedback_modal_widget.dart';
+import '/pages/input_modal/input_modal_widget.dart';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'home_page_model.dart';
 export 'home_page_model.dart';
@@ -198,7 +204,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        backgroundColor: Colors.black,
         drawer: Drawer(
           elevation: 16.0,
           child: Container(
@@ -1451,41 +1457,362 @@ class _HomePageWidgetState extends State<HomePageWidget>
                 ),
               ),
               Align(
-                alignment: const AlignmentDirectional(-1.0, 0.75),
-                child: Stack(
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            setState(() {
-                              FFAppState().makePhoto = true;
-                            });
-
-                            context.pushNamed('loading');
-                          },
-                          onLongPress: () async {
-                            scaffoldKey.currentState!.openDrawer();
-                          },
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.asset(
-                              'assets/images/1200x600wa-removebg-preview-modified.png',
-                              width: 80.0,
-                              height: 80.0,
-                              fit: BoxFit.cover,
+                alignment: const AlignmentDirectional(0.0, 1.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    border: Border.all(
+                      color: Colors.black,
+                    ),
+                  ),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 180.0,
+                    child: CarouselSlider(
+                      items: [
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FlutterFlowIconButton(
+                              borderColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              borderRadius: 50.0,
+                              borderWidth: 1.0,
+                              buttonSize: 70.0,
+                              fillColor: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              icon: const FaIcon(
+                                FontAwesomeIcons.microphoneAlt,
+                                color: Color(0xFFF2E645),
+                                size: 50.0,
+                              ),
+                              onPressed: () {
+                                print('IconButton pressed ...');
+                              },
                             ),
-                          ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FlutterFlowIconButton(
+                              borderColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              borderRadius: 50.0,
+                              borderWidth: 1.0,
+                              buttonSize: 70.0,
+                              fillColor: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              icon: const Icon(
+                                Icons.keyboard_hide,
+                                color: Color(0xFF3DD1A9),
+                                size: 50.0,
+                              ),
+                              onPressed: () async {
+                                await showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  backgroundColor: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  enableDrag: false,
+                                  context: context,
+                                  builder: (context) {
+                                    return GestureDetector(
+                                      onTap: () => _model
+                                              .unfocusNode.canRequestFocus
+                                          ? FocusScope.of(context)
+                                              .requestFocus(_model.unfocusNode)
+                                          : FocusScope.of(context).unfocus(),
+                                      child: Padding(
+                                        padding:
+                                            MediaQuery.viewInsetsOf(context),
+                                        child: const InputModalWidget(),
+                                      ),
+                                    );
+                                  },
+                                ).then((value) => safeSetState(() {}));
+                              },
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Stack(
+                              children: [
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    setState(() {
+                                      FFAppState().makePhoto = true;
+                                    });
+
+                                    context.pushNamed(
+                                      'loading',
+                                      queryParameters: {
+                                        'imageUrl': serializeParam(
+                                          '',
+                                          ParamType.String,
+                                        ),
+                                      }.withoutNulls,
+                                    );
+                                  },
+                                  onLongPress: () async {
+                                    scaffoldKey.currentState!.openDrawer();
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: Image.asset(
+                                      'assets/images/[CITYPNG.COM]HD_White_Glowing_Circle_Transparent_PNG_-_1500x1500.png',
+                                      width: 90.0,
+                                      height: 90.0,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    final selectedMedia = await selectMedia(
+                                      maxWidth: 600.00,
+                                      maxHeight: 600.00,
+                                      imageQuality: 50,
+                                      multiImage: false,
+                                    );
+                                    if (selectedMedia != null &&
+                                        selectedMedia.every((m) =>
+                                            validateFileFormat(
+                                                m.storagePath, context))) {
+                                      setState(
+                                          () => _model.isDataUploading1 = true);
+                                      var selectedUploadedFiles =
+                                          <FFUploadedFile>[];
+
+                                      var downloadUrls = <String>[];
+                                      try {
+                                        selectedUploadedFiles = selectedMedia
+                                            .map((m) => FFUploadedFile(
+                                                  name: m.storagePath
+                                                      .split('/')
+                                                      .last,
+                                                  bytes: m.bytes,
+                                                  height: m.dimensions?.height,
+                                                  width: m.dimensions?.width,
+                                                  blurHash: m.blurHash,
+                                                ))
+                                            .toList();
+
+                                        downloadUrls = (await Future.wait(
+                                          selectedMedia.map(
+                                            (m) async => await uploadData(
+                                                m.storagePath, m.bytes),
+                                          ),
+                                        ))
+                                            .where((u) => u != null)
+                                            .map((u) => u!)
+                                            .toList();
+                                      } finally {
+                                        _model.isDataUploading1 = false;
+                                      }
+                                      if (selectedUploadedFiles.length ==
+                                              selectedMedia.length &&
+                                          downloadUrls.length ==
+                                              selectedMedia.length) {
+                                        setState(() {
+                                          _model.uploadedLocalFile1 =
+                                              selectedUploadedFiles.first;
+                                          _model.uploadedFileUrl1 =
+                                              downloadUrls.first;
+                                        });
+                                      } else {
+                                        setState(() {});
+                                        return;
+                                      }
+                                    }
+
+                                    context.goNamed(
+                                      'loading',
+                                      queryParameters: {
+                                        'imageUrl': serializeParam(
+                                          _model.uploadedFileUrl1,
+                                          ParamType.String,
+                                        ),
+                                      }.withoutNulls,
+                                    );
+                                  },
+                                  onLongPress: () async {
+                                    scaffoldKey.currentState!.openDrawer();
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: Image.asset(
+                                      'assets/images/[CITYPNG.COM]White_Circle_Contain_Dots_Pattern_Halftone_PNG_-_2500x2500.png',
+                                      width: 90.0,
+                                      height: 90.0,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FlutterFlowIconButton(
+                              borderColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              borderRadius: 50.0,
+                              borderWidth: 1.0,
+                              buttonSize: 70.0,
+                              fillColor: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              icon: const Icon(
+                                Icons.upload_file,
+                                color: Color(0xFFEA42B3),
+                                size: 50.0,
+                              ),
+                              onPressed: () async {
+                                final selectedMedia = await selectMedia(
+                                  maxWidth: 600.00,
+                                  maxHeight: 600.00,
+                                  imageQuality: 50,
+                                  mediaSource: MediaSource.photoGallery,
+                                  multiImage: false,
+                                );
+                                if (selectedMedia != null &&
+                                    selectedMedia.every((m) =>
+                                        validateFileFormat(
+                                            m.storagePath, context))) {
+                                  setState(
+                                      () => _model.isDataUploading2 = true);
+                                  var selectedUploadedFiles =
+                                      <FFUploadedFile>[];
+
+                                  var downloadUrls = <String>[];
+                                  try {
+                                    selectedUploadedFiles = selectedMedia
+                                        .map((m) => FFUploadedFile(
+                                              name:
+                                                  m.storagePath.split('/').last,
+                                              bytes: m.bytes,
+                                              height: m.dimensions?.height,
+                                              width: m.dimensions?.width,
+                                              blurHash: m.blurHash,
+                                            ))
+                                        .toList();
+
+                                    downloadUrls = (await Future.wait(
+                                      selectedMedia.map(
+                                        (m) async => await uploadData(
+                                            m.storagePath, m.bytes),
+                                      ),
+                                    ))
+                                        .where((u) => u != null)
+                                        .map((u) => u!)
+                                        .toList();
+                                  } finally {
+                                    _model.isDataUploading2 = false;
+                                  }
+                                  if (selectedUploadedFiles.length ==
+                                          selectedMedia.length &&
+                                      downloadUrls.length ==
+                                          selectedMedia.length) {
+                                    setState(() {
+                                      _model.uploadedLocalFile2 =
+                                          selectedUploadedFiles.first;
+                                      _model.uploadedFileUrl2 =
+                                          downloadUrls.first;
+                                    });
+                                  } else {
+                                    setState(() {});
+                                    return;
+                                  }
+                                }
+
+                                if (_model.uploadedFileUrl2 != '') {
+                                  context.goNamed(
+                                    'loadingUpload',
+                                    queryParameters: {
+                                      'url': serializeParam(
+                                        _model.uploadedFileUrl2,
+                                        ParamType.String,
+                                      ),
+                                    }.withoutNulls,
+                                  );
+                                } else {
+                                  context.safePop();
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FlutterFlowIconButton(
+                              borderColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              borderRadius: 50.0,
+                              borderWidth: 1.0,
+                              buttonSize: 70.0,
+                              fillColor: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              icon: const FaIcon(
+                                FontAwesomeIcons.userAstronaut,
+                                color: Color(0xFF41E7F6),
+                                size: 50.0,
+                              ),
+                              onPressed: () async {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: const Text('Coming Soon'),
+                                      content: const Text(
+                                          'Voice Input, powered by Whisper, is coming soon!'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: const Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       ],
+                      carouselController: _model.carouselController ??=
+                          CarouselController(),
+                      options: CarouselOptions(
+                        initialPage: 2,
+                        viewportFraction: 0.2,
+                        disableCenter: false,
+                        enlargeCenterPage: true,
+                        enlargeFactor: 0.3,
+                        enableInfiniteScroll: false,
+                        scrollDirection: Axis.horizontal,
+                        autoPlay: false,
+                        onPageChanged: (index, _) =>
+                            _model.carouselCurrentIndex = index,
+                      ),
                     ),
-                  ],
+                  ),
                 ),
               ),
             ],

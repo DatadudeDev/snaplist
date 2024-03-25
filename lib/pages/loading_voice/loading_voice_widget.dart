@@ -4,34 +4,33 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'loading_mood_model.dart';
-export 'loading_mood_model.dart';
+import 'loading_voice_model.dart';
+export 'loading_voice_model.dart';
 
-class LoadingMoodWidget extends StatefulWidget {
-  const LoadingMoodWidget({
+class LoadingVoiceWidget extends StatefulWidget {
+  const LoadingVoiceWidget({
     super.key,
-    required this.mood,
+    required this.url,
   });
 
-  final String? mood;
+  final String? url;
 
   @override
-  State<LoadingMoodWidget> createState() => _LoadingMoodWidgetState();
+  State<LoadingVoiceWidget> createState() => _LoadingVoiceWidgetState();
 }
 
-class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
+class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
     with TickerProviderStateMixin {
-  late LoadingMoodModel _model;
+  late LoadingVoiceModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   var hasTextTriggered1 = false;
-  var hasTextTriggered2 = false;
-  var hasTextTriggered3 = false;
   final animationsMap = {
     'textOnActionTriggerAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onActionTrigger,
@@ -48,7 +47,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
     ),
     'textOnActionTriggerAnimation2': AnimationInfo(
       trigger: AnimationTrigger.onActionTrigger,
-      applyInitialState: false,
+      applyInitialState: true,
       effects: [
         FadeEffect(
           curve: Curves.easeOut,
@@ -61,7 +60,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
     ),
     'textOnActionTriggerAnimation3': AnimationInfo(
       trigger: AnimationTrigger.onActionTrigger,
-      applyInitialState: false,
+      applyInitialState: true,
       effects: [
         FadeEffect(
           curve: Curves.easeOut,
@@ -111,40 +110,25 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
         ),
       ],
     ),
-    'textOnActionTriggerAnimation7': AnimationInfo(
-      trigger: AnimationTrigger.onActionTrigger,
-      applyInitialState: true,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 1.0,
-          end: 0.0,
-        ),
-      ],
-    ),
   };
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => LoadingMoodModel());
+    _model = createModel(context, () => LoadingVoiceModel());
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       setState(() {
         _model.ten = true;
       });
-      _model.sendPhotoURLLoading = await DatacenterAPIGroup.postMoodCall.call(
-        mood: widget.mood,
-        userRef: valueOrDefault<String>(
-          currentUserReference?.id,
-          'gabe2091',
-        ),
+      _model.sendPhotoURL =
+          await DatacenterAPIGroup.sendUploadedImageCopyCall.call(
+        imageUrl: widget.url,
+        userRef: currentUserReference?.id,
       );
-      if ((_model.sendPhotoURLLoading?.succeeded ?? true)) {
-        await Future.delayed(const Duration(milliseconds: 3000));
+      if ((_model.sendPhotoURL?.succeeded ?? true)) {
+        await Future.delayed(const Duration(milliseconds: 4000));
         if (animationsMap['textOnActionTriggerAnimation1'] != null) {
           setState(() => hasTextTriggered1 = true);
           SchedulerBinding.instance.addPostFrameCallback((_) async =>
@@ -156,9 +140,9 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
           _model.ten = false;
           _model.twentyNine = true;
         });
-        await Future.delayed(const Duration(milliseconds: 3000));
-        if (animationsMap['textOnActionTriggerAnimation4'] != null) {
-          await animationsMap['textOnActionTriggerAnimation4']!
+        await Future.delayed(const Duration(milliseconds: 4000));
+        if (animationsMap['textOnActionTriggerAnimation2'] != null) {
+          await animationsMap['textOnActionTriggerAnimation2']!
               .controller
               .forward(from: 0.0);
         }
@@ -166,19 +150,29 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
           _model.twentyNine = false;
           _model.thirtySeven = true;
         });
-        await Future.delayed(const Duration(milliseconds: 3000));
-        if (animationsMap['textOnActionTriggerAnimation5'] != null) {
-          await animationsMap['textOnActionTriggerAnimation5']!
+        await Future.delayed(const Duration(milliseconds: 4000));
+        if (animationsMap['textOnActionTriggerAnimation3'] != null) {
+          await animationsMap['textOnActionTriggerAnimation3']!
               .controller
               .forward(from: 0.0);
         }
         setState(() {
           _model.thirtySeven = false;
+          _model.fifty = true;
+        });
+        await Future.delayed(const Duration(milliseconds: 4000));
+        if (animationsMap['textOnActionTriggerAnimation4'] != null) {
+          await animationsMap['textOnActionTriggerAnimation4']!
+              .controller
+              .forward(from: 0.0);
+        }
+        setState(() {
+          _model.fifty = false;
           _model.sixtyFive = true;
         });
-        await Future.delayed(const Duration(milliseconds: 3000));
-        if (animationsMap['textOnActionTriggerAnimation6'] != null) {
-          await animationsMap['textOnActionTriggerAnimation6']!
+        await Future.delayed(const Duration(milliseconds: 4500));
+        if (animationsMap['textOnActionTriggerAnimation5'] != null) {
+          await animationsMap['textOnActionTriggerAnimation5']!
               .controller
               .forward(from: 0.0);
         }
@@ -186,9 +180,9 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
           _model.sixtyFive = false;
           _model.eightyThree = true;
         });
-        await Future.delayed(const Duration(milliseconds: 3000));
-        if (animationsMap['textOnActionTriggerAnimation7'] != null) {
-          await animationsMap['textOnActionTriggerAnimation7']!
+        await Future.delayed(const Duration(milliseconds: 4000));
+        if (animationsMap['textOnActionTriggerAnimation6'] != null) {
+          await animationsMap['textOnActionTriggerAnimation6']!
               .controller
               .forward(from: 0.0);
         }
@@ -197,17 +191,12 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
           _model.oneHundred = true;
         });
         _model.getPlaylist = await DatacenterAPIGroup.getPlaylistURLCall.call(
-          timestamp: getJsonField(
-            (_model.sendPhotoURLLoading?.jsonBody ?? ''),
-            r'''$.timestamp''',
+          timestamp: DatacenterAPIGroup.sendUploadedImageCopyCall.timestamp(
+            (_model.sendPhotoURL?.jsonBody ?? ''),
           ),
           userRef: currentUserReference?.id,
         );
         if ((_model.getPlaylist?.succeeded ?? true)) {
-          await launchURL(DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
-            (_model.getPlaylist?.jsonBody ?? ''),
-          )!);
-
           await SnaplistsRecord.collection.doc().set(createSnaplistsRecordData(
                 userRef: currentUserReference,
                 name: DatacenterAPIGroup.getPlaylistURLCall.name(
@@ -232,6 +221,13 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
             FFAppState().fileBase64 = '';
             FFAppState().playlistUrl = '';
           });
+          unawaited(
+            () async {
+              await launchURL(DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
+                (_model.getPlaylist?.jsonBody ?? ''),
+              )!);
+            }(),
+          );
 
           context.goNamed(
             'HomePage',
@@ -254,7 +250,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
 
           await FeedbackRecord.collection.doc().set(createFeedbackRecordData(
                 userRef: currentUserReference,
-                feedback: 'get_playlist fucked up ',
+                feedback: 'gt_playlist fucked up',
                 isBug: true,
               ));
 
@@ -284,7 +280,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
               isBug: true,
             ));
 
-        context.goNamed(
+        context.pushNamed(
           'fail',
           extra: <String, dynamic>{
             kTransitionInfoKey: const TransitionInfo(
@@ -370,6 +366,8 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                     return 0.83;
                                   } else if (_model.oneHundred == true) {
                                     return 1.0;
+                                  } else if (_model.fifty == true) {
+                                    return 0.5;
                                   } else {
                                     return 0.0;
                                   }
@@ -388,9 +386,11 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                   } else if (_model.sixtyFive == true) {
                                     return const Color(0xFF3DD1A9);
                                   } else if (_model.eightyThree == true) {
-                                    return const Color(0xFFEA42B3);
+                                    return const Color(0xFFF2E645);
                                   } else if (_model.oneHundred == true) {
                                     return const Color(0xFF41E7F6);
+                                  } else if (_model.fifty == true) {
+                                    return const Color(0xFFEA42B3);
                                   } else {
                                     return Colors.white;
                                   }
@@ -420,7 +420,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Feeling ',
+                                            'Analyzing Photo',
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
@@ -435,53 +435,6 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                                   'textOnActionTriggerAnimation1']!,
                                               hasBeenTriggered:
                                                   hasTextTriggered1),
-                                        ),
-                                      if (_model.ten == true)
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 20.0, 0.0, 0.0),
-                                          child: Text(
-                                            valueOrDefault<String>(
-                                              widget.mood,
-                                              '123',
-                                            ),
-                                            textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  color: Colors.white,
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                          ).animateOnActionTrigger(
-                                              animationsMap[
-                                                  'textOnActionTriggerAnimation2']!,
-                                              hasBeenTriggered:
-                                                  hasTextTriggered2),
-                                        ),
-                                      if (_model.ten == true)
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 20.0, 0.0, 0.0),
-                                          child: Text(
-                                            ', eh',
-                                            textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  color: Colors.white,
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                          ).animateOnActionTrigger(
-                                              animationsMap[
-                                                  'textOnActionTriggerAnimation3']!,
-                                              hasBeenTriggered:
-                                                  hasTextTriggered3),
                                         ),
                                     ],
                                   ),
@@ -506,7 +459,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                                 ),
                                           ).animateOnActionTrigger(
                                             animationsMap[
-                                                'textOnActionTriggerAnimation4']!,
+                                                'textOnActionTriggerAnimation2']!,
                                           ),
                                         ),
                                     ],
@@ -532,7 +485,33 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                                 ),
                                           ).animateOnActionTrigger(
                                             animationsMap[
-                                                'textOnActionTriggerAnimation5']!,
+                                                'textOnActionTriggerAnimation3']!,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      if (_model.fifty == true)
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 20.0, 0.0, 0.0),
+                                          child: Text(
+                                            'Searching Spotify for some tracks',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Readex Pro',
+                                                  color: Colors.white,
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                          ).animateOnActionTrigger(
+                                            animationsMap[
+                                                'textOnActionTriggerAnimation4']!,
                                           ),
                                         ),
                                     ],
@@ -558,7 +537,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                                 ),
                                           ).animateOnActionTrigger(
                                             animationsMap[
-                                                'textOnActionTriggerAnimation6']!,
+                                                'textOnActionTriggerAnimation5']!,
                                           ),
                                         ),
                                     ],
@@ -584,7 +563,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                                 ),
                                           ).animateOnActionTrigger(
                                             animationsMap[
-                                                'textOnActionTriggerAnimation7']!,
+                                                'textOnActionTriggerAnimation6']!,
                                           ),
                                         ),
                                     ],
