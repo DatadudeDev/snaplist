@@ -11,11 +11,11 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
-import 'devz_model.dart';
-export 'devz_model.dart';
+import 'devz_copy_model.dart';
+export 'devz_copy_model.dart';
 
-class DevzWidget extends StatefulWidget {
-  const DevzWidget({
+class DevzCopyWidget extends StatefulWidget {
+  const DevzCopyWidget({
     super.key,
     String? playlistUrl,
   }) : playlistUrl = playlistUrl ?? '123';
@@ -23,18 +23,18 @@ class DevzWidget extends StatefulWidget {
   final String playlistUrl;
 
   @override
-  State<DevzWidget> createState() => _DevzWidgetState();
+  State<DevzCopyWidget> createState() => _DevzCopyWidgetState();
 }
 
-class _DevzWidgetState extends State<DevzWidget> {
-  late DevzModel _model;
+class _DevzCopyWidgetState extends State<DevzCopyWidget> {
+  late DevzCopyModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => DevzModel());
+    _model = createModel(context, () => DevzCopyModel());
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -68,57 +68,6 @@ class _DevzWidgetState extends State<DevzWidget> {
                 ).toString().toString(),
                 userRef: currentUserReference,
               ));
-        }
-      } else {
-        _model.spotifyDocDev = await actions.getDocUsingFilter(
-          'userRef',
-          FFAppState().accessToken,
-          'spotify',
-        );
-        await querySpotifyRecordOnce(
-          queryBuilder: (spotifyRecord) => spotifyRecord.where(
-            'userRef',
-            isEqualTo: currentUserReference,
-          ),
-          singleRecord: true,
-        ).then((s) => s.firstOrNull);
-        _model.accessTokenResDev =
-            await SpotifyAccountAPIGroup.acqurireNewAccessTokenCall.call(
-          base64: functions.toBase64(
-              '677dd225a59040108d47d550c4e74cb4:521e2d39a8b04bab8fad584760b84d30'),
-          refreshToken: _model.spotifyDocDev?.refreshToken,
-        );
-        if ((_model.accessTokenResDev?.succeeded ?? true)) {
-          _model.tracks2 = await SpotifyMediaAPIGroup.getProfileCall.call(
-            accessToken:
-                SpotifyAccountAPIGroup.acqurireNewAccessTokenCall.accessToken(
-              (_model.accessTokenResDev?.jsonBody ?? ''),
-            ),
-          );
-          if ((_model.tracks2?.succeeded ?? true)) {
-            setState(() {
-              FFAppState().Playlists =
-                  (_model.tracks2?.jsonBody ?? '').toList().cast<dynamic>();
-            });
-            _model.lastPlayedTrack2 = await querySongsRecordOnce(
-              queryBuilder: (songsRecord) => songsRecord
-                  .where(
-                    'userRef',
-                    isEqualTo: currentUserReference,
-                  )
-                  .orderBy('playedTime', descending: true),
-              singleRecord: true,
-            ).then((s) => s.firstOrNull);
-            if (getCurrentTimestamp <= _model.lastPlayedTrack!.playedTime!) {
-              await SongsRecord.collection.doc().set(createSongsRecordData(
-                    title: getJsonField(
-                      (_model.tracks2?.jsonBody ?? ''),
-                      r'''$.items[0].track.name''',
-                    ).toString().toString(),
-                    userRef: currentUserReference,
-                  ));
-            }
-          }
         }
       }
     });
@@ -394,9 +343,9 @@ class _DevzWidgetState extends State<DevzWidget> {
                                 .call(
                           base64: functions.toBase64(
                               '677dd225a59040108d47d550c4e74cb4:521e2d39a8b04bab8fad584760b84d30'),
-                          refreshToken: _model.spotifyDocDev?.refreshToken,
+                          refreshToken: _model.spotifyDocDevCopy?.refreshToken,
                         );
-                        if ((_model.accessTokenResDev?.succeeded ?? true)) {
+                        if ((_model.accessTokenResDevCopy?.succeeded ?? true)) {
                           _model.playlists2 =
                               await SpotifyMediaAPIGroup.getProfileCall.call(
                             accessToken: FFAppState().accessToken,
@@ -404,7 +353,7 @@ class _DevzWidgetState extends State<DevzWidget> {
                           if ((_model.playlists2?.succeeded ?? true)) {
                             setState(() {
                               FFAppState().Playlists = getJsonField(
-                                (_model.tracks2?.jsonBody ?? ''),
+                                (_model.playlists2?.jsonBody ?? ''),
                                 r'''$.items''',
                                 true,
                               )!

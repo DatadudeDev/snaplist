@@ -35,12 +35,12 @@ class LoadingVoiceModel extends FlutterFlowModel<LoadingVoiceWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // Stores action output result for [Backend Call - API (Send Uploaded Image Copy)] action in loadingVoice widget.
-  ApiCallResponse? sendPhotoURL;
+  // Stores action output result for [Backend Call - API (Post Voice)] action in loadingVoice widget.
+  ApiCallResponse? sendVoice;
   // Stores action output result for [Backend Call - API (get Playlist URL)] action in loadingVoice widget.
   ApiCallResponse? getPlaylist;
-
-  /// Initialization and disposal methods.
+  // Stores action output result for [Backend Call - API (start Player)] action in loadingVoice widget.
+  ApiCallResponse? startPlayback;
 
   @override
   void initState(BuildContext context) {}
@@ -49,8 +49,4 @@ class LoadingVoiceModel extends FlutterFlowModel<LoadingVoiceWidget> {
   void dispose() {
     unfocusNode.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

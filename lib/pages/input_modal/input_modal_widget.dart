@@ -31,8 +31,6 @@ class _InputModalWidgetState extends State<InputModalWidget> {
 
     _model.textController2 ??= TextEditingController();
     _model.textFieldFocusNode2 ??= FocusNode();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -70,7 +68,10 @@ class _InputModalWidgetState extends State<InputModalWidget> {
                 padding: const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
                 child: Text(
                   'What are we jamming to? ',
-                  style: FlutterFlowTheme.of(context).bodyMedium,
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        fontFamily: 'Readex Pro',
+                        letterSpacing: 0.0,
+                      ),
                 ),
               ),
             ],
@@ -107,13 +108,20 @@ class _InputModalWidgetState extends State<InputModalWidget> {
                             Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      5.0, 5.0, 0.0, 0.0),
-                                  child: Text(
-                                    'Describe your Vibe: ',
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyMedium,
+                                Container(
+                                  decoration: const BoxDecoration(),
+                                  child: Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        5.0, 5.0, 0.0, 0.0),
+                                    child: Text(
+                                      'Describe your Vibe: ',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0.0,
+                                          ),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -122,68 +130,75 @@ class _InputModalWidgetState extends State<InputModalWidget> {
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        5.0, 5.0, 5.0, 5.0),
-                                    child: SizedBox(
-                                      width: double.infinity,
-                                      child: TextFormField(
-                                        controller: _model.textController1,
-                                        focusNode: _model.textFieldFocusNode1,
-                                        autofocus: true,
-                                        textCapitalization:
-                                            TextCapitalization.sentences,
-                                        textInputAction: TextInputAction.done,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          labelStyle: FlutterFlowTheme.of(
-                                                  context)
+                                  child: Container(
+                                    decoration: const BoxDecoration(),
+                                    child: Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          5.0, 5.0, 5.0, 5.0),
+                                      child: SizedBox(
+                                        width: double.infinity,
+                                        child: TextFormField(
+                                          controller: _model.textController1,
+                                          focusNode: _model.textFieldFocusNode1,
+                                          autofocus: true,
+                                          textCapitalization:
+                                              TextCapitalization.sentences,
+                                          textInputAction: TextInputAction.done,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            labelStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            alignLabelWithHint: true,
+                                            hintText:
+                                                'e.g. Summer day at the beach',
+                                            hintStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            enabledBorder: InputBorder.none,
+                                            focusedBorder: InputBorder.none,
+                                            errorBorder: InputBorder.none,
+                                            focusedErrorBorder:
+                                                InputBorder.none,
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Readex Pro',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
+                                                fontSize: 20.0,
+                                                letterSpacing: 0.0,
                                               ),
-                                          alignLabelWithHint: true,
-                                          hintText:
-                                              'e.g. Summer day at the beach',
-                                          hintStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Readex Pro',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                              ),
-                                          enabledBorder: InputBorder.none,
-                                          focusedBorder: InputBorder.none,
-                                          errorBorder: InputBorder.none,
-                                          focusedErrorBorder: InputBorder.none,
+                                          maxLength: 100,
+                                          maxLengthEnforcement:
+                                              MaxLengthEnforcement.enforced,
+                                          buildCounter: (context,
+                                                  {required currentLength,
+                                                  required isFocused,
+                                                  maxLength}) =>
+                                              null,
+                                          cursorColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primaryText,
+                                          validator: _model
+                                              .textController1Validator
+                                              .asValidator(context),
                                         ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Readex Pro',
-                                              fontSize: 20.0,
-                                            ),
-                                        maxLines: 10,
-                                        minLines: 1,
-                                        maxLength: 250,
-                                        maxLengthEnforcement:
-                                            MaxLengthEnforcement.enforced,
-                                        buildCounter: (context,
-                                                {required currentLength,
-                                                required isFocused,
-                                                maxLength}) =>
-                                            null,
-                                        cursorColor:
-                                            FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                        validator: _model
-                                            .textController1Validator
-                                            .asValidator(context),
                                       ),
                                     ),
                                   ),
@@ -196,13 +211,20 @@ class _InputModalWidgetState extends State<InputModalWidget> {
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        5.0, 0.0, 0.0, 0.0),
-                                    child: Text(
-                                      'Inspired by: ',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium,
+                                  Container(
+                                    decoration: const BoxDecoration(),
+                                    child: Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          5.0, 0.0, 0.0, 0.0),
+                                      child: Text(
+                                        'Inspired by: ',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -212,67 +234,75 @@ class _InputModalWidgetState extends State<InputModalWidget> {
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        5.0, 5.0, 5.0, 5.0),
-                                    child: SizedBox(
-                                      width: double.infinity,
-                                      child: TextFormField(
-                                        controller: _model.textController2,
-                                        focusNode: _model.textFieldFocusNode2,
-                                        autofocus: true,
-                                        textCapitalization:
-                                            TextCapitalization.sentences,
-                                        textInputAction: TextInputAction.done,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          labelStyle: FlutterFlowTheme.of(
-                                                  context)
+                                  child: Container(
+                                    decoration: const BoxDecoration(),
+                                    child: Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          5.0, 5.0, 5.0, 5.0),
+                                      child: SizedBox(
+                                        width: double.infinity,
+                                        child: TextFormField(
+                                          controller: _model.textController2,
+                                          focusNode: _model.textFieldFocusNode2,
+                                          autofocus: true,
+                                          textCapitalization:
+                                              TextCapitalization.sentences,
+                                          textInputAction: TextInputAction.done,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            labelStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            alignLabelWithHint: true,
+                                            hintText:
+                                                'e.g. Lady Gaga, Pink, etc',
+                                            hintStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            enabledBorder: InputBorder.none,
+                                            focusedBorder: InputBorder.none,
+                                            errorBorder: InputBorder.none,
+                                            focusedErrorBorder:
+                                                InputBorder.none,
+                                          ),
+                                          style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Readex Pro',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
+                                                fontSize: 20.0,
+                                                letterSpacing: 0.0,
                                               ),
-                                          alignLabelWithHint: true,
-                                          hintText: 'e.g. Lady Gaga, Pink, etc',
-                                          hintStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Readex Pro',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                              ),
-                                          enabledBorder: InputBorder.none,
-                                          focusedBorder: InputBorder.none,
-                                          errorBorder: InputBorder.none,
-                                          focusedErrorBorder: InputBorder.none,
+                                          maxLength: 250,
+                                          maxLengthEnforcement:
+                                              MaxLengthEnforcement.enforced,
+                                          buildCounter: (context,
+                                                  {required currentLength,
+                                                  required isFocused,
+                                                  maxLength}) =>
+                                              null,
+                                          cursorColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primaryText,
+                                          validator: _model
+                                              .textController2Validator
+                                              .asValidator(context),
                                         ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Readex Pro',
-                                              fontSize: 20.0,
-                                            ),
-                                        maxLines: 10,
-                                        minLines: 1,
-                                        maxLength: 250,
-                                        maxLengthEnforcement:
-                                            MaxLengthEnforcement.enforced,
-                                        buildCounter: (context,
-                                                {required currentLength,
-                                                required isFocused,
-                                                maxLength}) =>
-                                            null,
-                                        cursorColor:
-                                            FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                        validator: _model
-                                            .textController2Validator
-                                            .asValidator(context),
                                       ),
                                     ),
                                   ),
@@ -302,32 +332,49 @@ class _InputModalWidgetState extends State<InputModalWidget> {
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
-                      if ((_model.textController1.text == '') &&
-                          (_model.textController2.text != '')) {
-                        return;
+                      if (_model.textController1.text != '') {
+                        if (_model.textController2.text != '') {
+                          context.goNamed(
+                            'loadingInput',
+                            queryParameters: {
+                              'input': serializeParam(
+                                '${_model.textController1.text}| Inspired by: ${_model.textController2.text}',
+                                ParamType.String,
+                              ),
+                            }.withoutNulls,
+                          );
+
+                          Navigator.pop(context);
+                        } else {
+                          context.goNamed(
+                            'loadingInput',
+                            queryParameters: {
+                              'input': serializeParam(
+                                _model.textController1.text,
+                                ParamType.String,
+                              ),
+                            }.withoutNulls,
+                          );
+
+                          Navigator.pop(context);
+                        }
+                      } else {
+                        if (_model.textController2.text != '') {
+                          context.goNamed(
+                            'loadingInput',
+                            queryParameters: {
+                              'input': serializeParam(
+                                'Inspired by artists: ${_model.textController2.text}',
+                                ParamType.String,
+                              ),
+                            }.withoutNulls,
+                          );
+
+                          Navigator.pop(context);
+                        } else {
+                          return;
+                        }
                       }
-
-                      context.goNamed(
-                        'loadingInput',
-                        queryParameters: {
-                          'input': serializeParam(
-                            () {
-                              if ((_model.textController1.text != '') &&
-                                  (_model.textController2.text != '')) {
-                                return 'Playlist Description: ${_model.textController1.text}Inspired by: ${_model.textController2.text}';
-                              } else if ((_model.textController1.text == '') &&
-                                  (_model.textController2.text != '')) {
-                                return 'Playlist Description: ${_model.textController1.text}';
-                              } else {
-                                return 'Generate a playlist Inspired by these artists: ${_model.textController2.text}';
-                              }
-                            }(),
-                            ParamType.String,
-                          ),
-                        }.withoutNulls,
-                      );
-
-                      Navigator.pop(context);
                     },
                     child: Icon(
                       Icons.send_rounded,

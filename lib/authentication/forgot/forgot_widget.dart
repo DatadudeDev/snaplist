@@ -25,8 +25,6 @@ class _ForgotWidgetState extends State<ForgotWidget> {
 
     _model.emailAddressController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -68,7 +66,10 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                     ),
                     Text(
                       'Back',
-                      style: FlutterFlowTheme.of(context).bodyMedium,
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Readex Pro',
+                            letterSpacing: 0.0,
+                          ),
                     ),
                   ],
                 ),
@@ -121,7 +122,12 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                                   12.0, 0.0, 0.0, 0.0),
                               child: Text(
                                 'Back',
-                                style: FlutterFlowTheme.of(context).bodyMedium,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      letterSpacing: 0.0,
+                                    ),
                               ),
                             ),
                           ],
@@ -133,7 +139,11 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                         const EdgeInsetsDirectional.fromSTEB(16.0, 10.0, 0.0, 0.0),
                     child: Text(
                       'Forgot Password',
-                      style: FlutterFlowTheme.of(context).headlineMedium,
+                      style:
+                          FlutterFlowTheme.of(context).headlineMedium.override(
+                                fontFamily: 'Outfit',
+                                letterSpacing: 0.0,
+                              ),
                     ),
                   ),
                   Padding(
@@ -141,7 +151,10 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                         const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 4.0),
                     child: Text(
                       'We will send you an email with a link to reset your password, please enter the email associated with your account below.',
-                      style: FlutterFlowTheme.of(context).labelMedium,
+                      style: FlutterFlowTheme.of(context).labelMedium.override(
+                            fontFamily: 'Readex Pro',
+                            letterSpacing: 0.0,
+                          ),
                     ),
                   ),
                   Padding(
@@ -156,9 +169,17 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                         obscureText: false,
                         decoration: InputDecoration(
                           labelText: 'Your email address...',
-                          labelStyle: FlutterFlowTheme.of(context).labelMedium,
+                          labelStyle:
+                              FlutterFlowTheme.of(context).labelMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
                           hintText: 'Enter your email...',
-                          hintStyle: FlutterFlowTheme.of(context).labelMedium,
+                          hintStyle:
+                              FlutterFlowTheme.of(context).labelMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: FlutterFlowTheme.of(context).alternate,
@@ -193,8 +214,12 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                           contentPadding: const EdgeInsetsDirectional.fromSTEB(
                               24.0, 24.0, 20.0, 24.0),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyMedium,
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
                         maxLines: null,
+                        minLines: null,
                         keyboardType: TextInputType.emailAddress,
                         cursorColor: FlutterFlowTheme.of(context).primary,
                         validator: _model.emailAddressControllerValidator
@@ -239,7 +264,11 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                           iconPadding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: FlutterFlowTheme.of(context).primary,
-                          textStyle: FlutterFlowTheme.of(context).titleSmall,
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
                           elevation: 3.0,
                           borderSide: const BorderSide(
                             color: Colors.transparent,

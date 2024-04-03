@@ -16,7 +16,8 @@ class SpotifyAccountAPIGroup {
   };
   static AccessRefreshTokenCall accessRefreshTokenCall =
       AccessRefreshTokenCall();
-  static AccessTokenCall accessTokenCall = AccessTokenCall();
+  static AcqurireNewAccessTokenCall acqurireNewAccessTokenCall =
+      AcqurireNewAccessTokenCall();
 }
 
 class AccessRefreshTokenCall {
@@ -57,13 +58,13 @@ class AccessRefreshTokenCall {
       );
 }
 
-class AccessTokenCall {
+class AcqurireNewAccessTokenCall {
   Future<ApiCallResponse> call({
     String? refreshToken = '',
     String? base64 = '',
   }) async {
     return ApiManager.instance.makeApiCall(
-      callName: 'Access Token',
+      callName: 'Acqurire New Access Token',
       apiUrl: '${SpotifyAccountAPIGroup.baseUrl}api/token',
       callType: ApiCallType.POST,
       headers: {
@@ -98,9 +99,13 @@ class SpotifyMediaAPIGroup {
   static Map<String, String> headers = {};
   static RecentlyPlayedTracksCall recentlyPlayedTracksCall =
       RecentlyPlayedTracksCall();
-  static GetPlaylistsCall getPlaylistsCall = GetPlaylistsCall();
+  static GetPlaylistCall getPlaylistCall = GetPlaylistCall();
   static GetProfileCall getProfileCall = GetProfileCall();
   static GetPlaylistImagesCall getPlaylistImagesCall = GetPlaylistImagesCall();
+  static GetDeviceIDCall getDeviceIDCall = GetDeviceIDCall();
+  static StartPlayerCall startPlayerCall = StartPlayerCall();
+  static ResumeMusicCall resumeMusicCall = ResumeMusicCall();
+  static PauseMusicCall pauseMusicCall = PauseMusicCall();
 }
 
 class RecentlyPlayedTracksCall {
@@ -124,12 +129,12 @@ class RecentlyPlayedTracksCall {
   }
 }
 
-class GetPlaylistsCall {
+class GetPlaylistCall {
   Future<ApiCallResponse> call({
     String? accessToken = '',
   }) async {
     return ApiManager.instance.makeApiCall(
-      callName: 'Get Playlists',
+      callName: 'Get Playlist',
       apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/me/playlists',
       callType: ApiCallType.GET,
       headers: {
@@ -200,6 +205,160 @@ class GetPlaylistImagesCall {
   }
 }
 
+class GetDeviceIDCall {
+  Future<ApiCallResponse> call({
+    String? accessToken = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'get Device ID',
+      apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/me/player/devices',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List<String>? deviceID(dynamic response) => (getJsonField(
+        response,
+        r'''$.devices[:].id''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  List<bool>? isActive(dynamic response) => (getJsonField(
+        response,
+        r'''$.devices[:].is_active''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<bool>(x))
+          .withoutNulls
+          .toList();
+  List<String>? deviceType(dynamic response) => (getJsonField(
+        response,
+        r'''$.devices[:].type''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  List<int>? volumePercent(dynamic response) => (getJsonField(
+        response,
+        r'''$.devices[:].volume_percent''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<int>(x))
+          .withoutNulls
+          .toList();
+  List<String>? deviceName(dynamic response) => (getJsonField(
+        response,
+        r'''$.devices[:].name''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  List<bool>? volumeAdjustable(dynamic response) => (getJsonField(
+        response,
+        r'''$.devices[:].supports_volume''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<bool>(x))
+          .withoutNulls
+          .toList();
+  List? devices(dynamic response) => getJsonField(
+        response,
+        r'''$.devices''',
+        true,
+      ) as List?;
+}
+
+class StartPlayerCall {
+  Future<ApiCallResponse> call({
+    String? accessToken = '',
+    String? contextUri = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "context_uri": "$contextUri"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'start Player',
+      apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/me/player/play',
+      callType: ApiCallType.PUT,
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+        'Content-Type': 'application/json',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ResumeMusicCall {
+  Future<ApiCallResponse> call({
+    String? accessToken = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Resume Music',
+      apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/me/player/play',
+      callType: ApiCallType.PUT,
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+      params: {},
+      bodyType: BodyType.NONE,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class PauseMusicCall {
+  Future<ApiCallResponse> call({
+    String? accessToken = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'Pause Music',
+      apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/me/player/pause',
+      callType: ApiCallType.PUT,
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+      params: {},
+      bodyType: BodyType.NONE,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
 /// End Spotify Media API Group Code
 
 /// Start Datacenter API Group Code
@@ -211,6 +370,8 @@ class DatacenterAPIGroup {
   static SendUploadedImageCopyCall sendUploadedImageCopyCall =
       SendUploadedImageCopyCall();
   static GetPlaylistURLCall getPlaylistURLCall = GetPlaylistURLCall();
+  static GetPlaylistURLInputCall getPlaylistURLInputCall =
+      GetPlaylistURLInputCall();
   static GetMoodsCall getMoodsCall = GetMoodsCall();
   static PostMoodCall postMoodCall = PostMoodCall();
   static PostInputCall postInputCall = PostInputCall();
@@ -333,6 +494,68 @@ class GetPlaylistURLCall {
         response,
         r'''$.id''',
       ));
+  String? contextUri(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.context_uri''',
+      ));
+}
+
+class GetPlaylistURLInputCall {
+  Future<ApiCallResponse> call({
+    String? userRef = '',
+    int? timestamp,
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'get Playlist URL Input',
+      apiUrl: '${DatacenterAPIGroup.baseUrl}/v1/get_playlist_input',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-type': 'application/json',
+      },
+      params: {
+        'userRef': userRef,
+        'timestamp': timestamp,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? playlistUrl(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.url''',
+      ));
+  String? description(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.description''',
+      ));
+  String? imageUrl(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.image_url''',
+      ));
+  String? name(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.name''',
+      ));
+  String? userRef(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.userRef''',
+      ));
+  String? id(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.id''',
+      ));
+  String? imageBase64(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].image_base64''',
+      ));
+  dynamic contextUri(dynamic response) => getJsonField(
+        response,
+        r'''$.context_uri''',
+      );
 }
 
 class GetMoodsCall {
@@ -472,6 +695,11 @@ class PostVoiceCall {
       alwaysAllowBody: false,
     );
   }
+
+  int? timestamp(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.timestamp''',
+      ));
 }
 
 /// End Datacenter API Group Code

@@ -4,6 +4,7 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -204,10 +205,6 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
           userRef: currentUserReference?.id,
         );
         if ((_model.getPlaylist?.succeeded ?? true)) {
-          await launchURL(DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
-            (_model.getPlaylist?.jsonBody ?? ''),
-          )!);
-
           await SnaplistsRecord.collection.doc().set(createSnaplistsRecordData(
                 userRef: currentUserReference,
                 name: DatacenterAPIGroup.getPlaylistURLCall.name(
@@ -227,27 +224,42 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                   (_model.getPlaylist?.jsonBody ?? ''),
                 ),
               ));
-          setState(() {
-            FFAppState().makePhoto = false;
-            FFAppState().fileBase64 = '';
-            FFAppState().playlistUrl = '';
-          });
-
-          context.goNamed(
-            'HomePage',
-            extra: <String, dynamic>{
-              kTransitionInfoKey: const TransitionInfo(
-                hasTransition: true,
-                transitionType: PageTransitionType.fade,
-                duration: Duration(milliseconds: 0),
-              ),
-            },
+          _model.startPlayback =
+              await SpotifyMediaAPIGroup.startPlayerCall.call(
+            accessToken: FFAppState().accessToken,
+            contextUri: DatacenterAPIGroup.getPlaylistURLCall.contextUri(
+              (_model.getPlaylist?.jsonBody ?? ''),
+            ),
           );
+          if ((_model.startPlayback?.succeeded ?? true)) {
+            unawaited(
+              () async {
+                await launchURL(
+                    DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
+                  (_model.getPlaylist?.jsonBody ?? ''),
+                )!);
+              }(),
+            );
 
-          return;
+            context.goNamed('HomePage');
+
+            return;
+          } else {
+            unawaited(
+              () async {
+                await launchURL(
+                    DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
+                  (_model.getPlaylist?.jsonBody ?? ''),
+                )!);
+              }(),
+            );
+
+            context.goNamed('HomePage');
+
+            return;
+          }
         } else {
           setState(() {
-            FFAppState().makePhoto = false;
             FFAppState().fileBase64 = '';
             FFAppState().playlistUrl = '';
           });
@@ -260,6 +272,12 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
 
           context.goNamed(
             'fail',
+            queryParameters: {
+              'failReason': serializeParam(
+                '',
+                ParamType.String,
+              ),
+            }.withoutNulls,
             extra: <String, dynamic>{
               kTransitionInfoKey: const TransitionInfo(
                 hasTransition: true,
@@ -286,6 +304,12 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
 
         context.goNamed(
           'fail',
+          queryParameters: {
+            'failReason': serializeParam(
+              '',
+              ParamType.String,
+            ),
+          }.withoutNulls,
           extra: <String, dynamic>{
             kTransitionInfoKey: const TransitionInfo(
               hasTransition: true,
@@ -305,8 +329,6 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
           !anim.applyInitialState),
       this,
     );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -428,6 +450,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -453,6 +476,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -475,6 +499,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -495,13 +520,14 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Thinking about some music I like ',
+                                            'oooh this one\'s bumpin\'',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -528,6 +554,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -554,6 +581,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -580,6 +608,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -606,6 +635,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ),

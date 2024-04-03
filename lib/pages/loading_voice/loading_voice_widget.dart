@@ -122,13 +122,12 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
       setState(() {
         _model.ten = true;
       });
-      _model.sendPhotoURL =
-          await DatacenterAPIGroup.sendUploadedImageCopyCall.call(
-        imageUrl: widget.url,
+      _model.sendVoice = await DatacenterAPIGroup.postVoiceCall.call(
         userRef: currentUserReference?.id,
+        voice: widget.url,
       );
-      if ((_model.sendPhotoURL?.succeeded ?? true)) {
-        await Future.delayed(const Duration(milliseconds: 4000));
+      if ((_model.sendVoice?.succeeded ?? true)) {
+        await Future.delayed(const Duration(milliseconds: 3500));
         if (animationsMap['textOnActionTriggerAnimation1'] != null) {
           setState(() => hasTextTriggered1 = true);
           SchedulerBinding.instance.addPostFrameCallback((_) async =>
@@ -140,7 +139,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
           _model.ten = false;
           _model.twentyNine = true;
         });
-        await Future.delayed(const Duration(milliseconds: 4000));
+        await Future.delayed(const Duration(milliseconds: 3500));
         if (animationsMap['textOnActionTriggerAnimation2'] != null) {
           await animationsMap['textOnActionTriggerAnimation2']!
               .controller
@@ -150,7 +149,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
           _model.twentyNine = false;
           _model.thirtySeven = true;
         });
-        await Future.delayed(const Duration(milliseconds: 4000));
+        await Future.delayed(const Duration(milliseconds: 3500));
         if (animationsMap['textOnActionTriggerAnimation3'] != null) {
           await animationsMap['textOnActionTriggerAnimation3']!
               .controller
@@ -160,7 +159,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
           _model.thirtySeven = false;
           _model.fifty = true;
         });
-        await Future.delayed(const Duration(milliseconds: 4000));
+        await Future.delayed(const Duration(milliseconds: 3500));
         if (animationsMap['textOnActionTriggerAnimation4'] != null) {
           await animationsMap['textOnActionTriggerAnimation4']!
               .controller
@@ -170,7 +169,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
           _model.fifty = false;
           _model.sixtyFive = true;
         });
-        await Future.delayed(const Duration(milliseconds: 4500));
+        await Future.delayed(const Duration(milliseconds: 4000));
         if (animationsMap['textOnActionTriggerAnimation5'] != null) {
           await animationsMap['textOnActionTriggerAnimation5']!
               .controller
@@ -180,7 +179,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
           _model.sixtyFive = false;
           _model.eightyThree = true;
         });
-        await Future.delayed(const Duration(milliseconds: 4000));
+        await Future.delayed(const Duration(milliseconds: 3500));
         if (animationsMap['textOnActionTriggerAnimation6'] != null) {
           await animationsMap['textOnActionTriggerAnimation6']!
               .controller
@@ -191,8 +190,8 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
           _model.oneHundred = true;
         });
         _model.getPlaylist = await DatacenterAPIGroup.getPlaylistURLCall.call(
-          timestamp: DatacenterAPIGroup.sendUploadedImageCopyCall.timestamp(
-            (_model.sendPhotoURL?.jsonBody ?? ''),
+          timestamp: DatacenterAPIGroup.postVoiceCall.timestamp(
+            (_model.sendVoice?.jsonBody ?? ''),
           ),
           userRef: currentUserReference?.id,
         );
@@ -216,11 +215,6 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                   (_model.getPlaylist?.jsonBody ?? ''),
                 ),
               ));
-          setState(() {
-            FFAppState().makePhoto = false;
-            FFAppState().fileBase64 = '';
-            FFAppState().playlistUrl = '';
-          });
           unawaited(
             () async {
               await launchURL(DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
@@ -228,17 +222,15 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
               )!);
             }(),
           );
-
-          context.goNamed(
-            'HomePage',
-            extra: <String, dynamic>{
-              kTransitionInfoKey: const TransitionInfo(
-                hasTransition: true,
-                transitionType: PageTransitionType.fade,
-                duration: Duration(milliseconds: 0),
-              ),
-            },
+          _model.startPlayback =
+              await SpotifyMediaAPIGroup.startPlayerCall.call(
+            accessToken: FFAppState().accessToken,
+            contextUri: DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
+              (_model.getPlaylist?.jsonBody ?? ''),
+            ),
           );
+
+          context.goNamed('HomePage');
 
           return;
         } else {
@@ -256,6 +248,12 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
 
           context.goNamed(
             'fail',
+            queryParameters: {
+              'failReason': serializeParam(
+                '',
+                ParamType.String,
+              ),
+            }.withoutNulls,
             extra: <String, dynamic>{
               kTransitionInfoKey: const TransitionInfo(
                 hasTransition: true,
@@ -282,6 +280,12 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
 
         context.pushNamed(
           'fail',
+          queryParameters: {
+            'failReason': serializeParam(
+              '',
+              ParamType.String,
+            ),
+          }.withoutNulls,
           extra: <String, dynamic>{
             kTransitionInfoKey: const TransitionInfo(
               hasTransition: true,
@@ -301,8 +305,6 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
           !anim.applyInitialState),
       this,
     );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -420,7 +422,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Analyzing Photo',
+                                            'Listening...',
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
@@ -428,6 +430,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -448,13 +451,14 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Thinking about some music I like ',
+                                            'mmmkay I think I\'ve got something...',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -481,6 +485,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -507,6 +512,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -533,6 +539,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -559,6 +566,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -585,6 +593,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ),
@@ -600,6 +609,23 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                     ),
                   ),
                 ),
+                if (_model.twentyNine == true)
+                  Align(
+                    alignment: const AlignmentDirectional(1.0, 1.0),
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 50.0, 0.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Image.asset(
+                          'assets/images/Mackey_(1).jpg',
+                          width: 60.0,
+                          height: 60.0,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),

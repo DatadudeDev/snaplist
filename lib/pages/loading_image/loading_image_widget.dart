@@ -10,11 +10,11 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'loading_model.dart';
-export 'loading_model.dart';
+import 'loading_image_model.dart';
+export 'loading_image_model.dart';
 
-class LoadingWidget extends StatefulWidget {
-  const LoadingWidget({
+class LoadingImageWidget extends StatefulWidget {
+  const LoadingImageWidget({
     super.key,
     required this.imageUrl,
   });
@@ -22,12 +22,12 @@ class LoadingWidget extends StatefulWidget {
   final String? imageUrl;
 
   @override
-  State<LoadingWidget> createState() => _LoadingWidgetState();
+  State<LoadingImageWidget> createState() => _LoadingImageWidgetState();
 }
 
-class _LoadingWidgetState extends State<LoadingWidget>
+class _LoadingImageWidgetState extends State<LoadingImageWidget>
     with TickerProviderStateMixin {
-  late LoadingModel _model;
+  late LoadingImageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   var hasTextTriggered1 = false;
@@ -115,23 +115,111 @@ class _LoadingWidgetState extends State<LoadingWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => LoadingModel());
+    _model = createModel(context, () => LoadingImageModel());
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await Future.wait([
-        Future(() async {
-          setState(() {
-            _model.ten = true;
-          });
-        }),
-        Future(() async {
-          _model.sendPhotoURL =
-              await DatacenterAPIGroup.sendUploadedImageCopyCall.call(
-            imageUrl: widget.imageUrl,
-            userRef: currentUserReference?.id,
-          );
-          if ((_model.sendPhotoURL?.succeeded ?? true)) {
+      setState(() {
+        _model.ten = true;
+      });
+      _model.sendPhotoURL =
+          await DatacenterAPIGroup.sendUploadedImageCopyCall.call(
+        imageUrl: widget.imageUrl,
+        userRef: currentUserReference?.id,
+      );
+      if ((_model.sendPhotoURL?.succeeded ?? true)) {
+        await Future.wait([
+          Future(() async {
+            await Future.delayed(const Duration(milliseconds: 24500));
+            _model.getPlaylist =
+                await DatacenterAPIGroup.getPlaylistURLCall.call(
+              timestamp: DatacenterAPIGroup.sendUploadedImageCopyCall.timestamp(
+                (_model.sendPhotoURL?.jsonBody ?? ''),
+              ),
+              userRef: currentUserReference?.id,
+            );
+            if ((_model.getPlaylist?.succeeded ?? true)) {
+              await SnaplistsRecord.collection
+                  .doc()
+                  .set(createSnaplistsRecordData(
+                    userRef: currentUserReference,
+                    name: DatacenterAPIGroup.getPlaylistURLCall.name(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                    description:
+                        DatacenterAPIGroup.getPlaylistURLCall.description(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                    imageUrl: DatacenterAPIGroup.getPlaylistURLCall.imageUrl(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                    createdTime: getCurrentTimestamp,
+                    url: DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                    id: DatacenterAPIGroup.getPlaylistURLCall.id(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                  ));
+              _model.startPlayback =
+                  await SpotifyMediaAPIGroup.startPlayerCall.call(
+                accessToken: FFAppState().accessToken,
+                contextUri: DatacenterAPIGroup.getPlaylistURLCall.contextUri(
+                  (_model.getPlaylist?.jsonBody ?? ''),
+                ),
+              );
+              if ((_model.startPlayback?.succeeded ?? true)) {
+                unawaited(
+                  () async {
+                    await launchURL(
+                        DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    )!);
+                  }(),
+                );
+
+                context.goNamed('HomePage');
+
+                return;
+              } else {
+                unawaited(
+                  () async {
+                    await launchURL(
+                        DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    )!);
+                  }(),
+                );
+                return;
+              }
+            } else {
+              setState(() {
+                FFAppState().makePhoto = false;
+                FFAppState().fileBase64 = '';
+                FFAppState().playlistUrl = '';
+              });
+
+              context.goNamed(
+                'fail',
+                queryParameters: {
+                  'failReason': serializeParam(
+                    'get_playlist API failed',
+                    ParamType.String,
+                  ),
+                }.withoutNulls,
+                extra: <String, dynamic>{
+                  kTransitionInfoKey: const TransitionInfo(
+                    hasTransition: true,
+                    transitionType: PageTransitionType.fade,
+                    duration: Duration(milliseconds: 0),
+                  ),
+                },
+              );
+
+              return;
+            }
+          }),
+          Future(() async {
             await Future.delayed(const Duration(milliseconds: 4000));
             if (animationsMap['textOnActionTriggerAnimation1'] != null) {
               setState(() => hasTextTriggered1 = true);
@@ -194,118 +282,41 @@ class _LoadingWidgetState extends State<LoadingWidget>
               _model.eightyThree = false;
               _model.oneHundred = true;
             });
-            _model.getPlaylist =
-                await DatacenterAPIGroup.getPlaylistURLCall.call(
-              timestamp: DatacenterAPIGroup.sendUploadedImageCopyCall.timestamp(
-                (_model.sendPhotoURL?.jsonBody ?? ''),
-              ),
-              userRef: currentUserReference?.id,
-            );
-            if ((_model.getPlaylist?.succeeded ?? true)) {
-              await SnaplistsRecord.collection
-                  .doc()
-                  .set(createSnaplistsRecordData(
-                    userRef: currentUserReference,
-                    name: DatacenterAPIGroup.getPlaylistURLCall.name(
-                      (_model.getPlaylist?.jsonBody ?? ''),
-                    ),
-                    description:
-                        DatacenterAPIGroup.getPlaylistURLCall.description(
-                      (_model.getPlaylist?.jsonBody ?? ''),
-                    ),
-                    imageUrl: DatacenterAPIGroup.getPlaylistURLCall.imageUrl(
-                      (_model.getPlaylist?.jsonBody ?? ''),
-                    ),
-                    createdTime: getCurrentTimestamp,
-                    url: DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
-                      (_model.getPlaylist?.jsonBody ?? ''),
-                    ),
-                    id: DatacenterAPIGroup.getPlaylistURLCall.id(
-                      (_model.getPlaylist?.jsonBody ?? ''),
-                    ),
-                  ));
-              setState(() {
-                FFAppState().makePhoto = false;
-                FFAppState().fileBase64 = '';
-                FFAppState().playlistUrl = '';
-              });
-              unawaited(
-                () async {
-                  await launchURL(
-                      DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
-                    (_model.getPlaylist?.jsonBody ?? ''),
-                  )!);
-                }(),
-              );
-
-              context.goNamed(
-                'HomePage',
-                extra: <String, dynamic>{
-                  kTransitionInfoKey: const TransitionInfo(
-                    hasTransition: true,
-                    transitionType: PageTransitionType.fade,
-                    duration: Duration(milliseconds: 0),
-                  ),
-                },
-              );
-
-              return;
-            } else {
-              setState(() {
-                FFAppState().makePhoto = false;
-                FFAppState().fileBase64 = '';
-                FFAppState().playlistUrl = '';
-              });
-
-              await FeedbackRecord.collection
-                  .doc()
-                  .set(createFeedbackRecordData(
-                    userRef: currentUserReference,
-                    feedback: 'gt_playlist fucked up',
-                    isBug: true,
-                  ));
-
-              context.goNamed(
-                'fail',
-                extra: <String, dynamic>{
-                  kTransitionInfoKey: const TransitionInfo(
-                    hasTransition: true,
-                    transitionType: PageTransitionType.fade,
-                    duration: Duration(milliseconds: 0),
-                  ),
-                },
-              );
-
-              return;
-            }
-          } else {
-            setState(() {
-              FFAppState().makePhoto = false;
-              FFAppState().fileBase64 = '';
-              FFAppState().playlistUrl = '';
-            });
-
-            await FeedbackRecord.collection.doc().set(createFeedbackRecordData(
-                  userRef: currentUserReference,
-                  feedback: 'post_image fucked up ',
-                  isBug: true,
-                ));
-
-            context.pushNamed(
-              'fail',
-              extra: <String, dynamic>{
-                kTransitionInfoKey: const TransitionInfo(
-                  hasTransition: true,
-                  transitionType: PageTransitionType.fade,
-                  duration: Duration(milliseconds: 0),
-                ),
-              },
-            );
-
             return;
-          }
-        }),
-      ]);
+          }),
+        ]);
+      } else {
+        setState(() {
+          FFAppState().makePhoto = false;
+          FFAppState().fileBase64 = '';
+          FFAppState().playlistUrl = '';
+        });
+
+        await FeedbackRecord.collection.doc().set(createFeedbackRecordData(
+              userRef: currentUserReference,
+              feedback: 'post_image fucked up ',
+              isBug: true,
+            ));
+
+        context.pushNamed(
+          'fail',
+          queryParameters: {
+            'failReason': serializeParam(
+              'post_image API failed',
+              ParamType.String,
+            ),
+          }.withoutNulls,
+          extra: <String, dynamic>{
+            kTransitionInfoKey: const TransitionInfo(
+              hasTransition: true,
+              transitionType: PageTransitionType.fade,
+              duration: Duration(milliseconds: 0),
+            ),
+          },
+        );
+
+        return;
+      }
     });
 
     setupAnimations(
@@ -314,8 +325,6 @@ class _LoadingWidgetState extends State<LoadingWidget>
           !anim.applyInitialState),
       this,
     );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -441,6 +450,7 @@ class _LoadingWidgetState extends State<LoadingWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -461,13 +471,14 @@ class _LoadingWidgetState extends State<LoadingWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Thinking about some music I like ',
+                                            'Thinking about some music you\'ll like ',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -494,6 +505,7 @@ class _LoadingWidgetState extends State<LoadingWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -520,6 +532,7 @@ class _LoadingWidgetState extends State<LoadingWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -546,6 +559,7 @@ class _LoadingWidgetState extends State<LoadingWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -572,6 +586,7 @@ class _LoadingWidgetState extends State<LoadingWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -598,6 +613,7 @@ class _LoadingWidgetState extends State<LoadingWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ),

@@ -30,10 +30,16 @@ class AuthRecord extends FirestoreRecord {
   String get accessToken => _accessToken ?? '';
   bool hasAccessToken() => _accessToken != null;
 
+  // "timeCreated" field.
+  DateTime? _timeCreated;
+  DateTime? get timeCreated => _timeCreated;
+  bool hasTimeCreated() => _timeCreated != null;
+
   void _initializeFields() {
     _user = snapshotData['user'] as DocumentReference?;
     _refreshToken = snapshotData['refresh_token'] as String?;
     _accessToken = snapshotData['access_token'] as String?;
+    _timeCreated = snapshotData['timeCreated'] as DateTime?;
   }
 
   static CollectionReference get collection =>
@@ -73,12 +79,14 @@ Map<String, dynamic> createAuthRecordData({
   DocumentReference? user,
   String? refreshToken,
   String? accessToken,
+  DateTime? timeCreated,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'user': user,
       'refresh_token': refreshToken,
       'access_token': accessToken,
+      'timeCreated': timeCreated,
     }.withoutNulls,
   );
 
@@ -92,12 +100,13 @@ class AuthRecordDocumentEquality implements Equality<AuthRecord> {
   bool equals(AuthRecord? e1, AuthRecord? e2) {
     return e1?.user == e2?.user &&
         e1?.refreshToken == e2?.refreshToken &&
-        e1?.accessToken == e2?.accessToken;
+        e1?.accessToken == e2?.accessToken &&
+        e1?.timeCreated == e2?.timeCreated;
   }
 
   @override
-  int hash(AuthRecord? e) =>
-      const ListEquality().hash([e?.user, e?.refreshToken, e?.accessToken]);
+  int hash(AuthRecord? e) => const ListEquality()
+      .hash([e?.user, e?.refreshToken, e?.accessToken, e?.timeCreated]);
 
   @override
   bool isValidKey(Object? o) => o is AuthRecord;

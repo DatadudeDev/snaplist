@@ -26,26 +26,26 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
 
   bool isLeftHanded = false;
 
+  bool isPaused = false;
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
   // Stores action output result for [Backend Call - API (get Moods)] action in HomePage widget.
   ApiCallResponse? getMoods;
-  // Stores action output result for [Backend Call - API (Get Playlists)] action in HomePage widget.
-  ApiCallResponse? getPlaylists;
-  // Stores action output result for [Custom Action - getDocUsingFilter] action in HomePage widget.
-  SpotifyRecord? spotifyDocDev;
-  // Stores action output result for [Backend Call - API (Access Token)] action in HomePage widget.
-  ApiCallResponse? accessTokenResDev;
-  // Stores action output result for [Backend Call - API (Get Playlists)] action in HomePage widget.
-  ApiCallResponse? getPlaylist2;
+  // Stores action output result for [Backend Call - API (Acqurire New Access Token)] action in HomePage widget.
+  ApiCallResponse? refreshAccessToken1;
   // Stores action output result for [Firestore Query - Query a collection] action in HomePage widget.
-  SongsRecord? lastPlayedTrack2;
+  AuthRecord? getRefreshTokenFromFirebase;
+  // Stores action output result for [Backend Call - API (Acqurire New Access Token)] action in HomePage widget.
+  ApiCallResponse? refreshAccessToken2;
   // State field(s) for Carousel widget.
   CarouselController? carouselController;
 
   int carouselCurrentIndex = 2;
 
+  // Stores action output result for [Backend Call - API (Pause Music)] action in IconButton widget.
+  ApiCallResponse? pauseMusic;
   bool isDataUploading1 = false;
   FFUploadedFile uploadedLocalFile1 =
       FFUploadedFile(bytes: Uint8List.fromList([]));
@@ -61,8 +61,6 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   int get tabBarCurrentIndex =>
       tabBarController != null ? tabBarController!.index : 0;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
@@ -71,8 +69,4 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
     unfocusNode.dispose();
     tabBarController?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

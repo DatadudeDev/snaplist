@@ -6,7 +6,16 @@ import 'fail_model.dart';
 export 'fail_model.dart';
 
 class FailWidget extends StatefulWidget {
-  const FailWidget({super.key});
+  const FailWidget({
+    super.key,
+    required this.failReason,
+    this.contextUri,
+    this.raw,
+  });
+
+  final String? failReason;
+  final String? contextUri;
+  final String? raw;
 
   @override
   State<FailWidget> createState() => _FailWidgetState();
@@ -21,8 +30,6 @@ class _FailWidgetState extends State<FailWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => FailModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -75,13 +82,70 @@ class _FailWidgetState extends State<FailWidget> {
                           height: 30.0,
                           decoration: const BoxDecoration(),
                           child: AutoSizeText(
-                            'Something has gone horribly wrong. Please restart the app the continue. \n\n',
+                            'Something has gone horribly wrong. Please restart the app the continue.\n\n',
                             textAlign: TextAlign.center,
                             maxLines: 2,
-                            style: FlutterFlowTheme.of(context).titleMedium,
+                            style: FlutterFlowTheme.of(context)
+                                .titleMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  letterSpacing: 0.0,
+                                ),
                           ),
                         ),
                       ],
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: MediaQuery.sizeOf(context).width * 0.9,
+                height: 400.0,
+                decoration: const BoxDecoration(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                      child: Text(
+                        valueOrDefault<String>(
+                          widget.failReason,
+                          '123',
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                      child: Text(
+                        valueOrDefault<String>(
+                          widget.raw,
+                          '123',
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                      child: Text(
+                        valueOrDefault<String>(
+                          widget.contextUri,
+                          '123',
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Readex Pro',
+                              letterSpacing: 0.0,
+                            ),
+                      ),
                     ),
                   ],
                 ),

@@ -39,8 +39,8 @@ class LoadingUploadModel extends FlutterFlowModel<LoadingUploadWidget> {
   ApiCallResponse? sendPhotoURL;
   // Stores action output result for [Backend Call - API (get Playlist URL)] action in loadingUpload widget.
   ApiCallResponse? getPlaylist;
-
-  /// Initialization and disposal methods.
+  // Stores action output result for [Backend Call - API (start Player)] action in loadingUpload widget.
+  ApiCallResponse? startPlayback;
 
   @override
   void initState(BuildContext context) {}
@@ -49,8 +49,4 @@ class LoadingUploadModel extends FlutterFlowModel<LoadingUploadWidget> {
   void dispose() {
     unfocusNode.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

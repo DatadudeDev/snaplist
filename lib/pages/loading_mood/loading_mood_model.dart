@@ -37,8 +37,8 @@ class LoadingMoodModel extends FlutterFlowModel<LoadingMoodWidget> {
   ApiCallResponse? sendPhotoURLLoading;
   // Stores action output result for [Backend Call - API (get Playlist URL)] action in loadingMood widget.
   ApiCallResponse? getPlaylist;
-
-  /// Initialization and disposal methods.
+  // Stores action output result for [Backend Call - API (start Player)] action in loadingMood widget.
+  ApiCallResponse? startPlayback;
 
   @override
   void initState(BuildContext context) {}
@@ -47,8 +47,4 @@ class LoadingMoodModel extends FlutterFlowModel<LoadingMoodWidget> {
   void dispose() {
     unfocusNode.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

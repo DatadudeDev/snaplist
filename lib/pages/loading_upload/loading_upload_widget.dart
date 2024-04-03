@@ -128,7 +128,7 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
         userRef: currentUserReference?.id,
       );
       if ((_model.sendPhotoURL?.succeeded ?? true)) {
-        await Future.delayed(const Duration(milliseconds: 4000));
+        await Future.delayed(const Duration(milliseconds: 3500));
         if (animationsMap['textOnActionTriggerAnimation1'] != null) {
           setState(() => hasTextTriggered1 = true);
           SchedulerBinding.instance.addPostFrameCallback((_) async =>
@@ -150,7 +150,7 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
           _model.twentyNine = false;
           _model.thirtySeven = true;
         });
-        await Future.delayed(const Duration(milliseconds: 4000));
+        await Future.delayed(const Duration(milliseconds: 3500));
         if (animationsMap['textOnActionTriggerAnimation3'] != null) {
           await animationsMap['textOnActionTriggerAnimation3']!
               .controller
@@ -170,7 +170,7 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
           _model.fifty = false;
           _model.sixtyFive = true;
         });
-        await Future.delayed(const Duration(milliseconds: 4500));
+        await Future.delayed(const Duration(milliseconds: 4000));
         if (animationsMap['textOnActionTriggerAnimation5'] != null) {
           await animationsMap['textOnActionTriggerAnimation5']!
               .controller
@@ -216,31 +216,36 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
                   (_model.getPlaylist?.jsonBody ?? ''),
                 ),
               ));
-          setState(() {
-            FFAppState().makePhoto = false;
-            FFAppState().fileBase64 = '';
-            FFAppState().playlistUrl = '';
-          });
-          unawaited(
-            () async {
-              await launchURL(DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
-                (_model.getPlaylist?.jsonBody ?? ''),
-              )!);
-            }(),
+          _model.startPlayback =
+              await SpotifyMediaAPIGroup.startPlayerCall.call(
+            accessToken: FFAppState().accessToken,
+            contextUri: DatacenterAPIGroup.getPlaylistURLCall.contextUri(
+              (_model.getPlaylist?.jsonBody ?? ''),
+            ),
           );
+          if ((_model.startPlayback?.succeeded ?? true)) {
+            unawaited(
+              () async {
+                await launchURL(
+                    (_model.getPlaylist?.succeeded ?? true).toString());
+              }(),
+            );
 
-          context.goNamed(
-            'HomePage',
-            extra: <String, dynamic>{
-              kTransitionInfoKey: const TransitionInfo(
-                hasTransition: true,
-                transitionType: PageTransitionType.fade,
-                duration: Duration(milliseconds: 0),
-              ),
-            },
-          );
+            context.goNamed('HomePage');
 
-          return;
+            return;
+          } else {
+            unawaited(
+              () async {
+                await launchURL(
+                    (_model.getPlaylist?.succeeded ?? true).toString());
+              }(),
+            );
+
+            context.goNamed('HomePage');
+
+            return;
+          }
         } else {
           setState(() {
             FFAppState().makePhoto = false;
@@ -256,6 +261,12 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
 
           context.goNamed(
             'fail',
+            queryParameters: {
+              'failReason': serializeParam(
+                '',
+                ParamType.String,
+              ),
+            }.withoutNulls,
             extra: <String, dynamic>{
               kTransitionInfoKey: const TransitionInfo(
                 hasTransition: true,
@@ -282,6 +293,12 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
 
         context.pushNamed(
           'fail',
+          queryParameters: {
+            'failReason': serializeParam(
+              '',
+              ParamType.String,
+            ),
+          }.withoutNulls,
           extra: <String, dynamic>{
             kTransitionInfoKey: const TransitionInfo(
               hasTransition: true,
@@ -301,8 +318,6 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
           !anim.applyInitialState),
       this,
     );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -420,7 +435,7 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Analyzing Photo',
+                                            'Analyzing your photo',
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
@@ -428,6 +443,7 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -448,13 +464,14 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Thinking about some music I like ',
+                                            'Thinking about some music you\'ll like ',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -481,6 +498,7 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -507,6 +525,7 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -533,6 +552,7 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -559,6 +579,7 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -585,6 +606,7 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ),

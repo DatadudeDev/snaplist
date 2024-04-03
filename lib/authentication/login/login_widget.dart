@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'login_model.dart';
@@ -117,13 +118,16 @@ class _LoginWidgetState extends State<LoginWidget>
     super.initState();
     _model = createModel(context, () => LoginModel());
 
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      setDarkModeSetting(context, ThemeMode.dark);
+    });
+
     _model.emailAddressController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
 
     _model.passwordController ??= TextEditingController();
     _model.passwordFocusNode ??= FocusNode();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -182,7 +186,7 @@ class _LoginWidgetState extends State<LoginWidget>
                             borderRadius: BorderRadius.circular(16.0),
                           ),
                           child: Opacity(
-                            opacity: 0.15,
+                            opacity: 0.4,
                             child: Container(
                               width: 120.0,
                               height: 120.0,
@@ -191,7 +195,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                 shape: BoxShape.circle,
                               ),
                               child: Image.asset(
-                                'assets/images/output-onlinepngtools_(1).png',
+                                'assets/images/output-onlinepngtools_(15).png',
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -204,7 +208,12 @@ class _LoginWidgetState extends State<LoginWidget>
                             const EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 0.0),
                         child: Text(
                           'Sign In',
-                          style: FlutterFlowTheme.of(context).headlineSmall,
+                          style: FlutterFlowTheme.of(context)
+                              .headlineSmall
+                              .override(
+                                fontFamily: 'Outfit',
+                                letterSpacing: 0.0,
+                              ),
                         ).animateOnPageLoad(
                             animationsMap['textOnPageLoadAnimation1']!),
                       ),
@@ -213,7 +222,11 @@ class _LoginWidgetState extends State<LoginWidget>
                             const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                         child: Text(
                           'or create an account below:',
-                          style: FlutterFlowTheme.of(context).labelMedium,
+                          style:
+                              FlutterFlowTheme.of(context).labelMedium.override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
                         ).animateOnPageLoad(
                             animationsMap['textOnPageLoadAnimation2']!),
                       ),
@@ -243,8 +256,12 @@ class _LoginWidgetState extends State<LoginWidget>
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Email',
-                              labelStyle:
-                                  FlutterFlowTheme.of(context).labelMedium,
+                              labelStyle: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context).alternate,
@@ -278,7 +295,13 @@ class _LoginWidgetState extends State<LoginWidget>
                                   .secondaryBackground,
                               contentPadding: const EdgeInsets.all(24.0),
                             ),
-                            style: FlutterFlowTheme.of(context).bodyMedium,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  letterSpacing: 0.0,
+                                ),
+                            minLines: null,
                             keyboardType: TextInputType.emailAddress,
                             validator: _model.emailAddressControllerValidator
                                 .asValidator(context),
@@ -293,12 +316,17 @@ class _LoginWidgetState extends State<LoginWidget>
                           child: TextFormField(
                             controller: _model.passwordController,
                             focusNode: _model.passwordFocusNode,
+                            autofocus: false,
                             autofillHints: const [AutofillHints.password],
                             obscureText: !_model.passwordVisibility,
                             decoration: InputDecoration(
                               labelText: 'Password',
-                              labelStyle:
-                                  FlutterFlowTheme.of(context).labelMedium,
+                              labelStyle: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context).alternate,
@@ -347,7 +375,13 @@ class _LoginWidgetState extends State<LoginWidget>
                                 ),
                               ),
                             ),
-                            style: FlutterFlowTheme.of(context).bodyMedium,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  letterSpacing: 0.0,
+                                ),
+                            minLines: null,
                             validator: _model.passwordControllerValidator
                                 .asValidator(context),
                           ),
@@ -357,117 +391,113 @@ class _LoginWidgetState extends State<LoginWidget>
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Align(
-                            alignment: const AlignmentDirectional(0.0, 0.0),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  25.0, 0.0, 0.0, 12.0),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  GoRouter.of(context).prepareAuthEvent(true);
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                25.0, 0.0, 0.0, 0.0),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                GoRouter.of(context).prepareAuthEvent();
 
-                                  final user =
-                                      await authManager.createAccountWithEmail(
-                                    context,
-                                    _model.emailAddressController.text,
-                                    _model.passwordController.text,
-                                  );
-                                  if (user == null) {
-                                    return;
-                                  }
+                                final user =
+                                    await authManager.createAccountWithEmail(
+                                  context,
+                                  _model.emailAddressController.text,
+                                  _model.passwordController.text,
+                                );
+                                if (user == null) {
+                                  return;
+                                }
 
-                                  await UsersRecord.collection
-                                      .doc(user.uid)
-                                      .update(createUsersRecordData(
-                                        email: '',
-                                        createdTime: getCurrentTimestamp,
-                                      ));
+                                await UsersRecord.collection
+                                    .doc(user.uid)
+                                    .update(createUsersRecordData(
+                                      createdTime: getCurrentTimestamp,
+                                    ));
 
-                                  context.goNamedAuth(
-                                    'spotify',
-                                    context.mounted,
-                                    ignoreRedirect: true,
-                                  );
+                                context.goNamedAuth('spotify', context.mounted);
 
-                                  setState(() {
-                                    _model.emailAddressController?.clear();
-                                    _model.passwordController?.clear();
-                                  });
-                                },
-                                text: 'Sign Up',
-                                options: FFButtonOptions(
-                                  width: 125.0,
-                                  height: 52.0,
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  color: FlutterFlowTheme.of(context).secondary,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        color: Colors.white,
-                                      ),
-                                  elevation: 3.0,
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12.0),
+                                setState(() {
+                                  _model.emailAddressController?.clear();
+                                  _model.passwordController?.clear();
+                                });
+                              },
+                              text: 'Signup',
+                              options: FFButtonOptions(
+                                width: 120.0,
+                                height: 50.0,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    24.0, 0.0, 24.0, 0.0),
+                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: FlutterFlowTheme.of(context).secondary,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                elevation: 3.0,
+                                borderSide: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
                                 ),
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: const AlignmentDirectional(0.0, 0.0),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 25.0, 12.0),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  GoRouter.of(context).prepareAuthEvent();
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 25.0, 0.0),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                GoRouter.of(context).prepareAuthEvent(true);
 
-                                  final user =
-                                      await authManager.signInWithEmail(
-                                    context,
-                                    _model.emailAddressController.text,
-                                    _model.passwordController.text,
-                                  );
-                                  if (user == null) {
-                                    return;
-                                  }
+                                final user = await authManager.signInWithEmail(
+                                  context,
+                                  _model.emailAddressController.text,
+                                  _model.passwordController.text,
+                                );
+                                if (user == null) {
+                                  return;
+                                }
 
-                                  context.goNamedAuth(
-                                      'HomePage', context.mounted);
+                                context.goNamedAuth(
+                                  'HomePage',
+                                  context.mounted,
+                                  ignoreRedirect: true,
+                                );
 
-                                  setState(() {
-                                    _model.emailAddressController?.clear();
-                                    _model.passwordController?.clear();
-                                  });
-                                },
-                                text: 'Sign In',
-                                options: FFButtonOptions(
-                                  width: 125.0,
-                                  height: 52.0,
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        color: Colors.white,
-                                      ),
-                                  elevation: 3.0,
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12.0),
+                                setState(() {
+                                  _model.emailAddressController?.clear();
+                                  _model.passwordController?.clear();
+                                });
+                              },
+                              text: 'Log In',
+                              options: FFButtonOptions(
+                                width: 120.0,
+                                height: 50.0,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    24.0, 0.0, 24.0, 0.0),
+                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: FlutterFlowTheme.of(context).primary,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      color: Colors.white,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                elevation: 3.0,
+                                borderSide: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
                                 ),
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
                           ),
@@ -477,7 +507,7 @@ class _LoginWidgetState extends State<LoginWidget>
                         alignment: const AlignmentDirectional(0.0, 0.0),
                         child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 20.0),
+                              0.0, 10.0, 0.0, 20.0),
                           child: FFButtonWidget(
                             onPressed: () async {
                               context.pushNamed('forgot');
@@ -497,8 +527,12 @@ class _LoginWidgetState extends State<LoginWidget>
                                   0.0, 0.0, 0.0, 0.0),
                               color: FlutterFlowTheme.of(context)
                                   .secondaryBackground,
-                              textStyle:
-                                  FlutterFlowTheme.of(context).bodyMedium,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    letterSpacing: 0.0,
+                                  ),
                               elevation: 0.0,
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context)
@@ -521,7 +555,12 @@ class _LoginWidgetState extends State<LoginWidget>
                               child: Text(
                                 'Or sign up with: ',
                                 textAlign: TextAlign.center,
-                                style: FlutterFlowTheme.of(context).labelMedium,
+                                style: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      letterSpacing: 0.0,
+                                    ),
                               ),
                             ),
                           ),
@@ -587,6 +626,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                   .override(
                                                     fontFamily: 'Open Sans',
                                                     fontSize: 14.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                           elevation: 0.0,
@@ -648,6 +688,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                   .bodyMedium
                                                   .override(
                                                     fontFamily: 'Open Sans',
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                           elevation: 0.0,
@@ -728,6 +769,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                             .override(
                                               fontFamily: 'Open Sans',
                                               fontSize: 14.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.bold,
                                             ),
                                         elevation: 0.0,
@@ -788,6 +830,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                               fontFamily: 'Open Sans',
                                               color: Colors.white,
                                               fontSize: 14.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.bold,
                                             ),
                                         elevation: 0.0,

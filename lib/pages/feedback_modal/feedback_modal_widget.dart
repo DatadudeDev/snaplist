@@ -32,8 +32,6 @@ class _FeedbackModalWidgetState extends State<FeedbackModalWidget> {
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -125,6 +123,7 @@ class _FeedbackModalWidgetState extends State<FeedbackModalWidget> {
                                           fontFamily: 'Readex Pro',
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryText,
+                                          letterSpacing: 0.0,
                                         ),
                                     alignLabelWithHint: true,
                                     hintStyle: FlutterFlowTheme.of(context)
@@ -133,6 +132,7 @@ class _FeedbackModalWidgetState extends State<FeedbackModalWidget> {
                                           fontFamily: 'Readex Pro',
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryText,
+                                          letterSpacing: 0.0,
                                         ),
                                     enabledBorder: InputBorder.none,
                                     focusedBorder: InputBorder.none,
@@ -144,9 +144,9 @@ class _FeedbackModalWidgetState extends State<FeedbackModalWidget> {
                                       .override(
                                         fontFamily: 'Readex Pro',
                                         fontSize: 20.0,
+                                        letterSpacing: 0.0,
                                       ),
                                   maxLines: 10,
-                                  minLines: 1,
                                   maxLength: 250,
                                   maxLengthEnforcement:
                                       MaxLengthEnforcement.enforced,
@@ -219,6 +219,7 @@ class _FeedbackModalWidgetState extends State<FeedbackModalWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Readex Pro',
                               fontSize: 12.0,
+                              letterSpacing: 0.0,
                             ),
                       ),
                     ),
@@ -230,6 +231,7 @@ class _FeedbackModalWidgetState extends State<FeedbackModalWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Readex Pro',
                               fontSize: 10.0,
+                              letterSpacing: 0.0,
                             ),
                       ),
                     ),

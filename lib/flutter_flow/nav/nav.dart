@@ -104,7 +104,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
           path: '/spotify',
           requireAuth: true,
           builder: (context, params) => OnboardingWidget(
-            code: params.getParam('code', ParamType.String),
+            code: params.getParam(
+              'code',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -112,7 +115,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
           path: '/homePage',
           requireAuth: true,
           builder: (context, params) => HomePageWidget(
-            mood: params.getParam('mood', ParamType.String),
+            mood: params.getParam(
+              'mood',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -120,15 +126,21 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
           path: '/devz',
           requireAuth: true,
           builder: (context, params) => DevzWidget(
-            playlistUrl: params.getParam('playlistUrl', ParamType.String),
+            playlistUrl: params.getParam(
+              'playlistUrl',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
-          name: 'loading',
-          path: '/loading',
+          name: 'loadingImage',
+          path: '/loadingImage',
           requireAuth: true,
-          builder: (context, params) => LoadingWidget(
-            imageUrl: params.getParam('imageUrl', ParamType.String),
+          builder: (context, params) => LoadingImageWidget(
+            imageUrl: params.getParam(
+              'imageUrl',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -136,21 +148,40 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
           path: '/loadingMood',
           requireAuth: true,
           builder: (context, params) => LoadingMoodWidget(
-            mood: params.getParam('mood', ParamType.String),
+            mood: params.getParam(
+              'mood',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
           name: 'fail',
           path: '/fail',
           requireAuth: true,
-          builder: (context, params) => const FailWidget(),
+          builder: (context, params) => FailWidget(
+            failReason: params.getParam(
+              'failReason',
+              ParamType.String,
+            ),
+            contextUri: params.getParam(
+              'contextUri',
+              ParamType.String,
+            ),
+            raw: params.getParam(
+              'raw',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'loadingInput',
           path: '/loadingInput',
           requireAuth: true,
           builder: (context, params) => LoadingInputWidget(
-            input: params.getParam('input', ParamType.String),
+            input: params.getParam(
+              'input',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -158,7 +189,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
           path: '/loadingUpload',
           requireAuth: true,
           builder: (context, params) => LoadingUploadWidget(
-            url: params.getParam('url', ParamType.String),
+            url: params.getParam(
+              'url',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -166,7 +200,21 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
           path: '/loadingVoice',
           requireAuth: true,
           builder: (context, params) => LoadingVoiceWidget(
-            url: params.getParam('url', ParamType.String),
+            url: params.getParam(
+              'url',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'devzCopy',
+          path: '/devzCopy',
+          requireAuth: true,
+          builder: (context, params) => DevzCopyWidget(
+            playlistUrl: params.getParam(
+              'playlistUrl',
+              ParamType.String,
+            ),
           ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
@@ -300,8 +348,12 @@ class FFParameters {
       return param;
     }
     // Return serialized value.
-    return deserializeParam<T>(param, type, isList,
-        collectionNamePath: collectionNamePath);
+    return deserializeParam<T>(
+      param,
+      type,
+      isList,
+      collectionNamePath: collectionNamePath,
+    );
   }
 }
 
@@ -350,9 +402,12 @@ class FFRoute {
           final child = appStateNotifier.loading
               ? Container(
                   color: FlutterFlowTheme.of(context).secondaryBackground,
-                  child: Image.asset(
-                    'assets/images/output-onlinegiftools_(3).gif',
-                    fit: BoxFit.contain,
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/output-onlinegiftools_(3).gif',
+                      width: 300.0,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 )
               : page;

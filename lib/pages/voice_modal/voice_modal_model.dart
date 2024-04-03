@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'voice_modal_widget.dart' show VoiceModalWidget;
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ class VoiceModalModel extends FlutterFlowModel<VoiceModalWidget> {
   ///  Local state fields for this component.
 
   bool isBug = false;
+
+  bool isPaused = false;
 
   ///  State fields for stateful widgets in this component.
 
@@ -19,15 +22,12 @@ class VoiceModalModel extends FlutterFlowModel<VoiceModalWidget> {
       FFUploadedFile(bytes: Uint8List.fromList([]));
   String uploadedFileUrl = '';
 
-  /// Initialization and disposal methods.
+  // Stores action output result for [Backend Call - API (Resume Music)] action in Container widget.
+  ApiCallResponse? apiResult2c4;
 
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {}
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

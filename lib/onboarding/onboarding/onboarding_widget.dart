@@ -228,53 +228,72 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.mobileRes =
-          await SpotifyAccountAPIGroup.accessRefreshTokenCall.call(
-        base64: functions.toBase64(
-            '66735975625f4a9cbd385f15504e4ee8:eb2113c63dfe496e88fd346e9694b6c1'),
-        code: widget.code,
-        redirectUri: 'snaplist://snaplist.com/spotify',
-      );
-      if ((_model.mobileRes?.succeeded ?? true)) {
-        setState(() {
-          _model.response = (_model.mobileRes?.jsonBody ?? '');
-        });
-        setState(() {
-          FFAppState().accessToken = getJsonField(
-            _model.response,
-            r'''$.access_token''',
-          ).toString().toString();
-          FFAppState().refreshToken = getJsonField(
-            _model.response,
-            r'''$.refresh_token''',
-          ).toString().toString();
-        });
-        unawaited(
-          () async {
-            await AuthRecord.collection.doc().set(createAuthRecordData(
-                  user: currentUserReference,
-                  refreshToken: FFAppState().refreshToken,
-                  accessToken: FFAppState().accessToken,
-                ));
-          }(),
-        );
-        while (_model.pageViewCurrentIndex == 0) {
-          await Future.delayed(const Duration(milliseconds: 3000));
-          await _model.pageViewController?.nextPage(
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.ease,
+      await Future.wait([
+        Future(() async {
+          _model.mobileRes =
+              await SpotifyAccountAPIGroup.accessRefreshTokenCall.call(
+            base64: functions.toBase64(
+                '66735975625f4a9cbd385f15504e4ee8:eb2113c63dfe496e88fd346e9694b6c1'),
+            code: widget.code,
+            redirectUri: 'snaplist://snaplist.com/spotify',
           );
-          await Future.delayed(const Duration(milliseconds: 3000));
-          await _model.pageViewController?.nextPage(
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.ease,
-          );
-          await Future.delayed(const Duration(milliseconds: 3000));
-        }
-      }
-    });
+          if ((_model.mobileRes?.succeeded ?? true)) {
+            setState(() {
+              _model.response = (_model.mobileRes?.jsonBody ?? '');
+            });
+            setState(() {
+              FFAppState().accessToken = getJsonField(
+                _model.response,
+                r'''$.access_token''',
+              ).toString().toString();
+              FFAppState().refreshToken = getJsonField(
+                _model.response,
+                r'''$.refresh_token''',
+              ).toString().toString();
+            });
+            unawaited(
+              () async {
+                await AuthRecord.collection.doc().set(createAuthRecordData(
+                      user: currentUserReference,
+                      refreshToken: FFAppState().refreshToken,
+                      accessToken: FFAppState().accessToken,
+                      timeCreated: getCurrentTimestamp,
+                    ));
+              }(),
+            );
+            return;
+          } else {
+            context.pushNamed(
+              'fail',
+              queryParameters: {
+                'failReason': serializeParam(
+                  'filed to acquire spotify access token',
+                  ParamType.String,
+                ),
+              }.withoutNulls,
+            );
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+            return;
+          }
+        }),
+        Future(() async {
+          await Future.delayed(const Duration(milliseconds: 3000));
+          while (_model.pageViewCurrentIndex == 0) {
+            await Future.delayed(const Duration(milliseconds: 3000));
+            await _model.pageViewController?.nextPage(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.ease,
+            );
+            await Future.delayed(const Duration(milliseconds: 3000));
+            await _model.pageViewController?.nextPage(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.ease,
+            );
+            await Future.delayed(const Duration(milliseconds: 3000));
+          }
+        }),
+      ]);
+    });
   }
 
   @override
@@ -508,6 +527,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                           context)
                                                       .primaryText,
                                                   fontSize: 36.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                           ).animateOnPageLoad(animationsMap[
@@ -529,6 +549,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                             context)
                                                         .secondaryText,
                                                     fontSize: 18.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                             ).animateOnPageLoad(animationsMap[
@@ -557,6 +578,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                           context)
                                                       .primaryText,
                                                   fontSize: 36.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                           ).animateOnPageLoad(animationsMap[
@@ -578,6 +600,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                             context)
                                                         .secondaryText,
                                                     fontSize: 16.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                             ).animateOnPageLoad(animationsMap[
@@ -606,6 +629,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                           context)
                                                       .primaryText,
                                                   fontSize: 36.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                           ).animateOnPageLoad(animationsMap[
@@ -627,6 +651,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                             context)
                                                         .secondaryText,
                                                     fontSize: 16.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                             ).animateOnPageLoad(animationsMap[
@@ -702,6 +727,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                       .override(
                                         fontFamily: 'Readex Pro',
                                         fontSize: 18.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.w500,
                                       ),
                                   elevation: 3.0,

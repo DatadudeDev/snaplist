@@ -1,18 +1,23 @@
+import '/backend/api_requests/api_calls.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/upload_data.dart';
-import 'package:cross_file/cross_file.dart';
-import 'package:flutter/foundation.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:record/record.dart';
 import 'voice_modal_model.dart';
 export 'voice_modal_model.dart';
 
 class VoiceModalWidget extends StatefulWidget {
-  const VoiceModalWidget({super.key});
+  const VoiceModalWidget({
+    super.key,
+    required this.isPaused,
+  });
+
+  final bool? isPaused;
 
   @override
   State<VoiceModalWidget> createState() => _VoiceModalWidgetState();
@@ -34,32 +39,11 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.audioRecorder ??= AudioRecorder();
-      if (await _model.audioRecorder!.hasPermission()) {
-        final String path;
-        final AudioEncoder encoder;
-        if (kIsWeb) {
-          path = '';
-          encoder = AudioEncoder.opus;
-        } else {
-          final dir = await getApplicationDocumentsDirectory();
-          path =
-              '${dir.path}/audio_${DateTime.now().millisecondsSinceEpoch}.m4a';
-          encoder = AudioEncoder.aacLc;
-        }
-        await _model.audioRecorder!.start(
-          RecordConfig(encoder: encoder),
-          path: path,
-        );
-      } else {
-        showSnackbar(
-          context,
-          'You have not provided permission to record audio.',
-        );
-      }
+      await startAudioRecording(
+        context,
+        audioRecorder: _model.audioRecorder ??= AudioRecorder(),
+      );
     });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -71,20 +55,25 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return InkWell(
       splashColor: Colors.transparent,
       focusColor: Colors.transparent,
       hoverColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onTap: () async {
-        _model.audio = await _model.audioRecorder?.stop();
-        if (_model.audio != null) {
-          _model.recordedFileBytes = FFUploadedFile(
-            name: 'recordedFileBytes.mp3',
-            bytes: await XFile(_model.audio!).readAsBytes(),
-          );
-        }
+        var shouldSetState = false;
+        await stopAudioRecording(
+          audioRecorder: _model.audioRecorder,
+          audioName: 'recordedFileBytes.mp3',
+          onRecordingComplete: (audioFilePath, audioBytes) {
+            _model.audio = audioFilePath;
+            _model.recordedFileBytes = audioBytes;
+          },
+        );
 
+        shouldSetState = true;
         {
           setState(() => _model.isDataUploading = true);
           var selectedUploadedFiles = <FFUploadedFile>[];
@@ -120,17 +109,45 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
           }
         }
 
-        context.goNamed(
-          'loadingVoice',
-          queryParameters: {
-            'url': serializeParam(
-              _model.uploadedFileUrl,
-              ParamType.String,
-            ),
-          }.withoutNulls,
-        );
+        if (widget.isPaused == true) {
+          unawaited(
+            () async {
+              _model.apiResult2c4 =
+                  await SpotifyMediaAPIGroup.resumeMusicCall.call(
+                accessToken: FFAppState().accessToken,
+              );
+            }(),
+          );
+          shouldSetState = true;
 
-        setState(() {});
+          context.goNamed(
+            'loadingVoice',
+            queryParameters: {
+              'url': serializeParam(
+                _model.uploadedFileUrl,
+                ParamType.String,
+              ),
+            }.withoutNulls,
+          );
+
+          if (shouldSetState) setState(() {});
+          return;
+        } else {
+          context.goNamed(
+            'loadingVoice',
+            queryParameters: {
+              'url': serializeParam(
+                _model.uploadedFileUrl,
+                ParamType.String,
+              ),
+            }.withoutNulls,
+          );
+
+          if (shouldSetState) setState(() {});
+          return;
+        }
+
+        if (shouldSetState) setState(() {});
       },
       child: Container(
         width: double.infinity,
@@ -162,6 +179,7 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
                     fontFamily: 'Readex Pro',
                     color: FlutterFlowTheme.of(context).primaryText,
                     fontSize: 13.0,
+                    letterSpacing: 0.0,
                   ),
             ),
           ],

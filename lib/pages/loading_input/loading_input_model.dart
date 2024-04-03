@@ -35,10 +35,10 @@ class LoadingInputModel extends FlutterFlowModel<LoadingInputWidget> {
   final unfocusNode = FocusNode();
   // Stores action output result for [Backend Call - API (Post Input)] action in loadingInput widget.
   ApiCallResponse? sendPhotoURLLoading;
-  // Stores action output result for [Backend Call - API (get Playlist URL)] action in loadingInput widget.
+  // Stores action output result for [Backend Call - API (get Playlist URL Input)] action in loadingInput widget.
   ApiCallResponse? getPlaylist;
-
-  /// Initialization and disposal methods.
+  // Stores action output result for [Backend Call - API (start Player)] action in loadingInput widget.
+  ApiCallResponse? startPlayback;
 
   @override
   void initState(BuildContext context) {}
@@ -47,8 +47,4 @@ class LoadingInputModel extends FlutterFlowModel<LoadingInputWidget> {
   void dispose() {
     unfocusNode.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

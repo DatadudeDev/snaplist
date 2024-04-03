@@ -4,6 +4,7 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -113,133 +114,166 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
         userRef: currentUserReference?.id,
       );
       if ((_model.sendPhotoURLLoading?.succeeded ?? true)) {
-        await Future.delayed(const Duration(milliseconds: 3000));
-        if (animationsMap['textOnActionTriggerAnimation1'] != null) {
-          setState(() => hasTextTriggered1 = true);
-          SchedulerBinding.instance.addPostFrameCallback((_) async =>
-              await animationsMap['textOnActionTriggerAnimation1']!
+        await Future.wait([
+          Future(() async {
+            _model.getPlaylist =
+                await DatacenterAPIGroup.getPlaylistURLInputCall.call(
+              timestamp: getJsonField(
+                (_model.sendPhotoURLLoading?.jsonBody ?? ''),
+                r'''$.timestamp''',
+              ),
+              userRef: currentUserReference?.id,
+            );
+            if ((_model.getPlaylist?.succeeded ?? true)) {
+              await SnaplistsRecord.collection
+                  .doc()
+                  .set(createSnaplistsRecordData(
+                    userRef: currentUserReference,
+                    name: DatacenterAPIGroup.getPlaylistURLInputCall.name(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                    description:
+                        DatacenterAPIGroup.getPlaylistURLInputCall.description(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                    imageUrl:
+                        DatacenterAPIGroup.getPlaylistURLInputCall.imageUrl(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                    createdTime: getCurrentTimestamp,
+                    url: DatacenterAPIGroup.getPlaylistURLInputCall.playlistUrl(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                    id: DatacenterAPIGroup.getPlaylistURLInputCall.id(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                  ));
+              _model.startPlayback =
+                  await SpotifyMediaAPIGroup.startPlayerCall.call(
+                accessToken: FFAppState().accessToken,
+                contextUri: DatacenterAPIGroup.getPlaylistURLInputCall
+                    .contextUri(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    )
+                    .toString(),
+              );
+              if ((_model.startPlayback?.succeeded ?? true)) {
+                unawaited(
+                  () async {
+                    await launchURL(
+                        DatacenterAPIGroup.getPlaylistURLInputCall.playlistUrl(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    )!);
+                  }(),
+                );
+
+                context.goNamed('HomePage');
+
+                return;
+              } else {
+                unawaited(
+                  () async {
+                    await launchURL(
+                        DatacenterAPIGroup.getPlaylistURLInputCall.playlistUrl(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    )!);
+                  }(),
+                );
+
+                context.goNamed('HomePage');
+
+                return;
+              }
+            } else {
+              setState(() {
+                FFAppState().fileBase64 = '';
+                FFAppState().playlistUrl = '';
+              });
+
+              await FeedbackRecord.collection
+                  .doc()
+                  .set(createFeedbackRecordData(
+                    userRef: currentUserReference,
+                    feedback: 'get_playlist fucked up ',
+                    isBug: true,
+                  ));
+
+              context.goNamed(
+                'fail',
+                queryParameters: {
+                  'failReason': serializeParam(
+                    '',
+                    ParamType.String,
+                  ),
+                }.withoutNulls,
+                extra: <String, dynamic>{
+                  kTransitionInfoKey: const TransitionInfo(
+                    hasTransition: true,
+                    transitionType: PageTransitionType.fade,
+                    duration: Duration(milliseconds: 0),
+                  ),
+                },
+              );
+
+              return;
+            }
+          }),
+          Future(() async {
+            await Future.delayed(const Duration(milliseconds: 3000));
+            if (animationsMap['textOnActionTriggerAnimation1'] != null) {
+              setState(() => hasTextTriggered1 = true);
+              SchedulerBinding.instance.addPostFrameCallback((_) async =>
+                  await animationsMap['textOnActionTriggerAnimation1']!
+                      .controller
+                      .forward(from: 0.0));
+            }
+            setState(() {
+              _model.ten = false;
+              _model.twentyNine = true;
+            });
+            await Future.delayed(const Duration(milliseconds: 3000));
+            if (animationsMap['textOnActionTriggerAnimation2'] != null) {
+              await animationsMap['textOnActionTriggerAnimation2']!
                   .controller
-                  .forward(from: 0.0));
-        }
-        setState(() {
-          _model.ten = false;
-          _model.twentyNine = true;
-        });
-        await Future.delayed(const Duration(milliseconds: 3000));
-        if (animationsMap['textOnActionTriggerAnimation2'] != null) {
-          await animationsMap['textOnActionTriggerAnimation2']!
-              .controller
-              .forward(from: 0.0);
-        }
-        setState(() {
-          _model.twentyNine = false;
-          _model.thirtySeven = true;
-        });
-        await Future.delayed(const Duration(milliseconds: 3000));
-        if (animationsMap['textOnActionTriggerAnimation3'] != null) {
-          await animationsMap['textOnActionTriggerAnimation3']!
-              .controller
-              .forward(from: 0.0);
-        }
-        setState(() {
-          _model.thirtySeven = false;
-          _model.sixtyFive = true;
-        });
-        await Future.delayed(const Duration(milliseconds: 3000));
-        if (animationsMap['textOnActionTriggerAnimation4'] != null) {
-          await animationsMap['textOnActionTriggerAnimation4']!
-              .controller
-              .forward(from: 0.0);
-        }
-        setState(() {
-          _model.sixtyFive = false;
-          _model.eightyThree = true;
-        });
-        await Future.delayed(const Duration(milliseconds: 3000));
-        if (animationsMap['textOnActionTriggerAnimation5'] != null) {
-          await animationsMap['textOnActionTriggerAnimation5']!
-              .controller
-              .forward(from: 0.0);
-        }
-        setState(() {
-          _model.eightyThree = false;
-          _model.oneHundred = true;
-        });
-        _model.getPlaylist = await DatacenterAPIGroup.getPlaylistURLCall.call(
-          timestamp: getJsonField(
-            (_model.sendPhotoURLLoading?.jsonBody ?? ''),
-            r'''$.timestamp''',
-          ),
-          userRef: currentUserReference?.id,
-        );
-        if ((_model.getPlaylist?.succeeded ?? true)) {
-          await launchURL(DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
-            (_model.getPlaylist?.jsonBody ?? ''),
-          )!);
-
-          await SnaplistsRecord.collection.doc().set(createSnaplistsRecordData(
-                userRef: currentUserReference,
-                name: DatacenterAPIGroup.getPlaylistURLCall.name(
-                  (_model.getPlaylist?.jsonBody ?? ''),
-                ),
-                description: DatacenterAPIGroup.getPlaylistURLCall.description(
-                  (_model.getPlaylist?.jsonBody ?? ''),
-                ),
-                imageUrl: DatacenterAPIGroup.getPlaylistURLCall.imageUrl(
-                  (_model.getPlaylist?.jsonBody ?? ''),
-                ),
-                createdTime: getCurrentTimestamp,
-                url: DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
-                  (_model.getPlaylist?.jsonBody ?? ''),
-                ),
-                id: DatacenterAPIGroup.getPlaylistURLCall.id(
-                  (_model.getPlaylist?.jsonBody ?? ''),
-                ),
-              ));
-          setState(() {
-            FFAppState().makePhoto = false;
-            FFAppState().fileBase64 = '';
-            FFAppState().playlistUrl = '';
-          });
-
-          context.goNamed(
-            'HomePage',
-            extra: <String, dynamic>{
-              kTransitionInfoKey: const TransitionInfo(
-                hasTransition: true,
-                transitionType: PageTransitionType.fade,
-                duration: Duration(milliseconds: 0),
-              ),
-            },
-          );
-
-          return;
-        } else {
-          setState(() {
-            FFAppState().makePhoto = false;
-            FFAppState().fileBase64 = '';
-            FFAppState().playlistUrl = '';
-          });
-
-          await FeedbackRecord.collection.doc().set(createFeedbackRecordData(
-                userRef: currentUserReference,
-                feedback: 'get_playlist fucked up ',
-                isBug: true,
-              ));
-
-          context.goNamed(
-            'fail',
-            extra: <String, dynamic>{
-              kTransitionInfoKey: const TransitionInfo(
-                hasTransition: true,
-                transitionType: PageTransitionType.fade,
-                duration: Duration(milliseconds: 0),
-              ),
-            },
-          );
-
-          return;
-        }
+                  .forward(from: 0.0);
+            }
+            setState(() {
+              _model.twentyNine = false;
+              _model.thirtySeven = true;
+            });
+            await Future.delayed(const Duration(milliseconds: 3000));
+            if (animationsMap['textOnActionTriggerAnimation3'] != null) {
+              await animationsMap['textOnActionTriggerAnimation3']!
+                  .controller
+                  .forward(from: 0.0);
+            }
+            setState(() {
+              _model.thirtySeven = false;
+              _model.sixtyFive = true;
+            });
+            await Future.delayed(const Duration(milliseconds: 3000));
+            if (animationsMap['textOnActionTriggerAnimation4'] != null) {
+              await animationsMap['textOnActionTriggerAnimation4']!
+                  .controller
+                  .forward(from: 0.0);
+            }
+            setState(() {
+              _model.sixtyFive = false;
+              _model.eightyThree = true;
+            });
+            await Future.delayed(const Duration(milliseconds: 3000));
+            if (animationsMap['textOnActionTriggerAnimation5'] != null) {
+              await animationsMap['textOnActionTriggerAnimation5']!
+                  .controller
+                  .forward(from: 0.0);
+            }
+            setState(() {
+              _model.eightyThree = false;
+              _model.oneHundred = true;
+            });
+            return;
+          }),
+        ]);
       } else {
         setState(() {
           FFAppState().makePhoto = false;
@@ -255,6 +289,12 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
 
         context.goNamed(
           'fail',
+          queryParameters: {
+            'failReason': serializeParam(
+              '',
+              ParamType.String,
+            ),
+          }.withoutNulls,
           extra: <String, dynamic>{
             kTransitionInfoKey: const TransitionInfo(
               hasTransition: true,
@@ -274,8 +314,6 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
           !anim.applyInitialState),
       this,
     );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -397,6 +435,7 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -417,13 +456,14 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Thinking about some music I like ',
+                                            'Thinking about some music you\'ll like ',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -450,6 +490,7 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -476,6 +517,7 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -502,6 +544,7 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ).animateOnActionTrigger(
@@ -528,6 +571,7 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                                                   fontFamily: 'Readex Pro',
                                                   color: Colors.white,
                                                   fontSize: 16.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ),

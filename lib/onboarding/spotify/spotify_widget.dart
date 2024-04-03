@@ -219,6 +219,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await Future.delayed(const Duration(milliseconds: 3000));
       while (_model.pageViewCurrentIndex == 0) {
         await Future.delayed(const Duration(milliseconds: 3000));
         await _model.pageViewController?.nextPage(
@@ -233,8 +234,6 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
         await Future.delayed(const Duration(milliseconds: 3000));
       }
     });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -466,6 +465,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                                           context)
                                                       .primaryText,
                                                   fontSize: 36.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                           ).animateOnPageLoad(animationsMap[
@@ -485,6 +485,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                                         'Plus Jakarta Sans',
                                                     color: const Color(0xFF57636C),
                                                     fontSize: 18.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                             ).animateOnPageLoad(animationsMap[
@@ -513,6 +514,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                                           context)
                                                       .primaryText,
                                                   fontSize: 36.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                           ).animateOnPageLoad(animationsMap[
@@ -534,6 +536,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                                             context)
                                                         .secondaryText,
                                                     fontSize: 16.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                             ).animateOnPageLoad(animationsMap[
@@ -562,6 +565,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                                           context)
                                                       .primaryText,
                                                   fontSize: 36.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                           ).animateOnPageLoad(animationsMap[
@@ -583,6 +587,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                                             context)
                                                         .secondaryText,
                                                     fontSize: 16.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                             ).animateOnPageLoad(animationsMap[
@@ -647,7 +652,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
                                   await actions.launchInExternalBrowser(
-                                    'https://accounts.spotify.com/authorize?response_type=code&client_id=66735975625f4a9cbd385f15504e4ee8&scope=user-read-private+user-read-email+playlist-modify-private+playlist-modify-public+playlist-read-private+playlist-read-collaborative+user-read-recently-played&redirect_uri=snaplist://snaplist.com/spotify&show_dialog=true',
+                                    'https://accounts.spotify.com/en/authorize?response_type=code&client_id=66735975625f4a9cbd385f15504e4ee8&scope=user-read-private+user-read-email+playlist-modify-private+playlist-modify-public+playlist-read-private+playlist-read-collaborative+user-read-recently-played+user-modify-playback-state+ugc-image-upload+user-read-playback-state+user-read-currently-playing+app-remote-control+streaming+user-follow-modify+user-follow-read+user-read-playback-position+user-top-read+user-library-modify+user-library-read&redirect_uri=snaplist://snaplist.com/spotify&show_dialog=true',
                                   );
                                 },
                                 child: Stack(
@@ -672,6 +677,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                             .override(
                                               fontFamily: 'Readex Pro',
                                               color: Colors.white,
+                                              letterSpacing: 0.0,
                                             ),
                                         elevation: 3.0,
                                         borderSide: const BorderSide(
@@ -723,6 +729,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                                             'Readex Pro',
                                                         color: Colors.black,
                                                         fontSize: 18.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w500,
                                                       ),
