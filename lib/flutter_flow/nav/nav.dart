@@ -1,13 +1,21 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:go_router/go_router.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import '/backend/backend.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
 import '/index.dart';
+import '/main.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/lat_lng.dart';
+import '/flutter_flow/place.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'serialization_util.dart';
 
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
@@ -73,31 +81,31 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) => appStateNotifier.loggedIn
-          ? entryPage ?? const HomePageWidget()
-          : const LoginWidget(),
+          ? entryPage ?? HomePageWidget()
+          : LoginWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
-              ? entryPage ?? const HomePageWidget()
-              : const LoginWidget(),
+              ? entryPage ?? HomePageWidget()
+              : LoginWidget(),
         ),
         FFRoute(
           name: 'spotify',
           path: '/spotifyAuth',
           requireAuth: true,
-          builder: (context, params) => const SpotifyWidget(),
+          builder: (context, params) => SpotifyWidget(),
         ),
         FFRoute(
           name: 'login',
           path: '/login',
-          builder: (context, params) => const LoginWidget(),
+          builder: (context, params) => LoginWidget(),
         ),
         FFRoute(
           name: 'forgot',
           path: '/forgot',
-          builder: (context, params) => const ForgotWidget(),
+          builder: (context, params) => ForgotWidget(),
         ),
         FFRoute(
           name: 'onboarding',
@@ -404,8 +412,8 @@ class FFRoute {
                   color: FlutterFlowTheme.of(context).secondaryBackground,
                   child: Center(
                     child: Image.asset(
-                      'assets/images/output-onlinegiftools_(3).gif',
-                      width: 300.0,
+                      'assets/images/IMG_0258.gif',
+                      width: 200.0,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -452,7 +460,7 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
 }
 
 class RootPageContext {

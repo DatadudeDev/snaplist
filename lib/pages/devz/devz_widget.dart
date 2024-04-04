@@ -7,9 +7,12 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'devz_model.dart';
 export 'devz_model.dart';
@@ -18,7 +21,7 @@ class DevzWidget extends StatefulWidget {
   const DevzWidget({
     super.key,
     String? playlistUrl,
-  }) : playlistUrl = playlistUrl ?? '123';
+  }) : this.playlistUrl = playlistUrl ?? '123';
 
   final String playlistUrl;
 
@@ -36,12 +39,16 @@ class _DevzWidgetState extends State<DevzWidget> {
     super.initState();
     _model = createModel(context, () => DevzModel());
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'devz'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('DEVZ_PAGE_devz_ON_INIT_STATE');
+      logFirebaseEvent('devz_backend_call');
       _model.tracks = await SpotifyMediaAPIGroup.recentlyPlayedTracksCall.call(
         accessToken: FFAppState().accessToken,
       );
       if ((_model.tracks?.succeeded ?? true)) {
+        logFirebaseEvent('devz_update_app_state');
         setState(() {
           FFAppState().tracks = getJsonField(
             (_model.tracks?.jsonBody ?? ''),
@@ -51,6 +58,7 @@ class _DevzWidgetState extends State<DevzWidget> {
               .toList()
               .cast<dynamic>();
         });
+        logFirebaseEvent('devz_firestore_query');
         _model.lastPlayedTrack = await querySongsRecordOnce(
           queryBuilder: (songsRecord) => songsRecord
               .where(
@@ -61,6 +69,8 @@ class _DevzWidgetState extends State<DevzWidget> {
           singleRecord: true,
         ).then((s) => s.firstOrNull);
         if (getCurrentTimestamp <= _model.lastPlayedTrack!.playedTime!) {
+          logFirebaseEvent('devz_backend_call');
+
           await SongsRecord.collection.doc().set(createSongsRecordData(
                 title: getJsonField(
                   (_model.tracks?.jsonBody ?? ''),
@@ -70,11 +80,13 @@ class _DevzWidgetState extends State<DevzWidget> {
               ));
         }
       } else {
+        logFirebaseEvent('devz_custom_action');
         _model.spotifyDocDev = await actions.getDocUsingFilter(
           'userRef',
           FFAppState().accessToken,
           'spotify',
         );
+        logFirebaseEvent('devz_firestore_query');
         await querySpotifyRecordOnce(
           queryBuilder: (spotifyRecord) => spotifyRecord.where(
             'userRef',
@@ -82,6 +94,7 @@ class _DevzWidgetState extends State<DevzWidget> {
           ),
           singleRecord: true,
         ).then((s) => s.firstOrNull);
+        logFirebaseEvent('devz_backend_call');
         _model.accessTokenResDev =
             await SpotifyAccountAPIGroup.acqurireNewAccessTokenCall.call(
           base64: functions.toBase64(
@@ -89,6 +102,7 @@ class _DevzWidgetState extends State<DevzWidget> {
           refreshToken: _model.spotifyDocDev?.refreshToken,
         );
         if ((_model.accessTokenResDev?.succeeded ?? true)) {
+          logFirebaseEvent('devz_backend_call');
           _model.tracks2 = await SpotifyMediaAPIGroup.getProfileCall.call(
             accessToken:
                 SpotifyAccountAPIGroup.acqurireNewAccessTokenCall.accessToken(
@@ -96,10 +110,12 @@ class _DevzWidgetState extends State<DevzWidget> {
             ),
           );
           if ((_model.tracks2?.succeeded ?? true)) {
+            logFirebaseEvent('devz_update_app_state');
             setState(() {
               FFAppState().Playlists =
                   (_model.tracks2?.jsonBody ?? '').toList().cast<dynamic>();
             });
+            logFirebaseEvent('devz_firestore_query');
             _model.lastPlayedTrack2 = await querySongsRecordOnce(
               queryBuilder: (songsRecord) => songsRecord
                   .where(
@@ -110,6 +126,8 @@ class _DevzWidgetState extends State<DevzWidget> {
               singleRecord: true,
             ).then((s) => s.firstOrNull);
             if (getCurrentTimestamp <= _model.lastPlayedTrack!.playedTime!) {
+              logFirebaseEvent('devz_backend_call');
+
               await SongsRecord.collection.doc().set(createSongsRecordData(
                     title: getJsonField(
                       (_model.tracks2?.jsonBody ?? ''),
@@ -360,11 +378,14 @@ class _DevzWidgetState extends State<DevzWidget> {
                 children: [
                   FFButtonWidget(
                     onPressed: () async {
+                      logFirebaseEvent('DEVZ_PAGE_BUTTON_BTN_ON_TAP');
+                      logFirebaseEvent('Button_backend_call');
                       _model.playlists =
                           await SpotifyMediaAPIGroup.getPlaylistCall.call(
                         accessToken: FFAppState().accessToken,
                       );
                       if ((_model.playlists?.succeeded ?? true)) {
+                        logFirebaseEvent('Button_update_app_state');
                         setState(() {
                           FFAppState().Playlists = getJsonField(
                             (_model.playlists?.jsonBody ?? ''),
@@ -375,12 +396,14 @@ class _DevzWidgetState extends State<DevzWidget> {
                               .cast<dynamic>();
                         });
                       } else {
+                        logFirebaseEvent('Button_custom_action');
                         _model.spotifyDocDevCopy =
                             await actions.getDocUsingFilter(
                           'userRef',
                           FFAppState().accessToken,
                           'spotify',
                         );
+                        logFirebaseEvent('Button_firestore_query');
                         await querySpotifyRecordOnce(
                           queryBuilder: (spotifyRecord) => spotifyRecord.where(
                             'userRef',
@@ -388,6 +411,7 @@ class _DevzWidgetState extends State<DevzWidget> {
                           ),
                           singleRecord: true,
                         ).then((s) => s.firstOrNull);
+                        logFirebaseEvent('Button_backend_call');
                         _model.accessTokenResDevCopy =
                             await SpotifyAccountAPIGroup
                                 .acqurireNewAccessTokenCall
@@ -397,11 +421,13 @@ class _DevzWidgetState extends State<DevzWidget> {
                           refreshToken: _model.spotifyDocDev?.refreshToken,
                         );
                         if ((_model.accessTokenResDev?.succeeded ?? true)) {
+                          logFirebaseEvent('Button_backend_call');
                           _model.playlists2 =
                               await SpotifyMediaAPIGroup.getProfileCall.call(
                             accessToken: FFAppState().accessToken,
                           );
                           if ((_model.playlists2?.succeeded ?? true)) {
+                            logFirebaseEvent('Button_update_app_state');
                             setState(() {
                               FFAppState().Playlists = getJsonField(
                                 (_model.tracks2?.jsonBody ?? ''),
@@ -421,9 +447,9 @@ class _DevzWidgetState extends State<DevzWidget> {
                     options: FFButtonOptions(
                       height: 40.0,
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                       iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
@@ -432,7 +458,7 @@ class _DevzWidgetState extends State<DevzWidget> {
                                 letterSpacing: 0.0,
                               ),
                       elevation: 3.0,
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Colors.transparent,
                         width: 1.0,
                       ),

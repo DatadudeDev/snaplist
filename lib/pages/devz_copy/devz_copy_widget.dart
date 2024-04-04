@@ -7,9 +7,12 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'devz_copy_model.dart';
 export 'devz_copy_model.dart';
@@ -18,7 +21,7 @@ class DevzCopyWidget extends StatefulWidget {
   const DevzCopyWidget({
     super.key,
     String? playlistUrl,
-  }) : playlistUrl = playlistUrl ?? '123';
+  }) : this.playlistUrl = playlistUrl ?? '123';
 
   final String playlistUrl;
 
@@ -36,12 +39,16 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
     super.initState();
     _model = createModel(context, () => DevzCopyModel());
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'devzCopy'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('DEVZ_COPY_PAGE_devzCopy_ON_INIT_STATE');
+      logFirebaseEvent('devzCopy_backend_call');
       _model.tracks = await SpotifyMediaAPIGroup.recentlyPlayedTracksCall.call(
         accessToken: FFAppState().accessToken,
       );
       if ((_model.tracks?.succeeded ?? true)) {
+        logFirebaseEvent('devzCopy_update_app_state');
         setState(() {
           FFAppState().tracks = getJsonField(
             (_model.tracks?.jsonBody ?? ''),
@@ -51,6 +58,7 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
               .toList()
               .cast<dynamic>();
         });
+        logFirebaseEvent('devzCopy_firestore_query');
         _model.lastPlayedTrack = await querySongsRecordOnce(
           queryBuilder: (songsRecord) => songsRecord
               .where(
@@ -61,6 +69,8 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
           singleRecord: true,
         ).then((s) => s.firstOrNull);
         if (getCurrentTimestamp <= _model.lastPlayedTrack!.playedTime!) {
+          logFirebaseEvent('devzCopy_backend_call');
+
           await SongsRecord.collection.doc().set(createSongsRecordData(
                 title: getJsonField(
                   (_model.tracks?.jsonBody ?? ''),
@@ -309,11 +319,14 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
                 children: [
                   FFButtonWidget(
                     onPressed: () async {
+                      logFirebaseEvent('DEVZ_COPY_PAGE_BUTTON_BTN_ON_TAP');
+                      logFirebaseEvent('Button_backend_call');
                       _model.playlists =
                           await SpotifyMediaAPIGroup.getPlaylistCall.call(
                         accessToken: FFAppState().accessToken,
                       );
                       if ((_model.playlists?.succeeded ?? true)) {
+                        logFirebaseEvent('Button_update_app_state');
                         setState(() {
                           FFAppState().Playlists = getJsonField(
                             (_model.playlists?.jsonBody ?? ''),
@@ -324,12 +337,14 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
                               .cast<dynamic>();
                         });
                       } else {
+                        logFirebaseEvent('Button_custom_action');
                         _model.spotifyDocDevCopy =
                             await actions.getDocUsingFilter(
                           'userRef',
                           FFAppState().accessToken,
                           'spotify',
                         );
+                        logFirebaseEvent('Button_firestore_query');
                         await querySpotifyRecordOnce(
                           queryBuilder: (spotifyRecord) => spotifyRecord.where(
                             'userRef',
@@ -337,6 +352,7 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
                           ),
                           singleRecord: true,
                         ).then((s) => s.firstOrNull);
+                        logFirebaseEvent('Button_backend_call');
                         _model.accessTokenResDevCopy =
                             await SpotifyAccountAPIGroup
                                 .acqurireNewAccessTokenCall
@@ -346,11 +362,13 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
                           refreshToken: _model.spotifyDocDevCopy?.refreshToken,
                         );
                         if ((_model.accessTokenResDevCopy?.succeeded ?? true)) {
+                          logFirebaseEvent('Button_backend_call');
                           _model.playlists2 =
                               await SpotifyMediaAPIGroup.getProfileCall.call(
                             accessToken: FFAppState().accessToken,
                           );
                           if ((_model.playlists2?.succeeded ?? true)) {
+                            logFirebaseEvent('Button_update_app_state');
                             setState(() {
                               FFAppState().Playlists = getJsonField(
                                 (_model.playlists2?.jsonBody ?? ''),
@@ -370,9 +388,9 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
                     options: FFButtonOptions(
                       height: 40.0,
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                       iconPadding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
@@ -381,7 +399,7 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
                                 letterSpacing: 0.0,
                               ),
                       elevation: 3.0,
-                      borderSide: const BorderSide(
+                      borderSide: BorderSide(
                         color: Colors.transparent,
                         width: 1.0,
                       ),

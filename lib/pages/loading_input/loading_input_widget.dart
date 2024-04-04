@@ -4,10 +4,14 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'loading_input_model.dart';
@@ -104,11 +108,16 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
     super.initState();
     _model = createModel(context, () => LoadingInputModel());
 
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'loadingInput'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('LOADING_INPUT_loadingInput_ON_INIT_STATE');
+      logFirebaseEvent('loadingInput_update_page_state');
       setState(() {
         _model.ten = true;
       });
+      logFirebaseEvent('loadingInput_backend_call');
       _model.sendPhotoURLLoading = await DatacenterAPIGroup.postInputCall.call(
         input: widget.input,
         userRef: currentUserReference?.id,
@@ -116,6 +125,7 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
       if ((_model.sendPhotoURLLoading?.succeeded ?? true)) {
         await Future.wait([
           Future(() async {
+            logFirebaseEvent('loadingInput_backend_call');
             _model.getPlaylist =
                 await DatacenterAPIGroup.getPlaylistURLInputCall.call(
               timestamp: getJsonField(
@@ -125,6 +135,8 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
               userRef: currentUserReference?.id,
             );
             if ((_model.getPlaylist?.succeeded ?? true)) {
+              logFirebaseEvent('loadingInput_backend_call');
+
               await SnaplistsRecord.collection
                   .doc()
                   .set(createSnaplistsRecordData(
@@ -148,6 +160,7 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                       (_model.getPlaylist?.jsonBody ?? ''),
                     ),
                   ));
+              logFirebaseEvent('loadingInput_backend_call');
               _model.startPlayback =
                   await SpotifyMediaAPIGroup.startPlayerCall.call(
                 accessToken: FFAppState().accessToken,
@@ -157,7 +170,8 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                     )
                     .toString(),
               );
-              if ((_model.startPlayback?.succeeded ?? true)) {
+              if (isAndroid) {
+                logFirebaseEvent('loadingInput_launch_u_r_l');
                 unawaited(
                   () async {
                     await launchURL(
@@ -166,29 +180,35 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                     )!);
                   }(),
                 );
+                logFirebaseEvent('loadingInput_navigate_to');
 
                 context.goNamed('HomePage');
 
                 return;
               } else {
+                logFirebaseEvent('loadingInput_launch_u_r_l');
                 unawaited(
                   () async {
-                    await launchURL(
-                        DatacenterAPIGroup.getPlaylistURLInputCall.playlistUrl(
-                      (_model.getPlaylist?.jsonBody ?? ''),
-                    )!);
+                    await launchURL(DatacenterAPIGroup.getPlaylistURLInputCall
+                        .contextUri(
+                          (_model.getPlaylist?.jsonBody ?? ''),
+                        )
+                        .toString());
                   }(),
                 );
+                logFirebaseEvent('loadingInput_navigate_to');
 
                 context.goNamed('HomePage');
 
                 return;
               }
             } else {
+              logFirebaseEvent('loadingInput_update_app_state');
               setState(() {
                 FFAppState().fileBase64 = '';
                 FFAppState().playlistUrl = '';
               });
+              logFirebaseEvent('loadingInput_backend_call');
 
               await FeedbackRecord.collection
                   .doc()
@@ -197,6 +217,7 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                     feedback: 'get_playlist fucked up ',
                     isBug: true,
                   ));
+              logFirebaseEvent('loadingInput_navigate_to');
 
               context.goNamed(
                 'fail',
@@ -207,7 +228,7 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                   ),
                 }.withoutNulls,
                 extra: <String, dynamic>{
-                  kTransitionInfoKey: const TransitionInfo(
+                  kTransitionInfoKey: TransitionInfo(
                     hasTransition: true,
                     transitionType: PageTransitionType.fade,
                     duration: Duration(milliseconds: 0),
@@ -219,7 +240,9 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
             }
           }),
           Future(() async {
+            logFirebaseEvent('loadingInput_wait__delay');
             await Future.delayed(const Duration(milliseconds: 3000));
+            logFirebaseEvent('loadingInput_widget_animation');
             if (animationsMap['textOnActionTriggerAnimation1'] != null) {
               setState(() => hasTextTriggered1 = true);
               SchedulerBinding.instance.addPostFrameCallback((_) async =>
@@ -227,46 +250,59 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                       .controller
                       .forward(from: 0.0));
             }
+            logFirebaseEvent('loadingInput_update_page_state');
             setState(() {
               _model.ten = false;
               _model.twentyNine = true;
             });
+            logFirebaseEvent('loadingInput_wait__delay');
             await Future.delayed(const Duration(milliseconds: 3000));
+            logFirebaseEvent('loadingInput_widget_animation');
             if (animationsMap['textOnActionTriggerAnimation2'] != null) {
               await animationsMap['textOnActionTriggerAnimation2']!
                   .controller
                   .forward(from: 0.0);
             }
+            logFirebaseEvent('loadingInput_update_page_state');
             setState(() {
               _model.twentyNine = false;
               _model.thirtySeven = true;
             });
+            logFirebaseEvent('loadingInput_wait__delay');
             await Future.delayed(const Duration(milliseconds: 3000));
+            logFirebaseEvent('loadingInput_widget_animation');
             if (animationsMap['textOnActionTriggerAnimation3'] != null) {
               await animationsMap['textOnActionTriggerAnimation3']!
                   .controller
                   .forward(from: 0.0);
             }
+            logFirebaseEvent('loadingInput_update_page_state');
             setState(() {
               _model.thirtySeven = false;
               _model.sixtyFive = true;
             });
+            logFirebaseEvent('loadingInput_wait__delay');
             await Future.delayed(const Duration(milliseconds: 3000));
+            logFirebaseEvent('loadingInput_widget_animation');
             if (animationsMap['textOnActionTriggerAnimation4'] != null) {
               await animationsMap['textOnActionTriggerAnimation4']!
                   .controller
                   .forward(from: 0.0);
             }
+            logFirebaseEvent('loadingInput_update_page_state');
             setState(() {
               _model.sixtyFive = false;
               _model.eightyThree = true;
             });
+            logFirebaseEvent('loadingInput_wait__delay');
             await Future.delayed(const Duration(milliseconds: 3000));
+            logFirebaseEvent('loadingInput_widget_animation');
             if (animationsMap['textOnActionTriggerAnimation5'] != null) {
               await animationsMap['textOnActionTriggerAnimation5']!
                   .controller
                   .forward(from: 0.0);
             }
+            logFirebaseEvent('loadingInput_update_page_state');
             setState(() {
               _model.eightyThree = false;
               _model.oneHundred = true;
@@ -275,17 +311,20 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
           }),
         ]);
       } else {
+        logFirebaseEvent('loadingInput_update_app_state');
         setState(() {
           FFAppState().makePhoto = false;
           FFAppState().fileBase64 = '';
           FFAppState().playlistUrl = '';
         });
+        logFirebaseEvent('loadingInput_backend_call');
 
         await FeedbackRecord.collection.doc().set(createFeedbackRecordData(
               userRef: currentUserReference,
               feedback: 'post_image fucked up ',
               isBug: true,
             ));
+        logFirebaseEvent('loadingInput_navigate_to');
 
         context.goNamed(
           'fail',
@@ -296,7 +335,7 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
             ),
           }.withoutNulls,
           extra: <String, dynamic>{
-            kTransitionInfoKey: const TransitionInfo(
+            kTransitionInfoKey: TransitionInfo(
               hasTransition: true,
               transitionType: PageTransitionType.fade,
               duration: Duration(milliseconds: 0),
@@ -335,7 +374,7 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: const Color(0xFF031524),
+          backgroundColor: Color(0xFF031524),
           body: SafeArea(
             top: true,
             child: Column(
@@ -343,10 +382,10 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 100.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 100.0),
                   child: Container(
                     width: double.infinity,
-                    decoration: const BoxDecoration(),
+                    decoration: BoxDecoration(),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -362,7 +401,7 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                               ),
                             ),
                             Align(
-                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               child: CircularPercentIndicator(
                                 percent: () {
                                   if (_model.ten == true) {
@@ -387,17 +426,17 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                                 animateFromLastPercent: true,
                                 progressColor: () {
                                   if (_model.ten == true) {
-                                    return const Color(0xFFEA42B3);
+                                    return Color(0xFFEA42B3);
                                   } else if (_model.twentyNine == true) {
-                                    return const Color(0xFF41E7F6);
+                                    return Color(0xFF41E7F6);
                                   } else if (_model.thirtySeven == true) {
-                                    return const Color(0xFFF2E645);
+                                    return Color(0xFFF2E645);
                                   } else if (_model.sixtyFive == true) {
-                                    return const Color(0xFF3DD1A9);
+                                    return Color(0xFF3DD1A9);
                                   } else if (_model.eightyThree == true) {
-                                    return const Color(0xFFEA42B3);
+                                    return Color(0xFFEA42B3);
                                   } else if (_model.oneHundred == true) {
-                                    return const Color(0xFF41E7F6);
+                                    return Color(0xFF41E7F6);
                                   } else {
                                     return Colors.white;
                                   }
@@ -414,7 +453,7 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                           children: [
                             Container(
                               width: 300.0,
-                              decoration: const BoxDecoration(),
+                              decoration: BoxDecoration(),
                               child: Stack(
                                 children: [
                                   Row(
@@ -424,7 +463,7 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                                       if (_model.ten == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'hmmm let\'s see here...',
@@ -453,7 +492,7 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                                       if (_model.twentyNine == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Thinking about some music you\'ll like ',
@@ -480,7 +519,7 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                                       if (_model.thirtySeven == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Searching Spotify for some tracks',
@@ -507,7 +546,7 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                                       if (_model.sixtyFive == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Curating your Snaplist',
@@ -534,7 +573,7 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                                       if (_model.eightyThree == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Generating a snappy name',
@@ -561,7 +600,7 @@ class _LoadingInputWidgetState extends State<LoadingInputWidget>
                                       if (_model.oneHundred == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Wrapping up...',

@@ -6,6 +6,8 @@ import '/flutter_flow/upload_data.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:record/record.dart';
 import 'voice_modal_model.dart';
@@ -39,6 +41,8 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('VOICE_MODAL_voiceModal_ON_INIT_STATE');
+      logFirebaseEvent('voiceModal_start_audio_recording');
       await startAudioRecording(
         context,
         audioRecorder: _model.audioRecorder ??= AudioRecorder(),
@@ -63,7 +67,9 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
       hoverColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onTap: () async {
-        var shouldSetState = false;
+        logFirebaseEvent('VOICE_MODAL_Container_6qnlewv3_ON_TAP');
+        var _shouldSetState = false;
+        logFirebaseEvent('Container_stop_audio_recording');
         await stopAudioRecording(
           audioRecorder: _model.audioRecorder,
           audioName: 'recordedFileBytes.mp3',
@@ -73,7 +79,8 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
           },
         );
 
-        shouldSetState = true;
+        _shouldSetState = true;
+        logFirebaseEvent('Container_upload_media_to_firebase');
         {
           setState(() => _model.isDataUploading = true);
           var selectedUploadedFiles = <FFUploadedFile>[];
@@ -110,6 +117,7 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
         }
 
         if (widget.isPaused == true) {
+          logFirebaseEvent('Container_backend_call');
           unawaited(
             () async {
               _model.apiResult2c4 =
@@ -118,7 +126,8 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
               );
             }(),
           );
-          shouldSetState = true;
+          _shouldSetState = true;
+          logFirebaseEvent('Container_navigate_to');
 
           context.goNamed(
             'loadingVoice',
@@ -130,9 +139,11 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
             }.withoutNulls,
           );
 
-          if (shouldSetState) setState(() {});
+          if (_shouldSetState) setState(() {});
           return;
         } else {
+          logFirebaseEvent('Container_navigate_to');
+
           context.goNamed(
             'loadingVoice',
             queryParameters: {
@@ -143,16 +154,16 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
             }.withoutNulls,
           );
 
-          if (shouldSetState) setState(() {});
+          if (_shouldSetState) setState(() {});
           return;
         }
 
-        if (shouldSetState) setState(() {});
+        if (_shouldSetState) setState(() {});
       },
       child: Container(
         width: double.infinity,
         height: 370.0,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: Colors.black,
         ),
         child: Column(
@@ -162,25 +173,31 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.asset(
-                    'assets/images/IMG_0242.gif',
-                    width: 200.0,
-                    height: 150.0,
-                    fit: BoxFit.cover,
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.asset(
+                      'assets/images/IMG_0242.gif',
+                      width: 200.0,
+                      height: 150.0,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ],
             ),
-            Text(
-              'Tap to Submit',
-              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                    fontFamily: 'Readex Pro',
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 13.0,
-                    letterSpacing: 0.0,
-                  ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+              child: Text(
+                'Tap to Submit',
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      fontFamily: 'Readex Pro',
+                      color: FlutterFlowTheme.of(context).primaryText,
+                      fontSize: 13.0,
+                      letterSpacing: 0.0,
+                    ),
+              ),
             ),
           ],
         ),

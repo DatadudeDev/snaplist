@@ -16,12 +16,14 @@ import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'home_page_model.dart';
@@ -54,8 +56,8 @@ class _HomePageWidgetState extends State<HomePageWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 300.ms,
-          begin: const Offset(-30.0, 0.0),
-          end: const Offset(0.0, 0.0),
+          begin: Offset(-30.0, 0.0),
+          end: Offset(0.0, 0.0),
         ),
       ],
     ),
@@ -66,12 +68,16 @@ class _HomePageWidgetState extends State<HomePageWidget>
     super.initState();
     _model = createModel(context, () => HomePageModel());
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'HomePage'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('HOME_PAGE_PAGE_HomePage_ON_INIT_STATE');
       await Future.wait([
         Future(() async {
+          logFirebaseEvent('HomePage_backend_call');
           _model.getMoods = await DatacenterAPIGroup.getMoodsCall.call();
           if ((_model.getMoods?.succeeded ?? true)) {
+            logFirebaseEvent('HomePage_update_app_state');
             setState(() {
               FFAppState().moods = DatacenterAPIGroup.getMoodsCall
                   .moodList(
@@ -80,12 +86,15 @@ class _HomePageWidgetState extends State<HomePageWidget>
                   .toList()
                   .cast<dynamic>();
             });
+            logFirebaseEvent('HomePage_update_app_state');
             setState(() {
               FFAppState().makePhoto = false;
               FFAppState().fileBase64 = '';
             });
             return;
           } else {
+            logFirebaseEvent('HomePage_navigate_to');
+
             context.goNamed(
               'fail',
               queryParameters: {
@@ -100,14 +109,24 @@ class _HomePageWidgetState extends State<HomePageWidget>
           }
         }),
         Future(() async {
-          if (FFAppState().refreshToken != '') {
+          if (FFAppState().refreshToken != null &&
+              FFAppState().refreshToken != '') {
+            logFirebaseEvent('HomePage_backend_call');
             _model.refreshAccessToken1 =
                 await SpotifyAccountAPIGroup.acqurireNewAccessTokenCall.call(
               refreshToken: FFAppState().refreshToken,
               base64: functions.toBase64(
                   '66735975625f4a9cbd385f15504e4ee8:eb2113c63dfe496e88fd346e9694b6c1'),
             );
-            if ((_model.refreshAccessToken1?.succeeded ?? true)) {
+            if (SpotifyAccountAPIGroup.acqurireNewAccessTokenCall.accessToken(
+                      (_model.refreshAccessToken1?.jsonBody ?? ''),
+                    ) !=
+                    null &&
+                SpotifyAccountAPIGroup.acqurireNewAccessTokenCall.accessToken(
+                      (_model.refreshAccessToken1?.jsonBody ?? ''),
+                    ) !=
+                    '') {
+              logFirebaseEvent('HomePage_update_app_state');
               setState(() {
                 FFAppState().accessToken = SpotifyAccountAPIGroup
                     .acqurireNewAccessTokenCall
@@ -117,15 +136,13 @@ class _HomePageWidgetState extends State<HomePageWidget>
               });
               return;
             } else {
-              context.goNamed(
+              logFirebaseEvent('HomePage_navigate_to');
+
+              context.pushNamed(
                 'fail',
                 queryParameters: {
                   'failReason': serializeParam(
-                    'failed to refresh the access token with from the App State',
-                    ParamType.String,
-                  ),
-                  'contextUri': serializeParam(
-                    (_model.refreshAccessToken1?.bodyText ?? ''),
+                    'failed to acquire refresh token',
                     ParamType.String,
                   ),
                 }.withoutNulls,
@@ -134,6 +151,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
               return;
             }
           } else {
+            logFirebaseEvent('HomePage_firestore_query');
             _model.getRefreshTokenFromFirebase = await queryAuthRecordOnce(
               queryBuilder: (authRecord) => authRecord
                   .where(
@@ -143,17 +161,21 @@ class _HomePageWidgetState extends State<HomePageWidget>
                   .orderBy('timeCreated', descending: true),
               singleRecord: true,
             ).then((s) => s.firstOrNull);
-            setState(() {
-              FFAppState().refreshToken =
-                  _model.getRefreshTokenFromFirebase!.refreshToken;
-            });
-            _model.refreshAccessToken2 =
-                await SpotifyAccountAPIGroup.acqurireNewAccessTokenCall.call(
-              refreshToken: FFAppState().refreshToken,
-              base64: functions.toBase64(
-                  '66735975625f4a9cbd385f15504e4ee8:eb2113c63dfe496e88fd346e9694b6c1'),
-            );
-            if ((_model.refreshAccessToken2?.succeeded ?? true)) {
+            if (_model.getRefreshTokenFromFirebase?.refreshToken != null &&
+                _model.getRefreshTokenFromFirebase?.refreshToken != '') {
+              logFirebaseEvent('HomePage_update_app_state');
+              setState(() {
+                FFAppState().refreshToken =
+                    _model.getRefreshTokenFromFirebase!.refreshToken;
+              });
+              logFirebaseEvent('HomePage_backend_call');
+              _model.refreshAccessToken2 =
+                  await SpotifyAccountAPIGroup.acqurireNewAccessTokenCall.call(
+                refreshToken: FFAppState().refreshToken,
+                base64: functions.toBase64(
+                    '66735975625f4a9cbd385f15504e4ee8:eb2113c63dfe496e88fd346e9694b6c1'),
+              );
+              logFirebaseEvent('HomePage_update_app_state');
               setState(() {
                 FFAppState().accessToken = SpotifyAccountAPIGroup
                     .acqurireNewAccessTokenCall
@@ -163,17 +185,9 @@ class _HomePageWidgetState extends State<HomePageWidget>
               });
               return;
             } else {
-              context.goNamed(
-                'fail',
-                queryParameters: {
-                  'failReason': serializeParam(
-                    'failed to refresh the access token with from the App State',
-                    ParamType.String,
-                  ),
-                }.withoutNulls,
-              );
+              logFirebaseEvent('HomePage_navigate_to');
 
-              return;
+              context.pushNamed('spotify');
             }
           }
         }),
@@ -220,7 +234,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
               color: FlutterFlowTheme.of(context).secondaryBackground,
             ),
             child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 16.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 16.0),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -228,7 +242,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(28.0, 20.0, 14.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(28.0, 20.0, 14.0, 0.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -238,7 +252,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                               width: 50.0,
                               height: 50.0,
                               clipBehavior: Clip.antiAlias,
-                              decoration: const BoxDecoration(
+                              decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                               ),
                               child: Image.asset(
@@ -249,7 +263,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                           ],
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               10.0, 0.0, 0.0, 0.0),
                           child: Text(
                             'Snaplist',
@@ -267,13 +281,15 @@ class _HomePageWidgetState extends State<HomePageWidget>
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 20.0, 16.0, 10.0),
+                        EdgeInsetsDirectional.fromSTEB(16.0, 20.0, 16.0, 10.0),
                     child: InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
+                        logFirebaseEvent('HOME_PAGE_PAGE_contentView_1_ON_TAP');
+                        logFirebaseEvent('contentView_1_update_page_state');
                         setState(() {
                           _model.isExplore = false;
                           _model.isMenu = false;
@@ -282,8 +298,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                           _model.isRecents = false;
                           _model.isFeedback = false;
                         });
+                        logFirebaseEvent('contentView_1_wait__delay');
                         await Future.delayed(
                             const Duration(milliseconds: 2000));
+                        logFirebaseEvent('contentView_1_update_page_state');
                         setState(() {
                           _model.isProfile = false;
                         });
@@ -297,13 +315,13 @@ class _HomePageWidgetState extends State<HomePageWidget>
                           shape: BoxShape.rectangle,
                         ),
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               12.0, 0.0, 12.0, 0.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 12.0, 12.0, 12.0),
                                 child: Container(
                                   width: 4.0,
@@ -326,7 +344,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                 size: 28.0,
                               ),
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     12.0, 0.0, 0.0, 0.0),
                                 child: Text(
                                   'Profile',
@@ -349,7 +367,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                               ),
                               if (_model.isProfile == true)
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       40.0, 0.0, 0.0, 0.0),
                                   child: Text(
                                     '(coming soon)',
@@ -369,13 +387,15 @@ class _HomePageWidgetState extends State<HomePageWidget>
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 10.0),
+                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 10.0),
                     child: InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
+                        logFirebaseEvent('HOME_PAGE_PAGE_contentView_1_ON_TAP');
+                        logFirebaseEvent('contentView_1_update_page_state');
                         setState(() {
                           _model.isExplore = true;
                           _model.isMenu = false;
@@ -384,8 +404,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                           _model.isRecents = false;
                           _model.isFeedback = false;
                         });
+                        logFirebaseEvent('contentView_1_wait__delay');
                         await Future.delayed(
                             const Duration(milliseconds: 2000));
+                        logFirebaseEvent('contentView_1_update_page_state');
                         setState(() {
                           _model.isExplore = false;
                         });
@@ -399,14 +421,14 @@ class _HomePageWidgetState extends State<HomePageWidget>
                           shape: BoxShape.rectangle,
                         ),
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               12.0, 0.0, 12.0, 0.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 12.0, 12.0, 12.0),
                                 child: Container(
                                   width: 4.0,
@@ -429,7 +451,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                 size: 28.0,
                               ),
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     12.0, 0.0, 0.0, 0.0),
                                 child: Text(
                                   'Explore',
@@ -452,7 +474,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                               ),
                               if (_model.isExplore == true)
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       30.0, 0.0, 0.0, 0.0),
                                   child: Text(
                                     '(coming soon)',
@@ -472,13 +494,15 @@ class _HomePageWidgetState extends State<HomePageWidget>
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 10.0),
+                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 10.0),
                     child: InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
+                        logFirebaseEvent('HOME_PAGE_PAGE_contentView_1_ON_TAP');
+                        logFirebaseEvent('contentView_1_update_page_state');
                         setState(() {
                           _model.isExplore = false;
                           _model.isMenu = false;
@@ -487,8 +511,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                           _model.isRecents = false;
                           _model.isFeedback = false;
                         });
+                        logFirebaseEvent('contentView_1_wait__delay');
                         await Future.delayed(
                             const Duration(milliseconds: 2000));
+                        logFirebaseEvent('contentView_1_update_page_state');
                         setState(() {
                           _model.isSettings = false;
                         });
@@ -502,13 +528,13 @@ class _HomePageWidgetState extends State<HomePageWidget>
                           shape: BoxShape.rectangle,
                         ),
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               12.0, 0.0, 12.0, 0.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 12.0, 12.0, 12.0),
                                 child: Container(
                                   width: 4.0,
@@ -522,25 +548,16 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                   ),
                                 ),
                               ),
-                              InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  context.pushNamed('spotify');
-                                },
-                                child: Icon(
-                                  Icons.settings_rounded,
-                                  color: _model.isSettings == true
-                                      ? FlutterFlowTheme.of(context).primaryText
-                                      : FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                  size: 28.0,
-                                ),
+                              Icon(
+                                Icons.settings_rounded,
+                                color: _model.isSettings == true
+                                    ? FlutterFlowTheme.of(context).primaryText
+                                    : FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                size: 28.0,
                               ),
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     12.0, 0.0, 0.0, 0.0),
                                 child: Text(
                                   'Settings',
@@ -563,7 +580,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                               ),
                               if (_model.isSettings == true)
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       30.0, 0.0, 0.0, 0.0),
                                   child: Text(
                                     '(coming soon)',
@@ -584,11 +601,11 @@ class _HomePageWidgetState extends State<HomePageWidget>
                   Expanded(
                     child: Container(
                       height: 600.0,
-                      decoration: const BoxDecoration(),
+                      decoration: BoxDecoration(),
                       child: Column(
                         children: [
                           Align(
-                            alignment: const Alignment(0.0, 0),
+                            alignment: Alignment(0.0, 0),
                             child: TabBar(
                               labelColor:
                                   FlutterFlowTheme.of(context).primaryText,
@@ -600,11 +617,11 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                     fontFamily: 'Readex Pro',
                                     letterSpacing: 0.0,
                                   ),
-                              unselectedLabelStyle: const TextStyle(),
+                              unselectedLabelStyle: TextStyle(),
                               indicatorColor:
                                   FlutterFlowTheme.of(context).primary,
-                              padding: const EdgeInsets.all(4.0),
-                              tabs: const [
+                              padding: EdgeInsets.all(4.0),
+                              tabs: [
                                 Tab(
                                   text: 'Moods',
                                 ),
@@ -628,7 +645,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                     children: [
                                       Container(
                                         height: 440.0,
-                                        decoration: const BoxDecoration(),
+                                        decoration: BoxDecoration(),
                                         child: Builder(
                                           builder: (context) {
                                             final mood =
@@ -643,7 +660,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                 final moodItem =
                                                     mood[moodIndex];
                                                 return Padding(
-                                                  padding: const EdgeInsetsDirectional
+                                                  padding: EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           0.0, 5.0, 0.0, 5.0),
                                                   child: InkWell(
@@ -656,6 +673,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                     highlightColor:
                                                         Colors.transparent,
                                                     onTap: () async {
+                                                      logFirebaseEvent(
+                                                          'HOME_PAGE_PAGE_Row_cz1wgk14_ON_TAP');
+                                                      logFirebaseEvent(
+                                                          'Row_update_app_state');
                                                       setState(() {
                                                         FFAppState().mood =
                                                             getJsonField(
@@ -663,6 +684,8 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                           r'''$.mood''',
                                                         ).toString();
                                                       });
+                                                      logFirebaseEvent(
+                                                          'Row_navigate_to');
 
                                                       context.goNamed(
                                                         'loadingMood',
@@ -684,7 +707,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                       children: [
                                                         Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
+                                                              EdgeInsetsDirectional
                                                                   .fromSTEB(
                                                                       40.0,
                                                                       0.0,
@@ -696,7 +719,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                             clipBehavior:
                                                                 Clip.antiAlias,
                                                             decoration:
-                                                                const BoxDecoration(
+                                                                BoxDecoration(
                                                               shape: BoxShape
                                                                   .circle,
                                                             ),
@@ -714,7 +737,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                           width: 150.0,
                                                           height: 60.0,
                                                           decoration:
-                                                              const BoxDecoration(),
+                                                              BoxDecoration(),
                                                           child: Column(
                                                             mainAxisSize:
                                                                 MainAxisSize
@@ -722,7 +745,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                             children: [
                                                               Padding(
                                                                 padding:
-                                                                    const EdgeInsetsDirectional
+                                                                    EdgeInsetsDirectional
                                                                         .fromSTEB(
                                                                             20.0,
                                                                             0.0,
@@ -740,7 +763,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                       width:
                                                                           100.0,
                                                                       decoration:
-                                                                          const BoxDecoration(),
+                                                                          BoxDecoration(),
                                                                       child:
                                                                           AutoSizeText(
                                                                         getJsonField(
@@ -765,7 +788,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    const EdgeInsetsDirectional
+                                                                    EdgeInsetsDirectional
                                                                         .fromSTEB(
                                                                             10.0,
                                                                             0.0,
@@ -780,7 +803,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                           .start,
                                                                   children: [
                                                                     Padding(
-                                                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
                                                                           5.0,
                                                                           0.0,
                                                                           0.0,
@@ -792,10 +815,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                         height:
                                                                             40.0,
                                                                         decoration:
-                                                                            const BoxDecoration(),
+                                                                            BoxDecoration(),
                                                                         child:
                                                                             Padding(
-                                                                          padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
                                                                               0.0,
                                                                               5.0,
                                                                               0.0,
@@ -874,10 +897,12 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                               snapshot.data!;
                                           return Container(
                                             height: 440.0,
-                                            decoration: const BoxDecoration(),
+                                            decoration: BoxDecoration(),
                                             child: Stack(
                                               children: [
-                                                if (containerSnaplistsRecordList.isEmpty)
+                                                if (containerSnaplistsRecordList
+                                                        .length ==
+                                                    0)
                                                   Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -891,7 +916,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                         children: [
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
+                                                                EdgeInsetsDirectional
                                                                     .fromSTEB(
                                                                         0.0,
                                                                         20.0,
@@ -921,10 +946,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                           Container(
                                                             width: 200.0,
                                                             decoration:
-                                                                const BoxDecoration(),
+                                                                BoxDecoration(),
                                                             child: Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
+                                                                  EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           0.0,
                                                                           5.0,
@@ -952,7 +977,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
+                                                                EdgeInsetsDirectional
                                                                     .fromSTEB(
                                                                         0.0,
                                                                         15.0,
@@ -977,7 +1002,9 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                       ),
                                                     ],
                                                   ),
-                                                if (containerSnaplistsRecordList.isNotEmpty)
+                                                if (containerSnaplistsRecordList
+                                                        .length >=
+                                                    1)
                                                   Builder(
                                                     builder: (context) {
                                                       final recents =
@@ -998,7 +1025,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                   recentsIndex];
                                                           return Padding(
                                                             padding:
-                                                                const EdgeInsetsDirectional
+                                                                EdgeInsetsDirectional
                                                                     .fromSTEB(
                                                                         0.0,
                                                                         5.0,
@@ -1015,9 +1042,15 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                   Colors
                                                                       .transparent,
                                                               onTap: () async {
+                                                                logFirebaseEvent(
+                                                                    'HOME_PAGE_PAGE_Row_ginmx8r2_ON_TAP');
+                                                                logFirebaseEvent(
+                                                                    'Row_launch_u_r_l');
                                                                 await launchURL(
                                                                     recentsItem
                                                                         .url);
+                                                                logFirebaseEvent(
+                                                                    'Row_drawer');
                                                                 if (scaffoldKey
                                                                         .currentState!
                                                                         .isDrawerOpen ||
@@ -1042,7 +1075,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                     height:
                                                                         200.0,
                                                                     decoration:
-                                                                        const BoxDecoration(),
+                                                                        BoxDecoration(),
                                                                     child:
                                                                         Stack(
                                                                       children: [
@@ -1058,7 +1091,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                                 ClipRRect(
                                                                               borderRadius: BorderRadius.circular(12.0),
                                                                               child: Image.network(
-                                                                                recentsItem.imageUrl,
+                                                                                '${recentsItem.imageUrl}',
                                                                                 width: 260.0,
                                                                                 height: 200.0,
                                                                                 fit: BoxFit.cover,
@@ -1072,7 +1105,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                           height:
                                                                               200.0,
                                                                           decoration:
-                                                                              const BoxDecoration(),
+                                                                              BoxDecoration(),
                                                                           child:
                                                                               Column(
                                                                             mainAxisSize:
@@ -1085,11 +1118,11 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                                                 children: [
                                                                                   Padding(
-                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
                                                                                     child: Container(
                                                                                       width: MediaQuery.sizeOf(context).width * 0.6,
                                                                                       height: 65.0,
-                                                                                      decoration: const BoxDecoration(
+                                                                                      decoration: BoxDecoration(
                                                                                         color: Color(0xAD000000),
                                                                                         borderRadius: BorderRadius.only(
                                                                                           bottomLeft: Radius.circular(12.0),
@@ -1108,7 +1141,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                                             children: [
                                                                                               Container(
                                                                                                 width: 200.0,
-                                                                                                decoration: const BoxDecoration(),
+                                                                                                decoration: BoxDecoration(),
                                                                                                 child: Row(
                                                                                                   mainAxisSize: MainAxisSize.max,
                                                                                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -1119,9 +1152,9 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                                                         Container(
                                                                                                           width: 200.0,
                                                                                                           height: 30.0,
-                                                                                                          decoration: const BoxDecoration(),
+                                                                                                          decoration: BoxDecoration(),
                                                                                                           child: Align(
-                                                                                                            alignment: const AlignmentDirectional(0.0, 0.0),
+                                                                                                            alignment: AlignmentDirectional(0.0, 0.0),
                                                                                                             child: AutoSizeText(
                                                                                                               recentsItem.name,
                                                                                                               textAlign: TextAlign.center,
@@ -1144,14 +1177,14 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                                             ],
                                                                                           ),
                                                                                           Padding(
-                                                                                            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 3.0, 0.0, 0.0),
+                                                                                            padding: EdgeInsetsDirectional.fromSTEB(0.0, 3.0, 0.0, 0.0),
                                                                                             child: Row(
                                                                                               mainAxisSize: MainAxisSize.max,
                                                                                               mainAxisAlignment: MainAxisAlignment.center,
                                                                                               children: [
                                                                                                 Container(
                                                                                                   width: 200.0,
-                                                                                                  decoration: const BoxDecoration(),
+                                                                                                  decoration: BoxDecoration(),
                                                                                                   child: Row(
                                                                                                     mainAxisSize: MainAxisSize.max,
                                                                                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -1161,9 +1194,9 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                                                         children: [
                                                                                                           Container(
                                                                                                             width: 200.0,
-                                                                                                            decoration: const BoxDecoration(),
+                                                                                                            decoration: BoxDecoration(),
                                                                                                             child: Align(
-                                                                                                              alignment: const AlignmentDirectional(0.0, 0.0),
+                                                                                                              alignment: AlignmentDirectional(0.0, 0.0),
                                                                                                               child: AutoSizeText(
                                                                                                                 recentsItem.description,
                                                                                                                 textAlign: TextAlign.center,
@@ -1207,13 +1240,15 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                               children: [
                                                                                 Builder(
                                                                                   builder: (context) => Padding(
-                                                                                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 15.0, 0.0),
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 15.0, 0.0),
                                                                                     child: InkWell(
                                                                                       splashColor: Colors.transparent,
                                                                                       focusColor: Colors.transparent,
                                                                                       hoverColor: Colors.transparent,
                                                                                       highlightColor: Colors.transparent,
                                                                                       onTap: () async {
+                                                                                        logFirebaseEvent('HOME_PAGE_PAGE_Icon_daous6li_ON_TAP');
+                                                                                        logFirebaseEvent('Icon_share');
                                                                                         await Share.share(
                                                                                           recentsItem.url,
                                                                                           sharePositionOrigin: getWidgetBoundingBox(context),
@@ -1265,25 +1300,25 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     ),
                     child: Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          const Divider(
+                          Divider(
                             height: 12.0,
                             thickness: 2.0,
                             color: Color(0xFFE5E7EB),
                           ),
                           Container(
                             height: 50.0,
-                            decoration: const BoxDecoration(),
+                            decoration: BoxDecoration(),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 10.0, 0.0, 10.0),
                                   child: InkWell(
                                     splashColor: Colors.transparent,
@@ -1291,11 +1326,17 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
+                                      logFirebaseEvent(
+                                          'HOME_PAGE_PAGE_lightDark_small_ON_TAP');
                                       if ((Theme.of(context).brightness ==
                                               Brightness.light) ==
                                           true) {
+                                        logFirebaseEvent(
+                                            'lightDark_small_set_dark_mode_settings');
                                         setDarkModeSetting(
                                             context, ThemeMode.dark);
+                                        logFirebaseEvent(
+                                            'lightDark_small_widget_animation');
                                         if (animationsMap[
                                                 'containerOnActionTriggerAnimation'] !=
                                             null) {
@@ -1305,8 +1346,12 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                               .forward(from: 0.0);
                                         }
                                       } else {
+                                        logFirebaseEvent(
+                                            'lightDark_small_set_dark_mode_settings');
                                         setDarkModeSetting(
                                             context, ThemeMode.light);
+                                        logFirebaseEvent(
+                                            'lightDark_small_widget_animation');
                                         if (animationsMap[
                                                 'containerOnActionTriggerAnimation'] !=
                                             null) {
@@ -1326,21 +1371,21 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                         borderRadius:
                                             BorderRadius.circular(20.0),
                                         border: Border.all(
-                                          color: const Color(0xFFE0E3E7),
+                                          color: Color(0xFFE0E3E7),
                                           width: 1.0,
                                         ),
                                       ),
                                       child: Padding(
-                                        padding: const EdgeInsets.all(2.0),
+                                        padding: EdgeInsets.all(2.0),
                                         child: Stack(
                                           alignment:
-                                              const AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.0, 0.0),
                                           children: [
                                             Align(
-                                              alignment: const AlignmentDirectional(
+                                              alignment: AlignmentDirectional(
                                                   -0.9, 0.0),
                                               child: Padding(
-                                                padding: const EdgeInsetsDirectional
+                                                padding: EdgeInsetsDirectional
                                                     .fromSTEB(
                                                         6.0, 0.0, 0.0, 0.0),
                                                 child: Icon(
@@ -1353,10 +1398,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                               ),
                                             ),
                                             Align(
-                                              alignment: const AlignmentDirectional(
+                                              alignment: AlignmentDirectional(
                                                   1.0, 0.0),
                                               child: Padding(
-                                                padding: const EdgeInsetsDirectional
+                                                padding: EdgeInsetsDirectional
                                                     .fromSTEB(
                                                         0.0, 0.0, 6.0, 0.0),
                                                 child: Icon(
@@ -1369,7 +1414,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                               ),
                                             ),
                                             Align(
-                                              alignment: const AlignmentDirectional(
+                                              alignment: AlignmentDirectional(
                                                   1.0, 0.0),
                                               child: Container(
                                                 width: 25.0,
@@ -1378,7 +1423,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryText,
-                                                  boxShadow: const [
+                                                  boxShadow: [
                                                     BoxShadow(
                                                       blurRadius: 4.0,
                                                       color: Color(0x430B0D0F),
@@ -1406,6 +1451,9 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                 ),
                                 FFButtonWidget(
                                   onPressed: () async {
+                                    logFirebaseEvent(
+                                        'HOME_PAGE_PAGE_FEEDBACK_BTN_ON_TAP');
+                                    logFirebaseEvent('Button_drawer');
                                     if (scaffoldKey
                                             .currentState!.isDrawerOpen ||
                                         scaffoldKey
@@ -1413,6 +1461,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                       Navigator.pop(context);
                                     }
 
+                                    logFirebaseEvent('Button_bottom_sheet');
                                     await showModalBottomSheet(
                                       isScrollControlled: true,
                                       backgroundColor: Colors.transparent,
@@ -1429,7 +1478,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                           child: Padding(
                                             padding: MediaQuery.viewInsetsOf(
                                                 context),
-                                            child: const FeedbackModalWidget(),
+                                            child: FeedbackModalWidget(),
                                           ),
                                         );
                                       },
@@ -1439,9 +1488,9 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                   options: FFButtonOptions(
                                     width: 80.0,
                                     height: 30.0,
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
                                         6.0, 0.0, 6.0, 0.0),
-                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 0.0),
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryBackground,
@@ -1464,6 +1513,9 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                 ),
                                 FFButtonWidget(
                                   onPressed: () async {
+                                    logFirebaseEvent(
+                                        'HOME_PAGE_PAGE_LOG_OUT_BTN_ON_TAP');
+                                    logFirebaseEvent('Button_update_app_state');
                                     setState(() {
                                       FFAppState().makePhoto = false;
                                       FFAppState().fileBase64 = '';
@@ -1489,6 +1541,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                       FFAppState().moodDescription = [];
                                       FFAppState().moodUrl = [];
                                     });
+                                    logFirebaseEvent('Button_auth');
                                     GoRouter.of(context).prepareAuthEvent();
                                     await authManager.signOut();
                                     GoRouter.of(context)
@@ -1501,9 +1554,9 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                   options: FFButtonOptions(
                                     width: 80.0,
                                     height: 30.0,
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
                                         6.0, 0.0, 6.0, 0.0),
-                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 0.0),
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryBackground,
@@ -1540,7 +1593,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
           top: true,
           child: Stack(
             children: [
-              const SizedBox(
+              Container(
                 width: double.infinity,
                 height: double.infinity,
                 child: custom_widgets.CameraPhoto(
@@ -1549,7 +1602,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                 ),
               ),
               Align(
-                alignment: const AlignmentDirectional(0.0, 1.0),
+                alignment: AlignmentDirectional(0.0, 1.0),
                 child: Container(
                   decoration: BoxDecoration(
                     color: (Theme.of(context).brightness == Brightness.dark) ==
@@ -1560,7 +1613,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                       color: Colors.black,
                     ),
                   ),
-                  child: SizedBox(
+                  child: Container(
                     width: double.infinity,
                     height: 180.0,
                     child: CarouselSlider(
@@ -1583,18 +1636,22 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                             Brightness.dark) ==
                                         true
                                     ? FlutterFlowTheme.of(context).warning
-                                    : const Color(0xFFD8AE2E),
+                                    : Color(0xFFD8AE2E),
                                 size: 50.0,
                               ),
                               onPressed: () async {
-                                var shouldSetState = false;
+                                logFirebaseEvent(
+                                    'HOME_PAGE_PAGE_microphoneAlt_ICN_ON_TAP');
+                                var _shouldSetState = false;
+                                logFirebaseEvent('IconButton_backend_call');
                                 _model.pauseMusic = await SpotifyMediaAPIGroup
                                     .pauseMusicCall
                                     .call(
                                   accessToken: FFAppState().accessToken,
                                 );
-                                shouldSetState = true;
+                                _shouldSetState = true;
                                 if ((_model.pauseMusic?.succeeded ?? true)) {
+                                  logFirebaseEvent('IconButton_bottom_sheet');
                                   await showModalBottomSheet(
                                     isScrollControlled: true,
                                     backgroundColor: Colors.transparent,
@@ -1611,7 +1668,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                         child: Padding(
                                           padding:
                                               MediaQuery.viewInsetsOf(context),
-                                          child: const VoiceModalWidget(
+                                          child: VoiceModalWidget(
                                             isPaused: true,
                                           ),
                                         ),
@@ -1619,9 +1676,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                     },
                                   ).then((value) => safeSetState(() {}));
 
-                                  if (shouldSetState) setState(() {});
+                                  if (_shouldSetState) setState(() {});
                                   return;
                                 } else {
+                                  logFirebaseEvent('IconButton_bottom_sheet');
                                   await showModalBottomSheet(
                                     isScrollControlled: true,
                                     backgroundColor: Colors.transparent,
@@ -1638,7 +1696,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                         child: Padding(
                                           padding:
                                               MediaQuery.viewInsetsOf(context),
-                                          child: const VoiceModalWidget(
+                                          child: VoiceModalWidget(
                                             isPaused: false,
                                           ),
                                         ),
@@ -1646,11 +1704,11 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                     },
                                   ).then((value) => safeSetState(() {}));
 
-                                  if (shouldSetState) setState(() {});
+                                  if (_shouldSetState) setState(() {});
                                   return;
                                 }
 
-                                if (shouldSetState) setState(() {});
+                                if (_shouldSetState) setState(() {});
                               },
                             ),
                           ],
@@ -1672,11 +1730,14 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                 color: (Theme.of(context).brightness ==
                                             Brightness.dark) ==
                                         true
-                                    ? const Color(0xFF3DD1A9)
-                                    : const Color(0xFF46BBAF),
+                                    ? Color(0xFF3DD1A9)
+                                    : Color(0xFF46BBAF),
                                 size: 50.0,
                               ),
                               onPressed: () async {
+                                logFirebaseEvent(
+                                    'HOME_PAGE_PAGE_keyboard_hide_ICN_ON_TAP');
+                                logFirebaseEvent('IconButton_bottom_sheet');
                                 await showModalBottomSheet(
                                   isScrollControlled: true,
                                   backgroundColor: FlutterFlowTheme.of(context)
@@ -1693,7 +1754,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                       child: Padding(
                                         padding:
                                             MediaQuery.viewInsetsOf(context),
-                                        child: const InputModalWidget(),
+                                        child: InputModalWidget(),
                                       ),
                                     );
                                   },
@@ -1732,6 +1793,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
+                                    logFirebaseEvent(
+                                        'HOME_PAGE_PAGE_Image_1vk3caxn_ON_TAP');
+                                    logFirebaseEvent(
+                                        'Image_upload_media_to_firebase');
                                     final selectedMedia = await selectMedia(
                                       maxWidth: 600.00,
                                       maxHeight: 600.00,
@@ -1789,6 +1854,8 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                       }
                                     }
 
+                                    logFirebaseEvent('Image_navigate_to');
+
                                     context.goNamed(
                                       'loadingImage',
                                       queryParameters: {
@@ -1800,6 +1867,9 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                     );
                                   },
                                   onLongPress: () async {
+                                    logFirebaseEvent(
+                                        'HOME_Image_1vk3caxn_ON_LONG_PRESS');
+                                    logFirebaseEvent('Image_drawer');
                                     scaffoldKey.currentState!.openDrawer();
                                   },
                                   child: ClipRRect(
@@ -1823,105 +1893,103 @@ class _HomePageWidgetState extends State<HomePageWidget>
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onLongPress: () async {
-                                context.pushNamed('devz');
-                              },
-                              child: FlutterFlowIconButton(
-                                borderColor:
-                                    FlutterFlowTheme.of(context).primaryText,
-                                borderRadius: 50.0,
-                                borderWidth: 1.0,
-                                buttonSize: 70.0,
-                                fillColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                icon: Icon(
-                                  Icons.upload_file,
-                                  color: (Theme.of(context).brightness ==
-                                              Brightness.dark) ==
-                                          true
-                                      ? const Color(0xFFD78CFF)
-                                      : const Color(0xFFC45AFF),
-                                  size: 50.0,
-                                ),
-                                onPressed: () async {
-                                  final selectedMedia = await selectMedia(
-                                    maxWidth: 600.00,
-                                    maxHeight: 600.00,
-                                    imageQuality: 50,
-                                    mediaSource: MediaSource.photoGallery,
-                                    multiImage: false,
-                                  );
-                                  if (selectedMedia != null &&
-                                      selectedMedia.every((m) =>
-                                          validateFileFormat(
-                                              m.storagePath, context))) {
-                                    setState(
-                                        () => _model.isDataUploading2 = true);
-                                    var selectedUploadedFiles =
-                                        <FFUploadedFile>[];
-
-                                    var downloadUrls = <String>[];
-                                    try {
-                                      selectedUploadedFiles = selectedMedia
-                                          .map((m) => FFUploadedFile(
-                                                name: m.storagePath
-                                                    .split('/')
-                                                    .last,
-                                                bytes: m.bytes,
-                                                height: m.dimensions?.height,
-                                                width: m.dimensions?.width,
-                                                blurHash: m.blurHash,
-                                              ))
-                                          .toList();
-
-                                      downloadUrls = (await Future.wait(
-                                        selectedMedia.map(
-                                          (m) async => await uploadData(
-                                              m.storagePath, m.bytes),
-                                        ),
-                                      ))
-                                          .where((u) => u != null)
-                                          .map((u) => u!)
-                                          .toList();
-                                    } finally {
-                                      _model.isDataUploading2 = false;
-                                    }
-                                    if (selectedUploadedFiles.length ==
-                                            selectedMedia.length &&
-                                        downloadUrls.length ==
-                                            selectedMedia.length) {
-                                      setState(() {
-                                        _model.uploadedLocalFile2 =
-                                            selectedUploadedFiles.first;
-                                        _model.uploadedFileUrl2 =
-                                            downloadUrls.first;
-                                      });
-                                    } else {
-                                      setState(() {});
-                                      return;
-                                    }
-                                  }
-
-                                  if (_model.uploadedFileUrl2 != '') {
-                                    context.goNamed(
-                                      'loadingUpload',
-                                      queryParameters: {
-                                        'url': serializeParam(
-                                          _model.uploadedFileUrl2,
-                                          ParamType.String,
-                                        ),
-                                      }.withoutNulls,
-                                    );
-                                  } else {
-                                    context.safePop();
-                                  }
-                                },
+                            FlutterFlowIconButton(
+                              borderColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              borderRadius: 50.0,
+                              borderWidth: 1.0,
+                              buttonSize: 70.0,
+                              fillColor: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              icon: Icon(
+                                Icons.upload_file,
+                                color: (Theme.of(context).brightness ==
+                                            Brightness.dark) ==
+                                        true
+                                    ? Color(0xFFD78CFF)
+                                    : Color(0xFFC45AFF),
+                                size: 50.0,
                               ),
+                              onPressed: () async {
+                                logFirebaseEvent(
+                                    'HOME_PAGE_PAGE_upload_file_ICN_ON_TAP');
+                                logFirebaseEvent(
+                                    'IconButton_upload_media_to_firebase');
+                                final selectedMedia = await selectMedia(
+                                  maxWidth: 600.00,
+                                  maxHeight: 600.00,
+                                  imageQuality: 50,
+                                  mediaSource: MediaSource.photoGallery,
+                                  multiImage: false,
+                                );
+                                if (selectedMedia != null &&
+                                    selectedMedia.every((m) =>
+                                        validateFileFormat(
+                                            m.storagePath, context))) {
+                                  setState(
+                                      () => _model.isDataUploading2 = true);
+                                  var selectedUploadedFiles =
+                                      <FFUploadedFile>[];
+
+                                  var downloadUrls = <String>[];
+                                  try {
+                                    selectedUploadedFiles = selectedMedia
+                                        .map((m) => FFUploadedFile(
+                                              name:
+                                                  m.storagePath.split('/').last,
+                                              bytes: m.bytes,
+                                              height: m.dimensions?.height,
+                                              width: m.dimensions?.width,
+                                              blurHash: m.blurHash,
+                                            ))
+                                        .toList();
+
+                                    downloadUrls = (await Future.wait(
+                                      selectedMedia.map(
+                                        (m) async => await uploadData(
+                                            m.storagePath, m.bytes),
+                                      ),
+                                    ))
+                                        .where((u) => u != null)
+                                        .map((u) => u!)
+                                        .toList();
+                                  } finally {
+                                    _model.isDataUploading2 = false;
+                                  }
+                                  if (selectedUploadedFiles.length ==
+                                          selectedMedia.length &&
+                                      downloadUrls.length ==
+                                          selectedMedia.length) {
+                                    setState(() {
+                                      _model.uploadedLocalFile2 =
+                                          selectedUploadedFiles.first;
+                                      _model.uploadedFileUrl2 =
+                                          downloadUrls.first;
+                                    });
+                                  } else {
+                                    setState(() {});
+                                    return;
+                                  }
+                                }
+
+                                if (_model.uploadedFileUrl2 != null &&
+                                    _model.uploadedFileUrl2 != '') {
+                                  logFirebaseEvent('IconButton_navigate_to');
+
+                                  context.goNamed(
+                                    'loadingUpload',
+                                    queryParameters: {
+                                      'url': serializeParam(
+                                        _model.uploadedFileUrl2,
+                                        ParamType.String,
+                                      ),
+                                    }.withoutNulls,
+                                  );
+                                } else {
+                                  logFirebaseEvent('IconButton_navigate_back');
+                                  context.safePop();
+                                }
+                              },
                             ),
                           ],
                         ),
@@ -1942,23 +2010,26 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                 color: (Theme.of(context).brightness ==
                                             Brightness.dark) ==
                                         true
-                                    ? const Color(0xFF75CEF1)
-                                    : const Color(0xFF47B1F5),
+                                    ? Color(0xFF75CEF1)
+                                    : Color(0xFF47B1F5),
                                 size: 50.0,
                               ),
                               onPressed: () async {
+                                logFirebaseEvent(
+                                    'HOME_PAGE_PAGE_userAstronaut_ICN_ON_TAP');
+                                logFirebaseEvent('IconButton_alert_dialog');
                                 await showDialog(
                                   context: context,
                                   builder: (alertDialogContext) {
                                     return AlertDialog(
-                                      title: const Text('Coming Soon'),
-                                      content: const Text(
-                                          'Voice Input, powered by Whisper, is coming soon!'),
+                                      title: Text('Coming Soon'),
+                                      content: Text(
+                                          'Full “Moods” Panel is coming soon :)'),
                                       actions: [
                                         TextButton(
                                           onPressed: () =>
                                               Navigator.pop(alertDialogContext),
-                                          child: const Text('Ok'),
+                                          child: Text('Ok'),
                                         ),
                                       ],
                                     );

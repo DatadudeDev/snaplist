@@ -3,6 +3,9 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'forgot_model.dart';
 export 'forgot_model.dart';
 
@@ -23,6 +26,7 @@ class _ForgotWidgetState extends State<ForgotWidget> {
     super.initState();
     _model = createModel(context, () => ForgotModel());
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'forgot'});
     _model.emailAddressController ??= TextEditingController();
     _model.emailAddressFocusNode ??= FocusNode();
   }
@@ -57,7 +61,7 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
                       child: Icon(
                         Icons.arrow_back_rounded,
                         color: FlutterFlowTheme.of(context).primaryText,
@@ -77,13 +81,13 @@ class _ForgotWidgetState extends State<ForgotWidget> {
             ),
           ),
           Align(
-            alignment: const AlignmentDirectional(0.0, -1.0),
+            alignment: AlignmentDirectional(0.0, -1.0),
             child: Container(
               width: double.infinity,
-              constraints: const BoxConstraints(
+              constraints: BoxConstraints(
                 maxWidth: 570.0,
               ),
-              decoration: const BoxDecoration(),
+              decoration: BoxDecoration(),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,20 +100,22 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                   ))
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 8.0),
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 8.0),
                       child: InkWell(
                         splashColor: Colors.transparent,
                         focusColor: Colors.transparent,
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
+                          logFirebaseEvent('FORGOT_PAGE_Row_dmwsl82u_ON_TAP');
+                          logFirebaseEvent('Row_navigate_back');
                           context.safePop();
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 12.0, 0.0, 12.0),
                               child: Icon(
                                 Icons.arrow_back_rounded,
@@ -118,7 +124,7 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   12.0, 0.0, 0.0, 0.0),
                               child: Text(
                                 'Back',
@@ -136,7 +142,7 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                     ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 10.0, 0.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(16.0, 10.0, 0.0, 0.0),
                     child: Text(
                       'Forgot Password',
                       style:
@@ -148,7 +154,7 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 4.0),
+                        EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 4.0),
                     child: Text(
                       'We will send you an email with a link to reset your password, please enter the email associated with your account below.',
                       style: FlutterFlowTheme.of(context).labelMedium.override(
@@ -159,13 +165,13 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                    child: SizedBox(
+                        EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                    child: Container(
                       width: double.infinity,
                       child: TextFormField(
                         controller: _model.emailAddressController,
                         focusNode: _model.emailAddressFocusNode,
-                        autofillHints: const [AutofillHints.email],
+                        autofillHints: [AutofillHints.email],
                         obscureText: false,
                         decoration: InputDecoration(
                           labelText: 'Your email address...',
@@ -211,7 +217,7 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                           filled: true,
                           fillColor:
                               FlutterFlowTheme.of(context).secondaryBackground,
-                          contentPadding: const EdgeInsetsDirectional.fromSTEB(
+                          contentPadding: EdgeInsetsDirectional.fromSTEB(
                               24.0, 24.0, 20.0, 24.0),
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -228,15 +234,17 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                     ),
                   ),
                   Align(
-                    alignment: const AlignmentDirectional(0.0, 0.0),
+                    alignment: AlignmentDirectional(0.0, 0.0),
                     child: Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                       child: FFButtonWidget(
                         onPressed: () async {
+                          logFirebaseEvent('FORGOT_PAGE_Button-Login_ON_TAP');
+                          logFirebaseEvent('Button-Login_auth');
                           if (_model.emailAddressController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
+                              SnackBar(
                                 content: Text(
                                   'Email required!',
                                 ),
@@ -248,20 +256,24 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                             email: _model.emailAddressController.text,
                             context: context,
                           );
+                          logFirebaseEvent('Button-Login_wait__delay');
                           await Future.delayed(
                               const Duration(milliseconds: 3000));
+                          logFirebaseEvent(
+                              'Button-Login_clear_text_fields_pin_codes');
                           setState(() {
                             _model.emailAddressController?.clear();
                           });
+                          logFirebaseEvent('Button-Login_navigate_back');
                           context.safePop();
                         },
                         text: 'Send Link',
                         options: FFButtonOptions(
                           width: 270.0,
                           height: 50.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: FlutterFlowTheme.of(context).primary,
                           textStyle:
@@ -270,7 +282,7 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                                     letterSpacing: 0.0,
                                   ),
                           elevation: 3.0,
-                          borderSide: const BorderSide(
+                          borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1.0,
                           ),

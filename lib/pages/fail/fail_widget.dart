@@ -1,7 +1,11 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'fail_model.dart';
 export 'fail_model.dart';
 
@@ -30,6 +34,8 @@ class _FailWidgetState extends State<FailWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => FailModel());
+
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'fail'});
   }
 
   @override
@@ -69,7 +75,7 @@ class _FailWidgetState extends State<FailWidget> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -80,7 +86,7 @@ class _FailWidgetState extends State<FailWidget> {
                         Container(
                           width: 300.0,
                           height: 30.0,
-                          decoration: const BoxDecoration(),
+                          decoration: BoxDecoration(),
                           child: AutoSizeText(
                             'Something has gone horribly wrong. Please restart the app the continue.\n\n',
                             textAlign: TextAlign.center,
@@ -101,13 +107,13 @@ class _FailWidgetState extends State<FailWidget> {
               Container(
                 width: MediaQuery.sizeOf(context).width * 0.9,
                 height: 400.0,
-                decoration: const BoxDecoration(),
+                decoration: BoxDecoration(),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                       child: Text(
                         valueOrDefault<String>(
                           widget.failReason,
@@ -121,7 +127,7 @@ class _FailWidgetState extends State<FailWidget> {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                       child: Text(
                         valueOrDefault<String>(
                           widget.raw,
@@ -135,7 +141,7 @@ class _FailWidgetState extends State<FailWidget> {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                       child: Text(
                         valueOrDefault<String>(
                           widget.contextUri,

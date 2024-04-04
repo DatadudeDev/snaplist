@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
@@ -32,7 +33,7 @@ class AccessRefreshTokenCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Basic $base64',
+        'Authorization': 'Basic ${base64}',
       },
       params: {
         'grant_type': "authorization_code",
@@ -69,7 +70,7 @@ class AcqurireNewAccessTokenCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Basic $base64',
+        'Authorization': 'Basic ${base64}',
       },
       params: {
         'grant_type': "refresh_token",
@@ -117,7 +118,7 @@ class RecentlyPlayedTracksCall {
       apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/me/player/recently-played',
       callType: ApiCallType.GET,
       headers: {
-        'Authorization': 'Bearer $accessToken',
+        'Authorization': 'Bearer ${accessToken}',
       },
       params: {},
       returnBody: true,
@@ -138,7 +139,7 @@ class GetPlaylistCall {
       apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/me/playlists',
       callType: ApiCallType.GET,
       headers: {
-        'Authorization': 'Bearer $accessToken',
+        'Authorization': 'Bearer ${accessToken}',
       },
       params: {},
       returnBody: true,
@@ -159,7 +160,7 @@ class GetProfileCall {
       apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/me/',
       callType: ApiCallType.GET,
       headers: {
-        'Authorization': 'Bearer $accessToken',
+        'Authorization': 'Bearer ${accessToken}',
       },
       params: {
         'access_token': accessToken,
@@ -185,10 +186,10 @@ class GetPlaylistImagesCall {
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'get Playlist Images',
-      apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/playlists/$id/images',
+      apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/playlists/${id}/images',
       callType: ApiCallType.GET,
       headers: {
-        'Authorization': 'Bearer $accessToken',
+        'Authorization': 'Bearer ${accessToken}',
       },
       params: {
         'id': id,
@@ -214,7 +215,7 @@ class GetDeviceIDCall {
       apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/me/player/devices',
       callType: ApiCallType.GET,
       headers: {
-        'Authorization': 'Bearer $accessToken',
+        'Authorization': 'Bearer ${accessToken}',
       },
       params: {},
       returnBody: true,
@@ -293,14 +294,14 @@ class StartPlayerCall {
   }) async {
     final ffApiRequestBody = '''
 {
-  "context_uri": "$contextUri"
+  "context_uri": "${contextUri}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'start Player',
       apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/me/player/play',
       callType: ApiCallType.PUT,
       headers: {
-        'Authorization': 'Bearer $accessToken',
+        'Authorization': 'Bearer ${accessToken}',
         'Content-Type': 'application/json',
       },
       params: {},
@@ -324,7 +325,7 @@ class ResumeMusicCall {
       apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/me/player/play',
       callType: ApiCallType.PUT,
       headers: {
-        'Authorization': 'Bearer $accessToken',
+        'Authorization': 'Bearer ${accessToken}',
       },
       params: {},
       bodyType: BodyType.NONE,
@@ -346,7 +347,7 @@ class PauseMusicCall {
       apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/me/player/pause',
       callType: ApiCallType.PUT,
       headers: {
-        'Authorization': 'Bearer $accessToken',
+        'Authorization': 'Bearer ${accessToken}',
       },
       params: {},
       bodyType: BodyType.NONE,
@@ -385,8 +386,8 @@ class SendUploadedImageCall {
   }) async {
     final ffApiRequestBody = '''
 {
-  "image": "$imageBase64",
-  "userRef": "$userRef"
+  "image": "${imageBase64}",
+  "userRef": "${userRef}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Send Uploaded Image',
@@ -419,8 +420,8 @@ class SendUploadedImageCopyCall {
   }) async {
     final ffApiRequestBody = '''
 {
-  "imageUrl": "$imageUrl",
-  "userRef": "$userRef"
+  "imageUrl": "${imageUrl}",
+  "userRef": "${userRef}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Send Uploaded Image Copy',
@@ -617,8 +618,8 @@ class PostMoodCall {
   }) async {
     final ffApiRequestBody = '''
 {
-  "mood": "$mood",
-  "userRef": "$userRef"
+  "mood": "${mood}",
+  "userRef": "${userRef}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Post Mood',
@@ -646,8 +647,8 @@ class PostInputCall {
   }) async {
     final ffApiRequestBody = '''
 {
-  "input": "$input",
-  "userRef": "$userRef"
+  "input": "${input}",
+  "userRef": "${userRef}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Post Input',
@@ -675,8 +676,8 @@ class PostVoiceCall {
   }) async {
     final ffApiRequestBody = '''
 {
-  "voice": "$voice",
-  "userRef": "$userRef"
+  "voice": "${voice}",
+  "userRef": "${userRef}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Post Voice',

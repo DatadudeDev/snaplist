@@ -7,7 +7,10 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'login_model.dart';
 export 'login_model.dart';
 
@@ -40,8 +43,8 @@ class _LoginWidgetState extends State<LoginWidget>
           curve: Curves.bounceOut,
           delay: 0.ms,
           duration: 300.ms,
-          begin: const Offset(0.6, 0.6),
-          end: const Offset(1.0, 1.0),
+          begin: Offset(0.6, 0.6),
+          end: Offset(1.0, 1.0),
         ),
       ],
     ),
@@ -60,8 +63,8 @@ class _LoginWidgetState extends State<LoginWidget>
           curve: Curves.easeInOut,
           delay: 100.ms,
           duration: 400.ms,
-          begin: const Offset(0.0, 30.0),
-          end: const Offset(0.0, 0.0),
+          begin: Offset(0.0, 30.0),
+          end: Offset(0.0, 0.0),
         ),
       ],
     ),
@@ -80,8 +83,8 @@ class _LoginWidgetState extends State<LoginWidget>
           curve: Curves.easeInOut,
           delay: 150.ms,
           duration: 400.ms,
-          begin: const Offset(0.0, 30.0),
-          end: const Offset(0.0, 0.0),
+          begin: Offset(0.0, 30.0),
+          end: Offset(0.0, 0.0),
         ),
       ],
     ),
@@ -99,15 +102,15 @@ class _LoginWidgetState extends State<LoginWidget>
           curve: Curves.easeInOut,
           delay: 200.ms,
           duration: 400.ms,
-          begin: const Offset(0.0, 60.0),
-          end: const Offset(0.0, 0.0),
+          begin: Offset(0.0, 60.0),
+          end: Offset(0.0, 0.0),
         ),
         TiltEffect(
           curve: Curves.easeInOut,
           delay: 200.ms,
           duration: 400.ms,
-          begin: const Offset(-0.349, 0),
-          end: const Offset(0, 0),
+          begin: Offset(-0.349, 0),
+          end: Offset(0, 0),
         ),
       ],
     ),
@@ -118,8 +121,11 @@ class _LoginWidgetState extends State<LoginWidget>
     super.initState();
     _model = createModel(context, () => LoginModel());
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'login'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('LOGIN_PAGE_login_ON_INIT_STATE');
+      logFirebaseEvent('login_set_dark_mode_settings');
       setDarkModeSetting(context, ThemeMode.dark);
     });
 
@@ -163,12 +169,12 @@ class _LoginWidgetState extends State<LoginWidget>
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        const Color(0x00FFFFFF),
+                        Color(0x00FFFFFF),
                         FlutterFlowTheme.of(context).secondaryBackground
                       ],
-                      stops: const [0.0, 1.0],
-                      begin: const AlignmentDirectional(0.0, -1.0),
-                      end: const AlignmentDirectional(0, 1.0),
+                      stops: [0.0, 1.0],
+                      begin: AlignmentDirectional(0.0, -1.0),
+                      end: AlignmentDirectional(0, 1.0),
                     ),
                   ),
                   child: Column(
@@ -177,12 +183,12 @@ class _LoginWidgetState extends State<LoginWidget>
                     children: [
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 45.0, 0.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 60.0, 0.0, 0.0),
                         child: Container(
                           width: 100.0,
                           height: 100.0,
                           decoration: BoxDecoration(
-                            color: const Color(0x00FFFFFF),
+                            color: Color(0x00FFFFFF),
                             borderRadius: BorderRadius.circular(16.0),
                           ),
                           child: Opacity(
@@ -191,7 +197,7 @@ class _LoginWidgetState extends State<LoginWidget>
                               width: 120.0,
                               height: 120.0,
                               clipBehavior: Clip.antiAlias,
-                              decoration: const BoxDecoration(
+                              decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                               ),
                               child: Image.asset(
@@ -205,7 +211,7 @@ class _LoginWidgetState extends State<LoginWidget>
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                         child: Text(
                           'Sign In',
                           style: FlutterFlowTheme.of(context)
@@ -219,7 +225,7 @@ class _LoginWidgetState extends State<LoginWidget>
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                         child: Text(
                           'or create an account below:',
                           style:
@@ -235,24 +241,24 @@ class _LoginWidgetState extends State<LoginWidget>
                 ),
               ),
               Align(
-                alignment: const AlignmentDirectional(0.0, 0.0),
+                alignment: AlignmentDirectional(0.0, 0.0),
                 child: Padding(
                   padding:
-                      const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
+                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
-                        child: SizedBox(
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
+                        child: Container(
                           width: double.infinity,
                           child: TextFormField(
                             controller: _model.emailAddressController,
                             focusNode: _model.emailAddressFocusNode,
                             autofocus: true,
-                            autofillHints: const [AutofillHints.email],
+                            autofillHints: [AutofillHints.email],
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Email',
@@ -293,7 +299,7 @@ class _LoginWidgetState extends State<LoginWidget>
                               filled: true,
                               fillColor: FlutterFlowTheme.of(context)
                                   .secondaryBackground,
-                              contentPadding: const EdgeInsets.all(24.0),
+                              contentPadding: EdgeInsets.all(24.0),
                             ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
@@ -310,14 +316,14 @@ class _LoginWidgetState extends State<LoginWidget>
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
-                        child: SizedBox(
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+                        child: Container(
                           width: double.infinity,
                           child: TextFormField(
                             controller: _model.passwordController,
                             focusNode: _model.passwordFocusNode,
                             autofocus: false,
-                            autofillHints: const [AutofillHints.password],
+                            autofillHints: [AutofillHints.password],
                             obscureText: !_model.passwordVisibility,
                             decoration: InputDecoration(
                               labelText: 'Password',
@@ -358,7 +364,7 @@ class _LoginWidgetState extends State<LoginWidget>
                               filled: true,
                               fillColor: FlutterFlowTheme.of(context)
                                   .secondaryBackground,
-                              contentPadding: const EdgeInsets.all(24.0),
+                              contentPadding: EdgeInsets.all(24.0),
                               suffixIcon: InkWell(
                                 onTap: () => setState(
                                   () => _model.passwordVisibility =
@@ -392,10 +398,13 @@ class _LoginWidgetState extends State<LoginWidget>
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 25.0, 0.0, 0.0, 0.0),
                             child: FFButtonWidget(
                               onPressed: () async {
+                                logFirebaseEvent(
+                                    'LOGIN_PAGE_SIGNUP_BTN_ON_TAP');
+                                logFirebaseEvent('Button_auth');
                                 GoRouter.of(context).prepareAuthEvent();
 
                                 final user =
@@ -414,8 +423,12 @@ class _LoginWidgetState extends State<LoginWidget>
                                       createdTime: getCurrentTimestamp,
                                     ));
 
+                                logFirebaseEvent('Button_navigate_to');
+
                                 context.goNamedAuth('spotify', context.mounted);
 
+                                logFirebaseEvent(
+                                    'Button_clear_text_fields_pin_codes');
                                 setState(() {
                                   _model.emailAddressController?.clear();
                                   _model.passwordController?.clear();
@@ -425,9 +438,9 @@ class _LoginWidgetState extends State<LoginWidget>
                               options: FFButtonOptions(
                                 width: 120.0,
                                 height: 50.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     24.0, 0.0, 24.0, 0.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 0.0),
                                 color: FlutterFlowTheme.of(context).secondary,
                                 textStyle: FlutterFlowTheme.of(context)
@@ -440,7 +453,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                       fontWeight: FontWeight.bold,
                                     ),
                                 elevation: 3.0,
-                                borderSide: const BorderSide(
+                                borderSide: BorderSide(
                                   color: Colors.transparent,
                                   width: 1.0,
                                 ),
@@ -449,10 +462,13 @@ class _LoginWidgetState extends State<LoginWidget>
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 25.0, 0.0),
                             child: FFButtonWidget(
                               onPressed: () async {
+                                logFirebaseEvent(
+                                    'LOGIN_PAGE_LOG_IN_BTN_ON_TAP');
+                                logFirebaseEvent('Button_auth');
                                 GoRouter.of(context).prepareAuthEvent(true);
 
                                 final user = await authManager.signInWithEmail(
@@ -464,12 +480,16 @@ class _LoginWidgetState extends State<LoginWidget>
                                   return;
                                 }
 
+                                logFirebaseEvent('Button_navigate_to');
+
                                 context.goNamedAuth(
                                   'HomePage',
                                   context.mounted,
                                   ignoreRedirect: true,
                                 );
 
+                                logFirebaseEvent(
+                                    'Button_clear_text_fields_pin_codes');
                                 setState(() {
                                   _model.emailAddressController?.clear();
                                   _model.passwordController?.clear();
@@ -479,9 +499,9 @@ class _LoginWidgetState extends State<LoginWidget>
                               options: FFButtonOptions(
                                 width: 120.0,
                                 height: 50.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     24.0, 0.0, 24.0, 0.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 0.0),
                                 color: FlutterFlowTheme.of(context).primary,
                                 textStyle: FlutterFlowTheme.of(context)
@@ -493,7 +513,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                       fontWeight: FontWeight.bold,
                                     ),
                                 elevation: 3.0,
-                                borderSide: const BorderSide(
+                                borderSide: BorderSide(
                                   color: Colors.transparent,
                                   width: 1.0,
                                 ),
@@ -504,14 +524,20 @@ class _LoginWidgetState extends State<LoginWidget>
                         ],
                       ),
                       Align(
-                        alignment: const AlignmentDirectional(0.0, 0.0),
+                        alignment: AlignmentDirectional(0.0, 0.0),
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 10.0, 0.0, 20.0),
                           child: FFButtonWidget(
                             onPressed: () async {
+                              logFirebaseEvent(
+                                  'LOGIN_PAGE_FORGOT_PASSWORD_BTN_ON_TAP');
+                              logFirebaseEvent('Button_navigate_to');
+
                               context.pushNamed('forgot');
 
+                              logFirebaseEvent(
+                                  'Button_clear_text_fields_pin_codes');
                               setState(() {
                                 _model.emailAddressController?.clear();
                                 _model.passwordController?.clear();
@@ -521,9 +547,9 @@ class _LoginWidgetState extends State<LoginWidget>
                             options: FFButtonOptions(
                               width: 230.0,
                               height: 34.0,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
                               color: FlutterFlowTheme.of(context)
                                   .secondaryBackground,
@@ -548,9 +574,9 @@ class _LoginWidgetState extends State<LoginWidget>
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Align(
-                            alignment: const AlignmentDirectional(0.0, 0.0),
+                            alignment: AlignmentDirectional(0.0, 0.0),
                             child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   16.0, 0.0, 16.0, 14.0),
                               child: Text(
                                 'Or sign up with: ',
@@ -569,7 +595,7 @@ class _LoginWidgetState extends State<LoginWidget>
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 10.0, 0.0, 0.0),
                                 child: Wrap(
                                   spacing: 0.0,
@@ -582,23 +608,27 @@ class _LoginWidgetState extends State<LoginWidget>
                                   clipBehavior: Clip.none,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 10.0, 16.0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
+                                          logFirebaseEvent(
+                                              'LOGIN_PAGE_SPOTIFY_BTN_ON_TAP');
+                                          logFirebaseEvent(
+                                              'Button_alert_dialog');
                                           await showDialog(
                                             context: context,
                                             builder: (alertDialogContext) {
                                               return AlertDialog(
-                                                title: const Text('Coming soon'),
-                                                content: const Text(
+                                                title: Text('Coming soon'),
+                                                content: Text(
                                                     'This feature is not yet available. Please sign up with Email/Password'),
                                                 actions: [
                                                   TextButton(
                                                     onPressed: () =>
                                                         Navigator.pop(
                                                             alertDialogContext),
-                                                    child: const Text('👍👍'),
+                                                    child: Text('👍👍'),
                                                   ),
                                                 ],
                                               );
@@ -606,7 +636,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                           );
                                         },
                                         text: 'Spotify',
-                                        icon: const FaIcon(
+                                        icon: FaIcon(
                                           FontAwesomeIcons.spotify,
                                           size: 20.0,
                                         ),
@@ -614,12 +644,12 @@ class _LoginWidgetState extends State<LoginWidget>
                                           width: 120.0,
                                           height: 44.0,
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 0.0),
                                           iconPadding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 0.0),
-                                          color: const Color(0xFF1DB954),
+                                          color: Color(0xFF1DB954),
                                           textStyle:
                                               FlutterFlowTheme.of(context)
                                                   .bodyMedium
@@ -644,23 +674,27 @@ class _LoginWidgetState extends State<LoginWidget>
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           10.0, 0.0, 0.0, 16.0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
+                                          logFirebaseEvent(
+                                              'LOGIN_PAGE_APPLE_BTN_ON_TAP');
+                                          logFirebaseEvent(
+                                              'Button_alert_dialog');
                                           await showDialog(
                                             context: context,
                                             builder: (alertDialogContext) {
                                               return AlertDialog(
-                                                title: const Text('Coming soon'),
-                                                content: const Text(
+                                                title: Text('Coming soon'),
+                                                content: Text(
                                                     'This feature is not yet available. Please sign up with Email/Password'),
                                                 actions: [
                                                   TextButton(
                                                     onPressed: () =>
                                                         Navigator.pop(
                                                             alertDialogContext),
-                                                    child: const Text('👍👍'),
+                                                    child: Text('👍👍'),
                                                   ),
                                                 ],
                                               );
@@ -668,7 +702,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                           );
                                         },
                                         text: 'Apple   ',
-                                        icon: const FaIcon(
+                                        icon: FaIcon(
                                           FontAwesomeIcons.apple,
                                           size: 20.0,
                                         ),
@@ -676,10 +710,10 @@ class _LoginWidgetState extends State<LoginWidget>
                                           width: 120.0,
                                           height: 44.0,
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 0.0),
                                           iconPadding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 0.0),
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryBackground,
@@ -692,7 +726,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                           elevation: 0.0,
-                                          borderSide: const BorderSide(
+                                          borderSide: BorderSide(
                                             color: Color(0x794A4A4A),
                                             width: 2.0,
                                           ),
@@ -727,23 +761,26 @@ class _LoginWidgetState extends State<LoginWidget>
                                 clipBehavior: Clip.none,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 10.0, 16.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
+                                        logFirebaseEvent(
+                                            'LOGIN_PAGE_AMAZON_BTN_ON_TAP');
+                                        logFirebaseEvent('Button_alert_dialog');
                                         await showDialog(
                                           context: context,
                                           builder: (alertDialogContext) {
                                             return AlertDialog(
-                                              title: const Text('Coming soon'),
-                                              content: const Text(
+                                              title: Text('Coming soon'),
+                                              content: Text(
                                                   'This feature is not yet available. Please sign up with Email/Password'),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () =>
                                                       Navigator.pop(
                                                           alertDialogContext),
-                                                  child: const Text('👍👍'),
+                                                  child: Text('👍👍'),
                                                 ),
                                               ],
                                             );
@@ -751,19 +788,19 @@ class _LoginWidgetState extends State<LoginWidget>
                                         );
                                       },
                                       text: 'Amazon',
-                                      icon: const FaIcon(
+                                      icon: FaIcon(
                                         FontAwesomeIcons.amazon,
                                         size: 20.0,
                                       ),
                                       options: FFButtonOptions(
                                         width: 120.0,
                                         height: 44.0,
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 0.0, 0.0, 0.0),
                                         iconPadding:
-                                            const EdgeInsetsDirectional.fromSTEB(
+                                            EdgeInsetsDirectional.fromSTEB(
                                                 0.0, 0.0, 0.0, 0.0),
-                                        color: const Color(0xFFFF9900),
+                                        color: Color(0xFFFF9900),
                                         textStyle: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -786,23 +823,26 @@ class _LoginWidgetState extends State<LoginWidget>
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
                                         10.0, 0.0, 0.0, 16.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
+                                        logFirebaseEvent(
+                                            'LOGIN_PAGE_GOOGLE_BTN_ON_TAP');
+                                        logFirebaseEvent('Button_alert_dialog');
                                         await showDialog(
                                           context: context,
                                           builder: (alertDialogContext) {
                                             return AlertDialog(
-                                              title: const Text('Coming soon'),
-                                              content: const Text(
+                                              title: Text('Coming soon'),
+                                              content: Text(
                                                   'This feature is not yet available. Please sign up with Email/Password'),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () =>
                                                       Navigator.pop(
                                                           alertDialogContext),
-                                                  child: const Text('👍👍'),
+                                                  child: Text('👍👍'),
                                                 ),
                                               ],
                                             );
@@ -810,7 +850,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                         );
                                       },
                                       text: 'Google',
-                                      icon: const FaIcon(
+                                      icon: FaIcon(
                                         FontAwesomeIcons.google,
                                         color: Colors.white,
                                         size: 20.0,
@@ -818,12 +858,12 @@ class _LoginWidgetState extends State<LoginWidget>
                                       options: FFButtonOptions(
                                         width: 120.0,
                                         height: 44.0,
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 0.0, 0.0, 0.0),
                                         iconPadding:
-                                            const EdgeInsetsDirectional.fromSTEB(
+                                            EdgeInsetsDirectional.fromSTEB(
                                                 0.0, 0.0, 0.0, 0.0),
-                                        color: const Color(0xFFDB4437),
+                                        color: Color(0xFFDB4437),
                                         textStyle: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(

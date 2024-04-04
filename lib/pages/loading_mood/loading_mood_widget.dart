@@ -4,10 +4,14 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'loading_mood_model.dart';
@@ -132,195 +136,241 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
     super.initState();
     _model = createModel(context, () => LoadingMoodModel());
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'loadingMood'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        _model.ten = true;
-      });
-      _model.sendPhotoURLLoading = await DatacenterAPIGroup.postMoodCall.call(
-        mood: widget.mood,
-        userRef: valueOrDefault<String>(
-          currentUserReference?.id,
-          'gabe2091',
-        ),
-      );
-      if ((_model.sendPhotoURLLoading?.succeeded ?? true)) {
-        await Future.delayed(const Duration(milliseconds: 3000));
-        if (animationsMap['textOnActionTriggerAnimation1'] != null) {
-          setState(() => hasTextTriggered1 = true);
-          SchedulerBinding.instance.addPostFrameCallback((_) async =>
-              await animationsMap['textOnActionTriggerAnimation1']!
-                  .controller
-                  .forward(from: 0.0));
-        }
-        setState(() {
-          _model.ten = false;
-          _model.twentyNine = true;
-        });
-        await Future.delayed(const Duration(milliseconds: 3000));
-        if (animationsMap['textOnActionTriggerAnimation4'] != null) {
-          await animationsMap['textOnActionTriggerAnimation4']!
-              .controller
-              .forward(from: 0.0);
-        }
-        setState(() {
-          _model.twentyNine = false;
-          _model.thirtySeven = true;
-        });
-        await Future.delayed(const Duration(milliseconds: 3000));
-        if (animationsMap['textOnActionTriggerAnimation5'] != null) {
-          await animationsMap['textOnActionTriggerAnimation5']!
-              .controller
-              .forward(from: 0.0);
-        }
-        setState(() {
-          _model.thirtySeven = false;
-          _model.sixtyFive = true;
-        });
-        await Future.delayed(const Duration(milliseconds: 3000));
-        if (animationsMap['textOnActionTriggerAnimation6'] != null) {
-          await animationsMap['textOnActionTriggerAnimation6']!
-              .controller
-              .forward(from: 0.0);
-        }
-        setState(() {
-          _model.sixtyFive = false;
-          _model.eightyThree = true;
-        });
-        await Future.delayed(const Duration(milliseconds: 3000));
-        if (animationsMap['textOnActionTriggerAnimation7'] != null) {
-          await animationsMap['textOnActionTriggerAnimation7']!
-              .controller
-              .forward(from: 0.0);
-        }
-        setState(() {
-          _model.eightyThree = false;
-          _model.oneHundred = true;
-        });
-        _model.getPlaylist = await DatacenterAPIGroup.getPlaylistURLCall.call(
-          timestamp: getJsonField(
-            (_model.sendPhotoURLLoading?.jsonBody ?? ''),
-            r'''$.timestamp''',
-          ),
-          userRef: currentUserReference?.id,
-        );
-        if ((_model.getPlaylist?.succeeded ?? true)) {
-          await SnaplistsRecord.collection.doc().set(createSnaplistsRecordData(
-                userRef: currentUserReference,
-                name: DatacenterAPIGroup.getPlaylistURLCall.name(
-                  (_model.getPlaylist?.jsonBody ?? ''),
-                ),
-                description: DatacenterAPIGroup.getPlaylistURLCall.description(
-                  (_model.getPlaylist?.jsonBody ?? ''),
-                ),
-                imageUrl: DatacenterAPIGroup.getPlaylistURLCall.imageUrl(
-                  (_model.getPlaylist?.jsonBody ?? ''),
-                ),
-                createdTime: getCurrentTimestamp,
-                url: DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
-                  (_model.getPlaylist?.jsonBody ?? ''),
-                ),
-                id: DatacenterAPIGroup.getPlaylistURLCall.id(
-                  (_model.getPlaylist?.jsonBody ?? ''),
-                ),
-              ));
-          _model.startPlayback =
-              await SpotifyMediaAPIGroup.startPlayerCall.call(
-            accessToken: FFAppState().accessToken,
-            contextUri: DatacenterAPIGroup.getPlaylistURLCall.contextUri(
-              (_model.getPlaylist?.jsonBody ?? ''),
+      logFirebaseEvent('LOADING_MOOD_loadingMood_ON_INIT_STATE');
+      await Future.wait([
+        Future(() async {
+          logFirebaseEvent('loadingMood_update_page_state');
+          setState(() {
+            _model.ten = true;
+          });
+          logFirebaseEvent('loadingMood_backend_call');
+          _model.sendPhotoURLLoading =
+              await DatacenterAPIGroup.postMoodCall.call(
+            mood: widget.mood,
+            userRef: valueOrDefault<String>(
+              currentUserReference?.id,
+              'gabe2091',
             ),
           );
-          if ((_model.startPlayback?.succeeded ?? true)) {
-            unawaited(
-              () async {
-                await launchURL(
-                    DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
-                  (_model.getPlaylist?.jsonBody ?? ''),
-                )!);
-              }(),
+          if ((_model.sendPhotoURLLoading?.succeeded ?? true)) {
+            logFirebaseEvent('loadingMood_backend_call');
+            _model.getPlaylist =
+                await DatacenterAPIGroup.getPlaylistURLCall.call(
+              timestamp: getJsonField(
+                (_model.sendPhotoURLLoading?.jsonBody ?? ''),
+                r'''$.timestamp''',
+              ),
+              userRef: currentUserReference?.id,
             );
+            if ((_model.getPlaylist?.succeeded ?? true)) {
+              logFirebaseEvent('loadingMood_backend_call');
 
-            context.goNamed('HomePage');
+              await SnaplistsRecord.collection
+                  .doc()
+                  .set(createSnaplistsRecordData(
+                    userRef: currentUserReference,
+                    name: DatacenterAPIGroup.getPlaylistURLCall.name(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                    description:
+                        DatacenterAPIGroup.getPlaylistURLCall.description(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                    imageUrl: DatacenterAPIGroup.getPlaylistURLCall.imageUrl(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                    createdTime: getCurrentTimestamp,
+                    url: DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                    id: DatacenterAPIGroup.getPlaylistURLCall.id(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    ),
+                  ));
+              logFirebaseEvent('loadingMood_backend_call');
+              _model.startPlayback =
+                  await SpotifyMediaAPIGroup.startPlayerCall.call(
+                accessToken: FFAppState().accessToken,
+                contextUri: DatacenterAPIGroup.getPlaylistURLCall.contextUri(
+                  (_model.getPlaylist?.jsonBody ?? ''),
+                ),
+              );
+              if (isAndroid) {
+                logFirebaseEvent('loadingMood_launch_u_r_l');
+                unawaited(
+                  () async {
+                    await launchURL(
+                        DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    )!);
+                  }(),
+                );
+                logFirebaseEvent('loadingMood_navigate_to');
 
-            return;
+                context.goNamed('HomePage');
+
+                return;
+              } else {
+                logFirebaseEvent('loadingMood_launch_u_r_l');
+                unawaited(
+                  () async {
+                    await launchURL(
+                        DatacenterAPIGroup.getPlaylistURLCall.contextUri(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    )!);
+                  }(),
+                );
+                logFirebaseEvent('loadingMood_navigate_to');
+
+                context.goNamed('HomePage');
+
+                return;
+              }
+            } else {
+              logFirebaseEvent('loadingMood_update_app_state');
+              setState(() {
+                FFAppState().fileBase64 = '';
+                FFAppState().playlistUrl = '';
+              });
+              logFirebaseEvent('loadingMood_backend_call');
+
+              await FeedbackRecord.collection
+                  .doc()
+                  .set(createFeedbackRecordData(
+                    userRef: currentUserReference,
+                    feedback: 'get_playlist fucked up ',
+                    isBug: true,
+                  ));
+              logFirebaseEvent('loadingMood_navigate_to');
+
+              context.goNamed(
+                'fail',
+                queryParameters: {
+                  'failReason': serializeParam(
+                    '',
+                    ParamType.String,
+                  ),
+                }.withoutNulls,
+                extra: <String, dynamic>{
+                  kTransitionInfoKey: TransitionInfo(
+                    hasTransition: true,
+                    transitionType: PageTransitionType.fade,
+                    duration: Duration(milliseconds: 0),
+                  ),
+                },
+              );
+
+              return;
+            }
           } else {
-            unawaited(
-              () async {
-                await launchURL(
-                    DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
-                  (_model.getPlaylist?.jsonBody ?? ''),
-                )!);
-              }(),
-            );
+            logFirebaseEvent('loadingMood_update_app_state');
+            setState(() {
+              FFAppState().makePhoto = false;
+              FFAppState().fileBase64 = '';
+              FFAppState().playlistUrl = '';
+            });
+            logFirebaseEvent('loadingMood_backend_call');
 
-            context.goNamed('HomePage');
+            await FeedbackRecord.collection.doc().set(createFeedbackRecordData(
+                  userRef: currentUserReference,
+                  feedback: 'post_image fucked up ',
+                  isBug: true,
+                ));
+            logFirebaseEvent('loadingMood_navigate_to');
+
+            context.goNamed(
+              'fail',
+              queryParameters: {
+                'failReason': serializeParam(
+                  '',
+                  ParamType.String,
+                ),
+              }.withoutNulls,
+              extra: <String, dynamic>{
+                kTransitionInfoKey: TransitionInfo(
+                  hasTransition: true,
+                  transitionType: PageTransitionType.fade,
+                  duration: Duration(milliseconds: 0),
+                ),
+              },
+            );
 
             return;
           }
-        } else {
+        }),
+        Future(() async {
+          logFirebaseEvent('loadingMood_wait__delay');
+          await Future.delayed(const Duration(milliseconds: 3000));
+          logFirebaseEvent('loadingMood_widget_animation');
+          if (animationsMap['textOnActionTriggerAnimation1'] != null) {
+            setState(() => hasTextTriggered1 = true);
+            SchedulerBinding.instance.addPostFrameCallback((_) async =>
+                await animationsMap['textOnActionTriggerAnimation1']!
+                    .controller
+                    .forward(from: 0.0));
+          }
+          logFirebaseEvent('loadingMood_update_page_state');
           setState(() {
-            FFAppState().fileBase64 = '';
-            FFAppState().playlistUrl = '';
+            _model.ten = false;
+            _model.twentyNine = true;
           });
-
-          await FeedbackRecord.collection.doc().set(createFeedbackRecordData(
-                userRef: currentUserReference,
-                feedback: 'get_playlist fucked up ',
-                isBug: true,
-              ));
-
-          context.goNamed(
-            'fail',
-            queryParameters: {
-              'failReason': serializeParam(
-                '',
-                ParamType.String,
-              ),
-            }.withoutNulls,
-            extra: <String, dynamic>{
-              kTransitionInfoKey: const TransitionInfo(
-                hasTransition: true,
-                transitionType: PageTransitionType.fade,
-                duration: Duration(milliseconds: 0),
-              ),
-            },
-          );
-
-          return;
-        }
-      } else {
-        setState(() {
-          FFAppState().makePhoto = false;
-          FFAppState().fileBase64 = '';
-          FFAppState().playlistUrl = '';
-        });
-
-        await FeedbackRecord.collection.doc().set(createFeedbackRecordData(
-              userRef: currentUserReference,
-              feedback: 'post_image fucked up ',
-              isBug: true,
-            ));
-
-        context.goNamed(
-          'fail',
-          queryParameters: {
-            'failReason': serializeParam(
-              '',
-              ParamType.String,
-            ),
-          }.withoutNulls,
-          extra: <String, dynamic>{
-            kTransitionInfoKey: const TransitionInfo(
-              hasTransition: true,
-              transitionType: PageTransitionType.fade,
-              duration: Duration(milliseconds: 0),
-            ),
-          },
-        );
-
-        return;
-      }
+          logFirebaseEvent('loadingMood_wait__delay');
+          await Future.delayed(const Duration(milliseconds: 3000));
+          logFirebaseEvent('loadingMood_widget_animation');
+          if (animationsMap['textOnActionTriggerAnimation4'] != null) {
+            await animationsMap['textOnActionTriggerAnimation4']!
+                .controller
+                .forward(from: 0.0);
+          }
+          logFirebaseEvent('loadingMood_update_page_state');
+          setState(() {
+            _model.twentyNine = false;
+            _model.thirtySeven = true;
+          });
+          logFirebaseEvent('loadingMood_wait__delay');
+          await Future.delayed(const Duration(milliseconds: 3000));
+          logFirebaseEvent('loadingMood_widget_animation');
+          if (animationsMap['textOnActionTriggerAnimation5'] != null) {
+            await animationsMap['textOnActionTriggerAnimation5']!
+                .controller
+                .forward(from: 0.0);
+          }
+          logFirebaseEvent('loadingMood_update_page_state');
+          setState(() {
+            _model.thirtySeven = false;
+            _model.sixtyFive = true;
+          });
+          logFirebaseEvent('loadingMood_wait__delay');
+          await Future.delayed(const Duration(milliseconds: 3000));
+          logFirebaseEvent('loadingMood_widget_animation');
+          if (animationsMap['textOnActionTriggerAnimation6'] != null) {
+            await animationsMap['textOnActionTriggerAnimation6']!
+                .controller
+                .forward(from: 0.0);
+          }
+          logFirebaseEvent('loadingMood_update_page_state');
+          setState(() {
+            _model.sixtyFive = false;
+            _model.eightyThree = true;
+          });
+          logFirebaseEvent('loadingMood_wait__delay');
+          await Future.delayed(const Duration(milliseconds: 3000));
+          logFirebaseEvent('loadingMood_widget_animation');
+          if (animationsMap['textOnActionTriggerAnimation7'] != null) {
+            await animationsMap['textOnActionTriggerAnimation7']!
+                .controller
+                .forward(from: 0.0);
+          }
+          logFirebaseEvent('loadingMood_update_page_state');
+          setState(() {
+            _model.eightyThree = false;
+            _model.oneHundred = true;
+          });
+        }),
+      ]);
     });
 
     setupAnimations(
@@ -350,7 +400,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: const Color(0xFF031524),
+          backgroundColor: Color(0xFF031524),
           body: SafeArea(
             top: true,
             child: Column(
@@ -358,10 +408,10 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 100.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 100.0),
                   child: Container(
                     width: double.infinity,
-                    decoration: const BoxDecoration(),
+                    decoration: BoxDecoration(),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -377,7 +427,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                               ),
                             ),
                             Align(
-                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               child: CircularPercentIndicator(
                                 percent: () {
                                   if (_model.ten == true) {
@@ -402,17 +452,17 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                 animateFromLastPercent: true,
                                 progressColor: () {
                                   if (_model.ten == true) {
-                                    return const Color(0xFFEA42B3);
+                                    return Color(0xFFEA42B3);
                                   } else if (_model.twentyNine == true) {
-                                    return const Color(0xFF41E7F6);
+                                    return Color(0xFF41E7F6);
                                   } else if (_model.thirtySeven == true) {
-                                    return const Color(0xFFF2E645);
+                                    return Color(0xFFF2E645);
                                   } else if (_model.sixtyFive == true) {
-                                    return const Color(0xFF3DD1A9);
+                                    return Color(0xFF3DD1A9);
                                   } else if (_model.eightyThree == true) {
-                                    return const Color(0xFFEA42B3);
+                                    return Color(0xFFEA42B3);
                                   } else if (_model.oneHundred == true) {
-                                    return const Color(0xFF41E7F6);
+                                    return Color(0xFF41E7F6);
                                   } else {
                                     return Colors.white;
                                   }
@@ -429,7 +479,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                           children: [
                             Container(
                               width: 300.0,
-                              decoration: const BoxDecoration(),
+                              decoration: BoxDecoration(),
                               child: Stack(
                                 children: [
                                   Row(
@@ -439,7 +489,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                       if (_model.ten == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Feeling ',
@@ -462,7 +512,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                       if (_model.ten == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             valueOrDefault<String>(
@@ -488,7 +538,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                       if (_model.ten == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             ', eh',
@@ -517,7 +567,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                       if (_model.twentyNine == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'oooh this one\'s bumpin\'',
@@ -544,7 +594,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                       if (_model.thirtySeven == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Searching Spotify for some tracks',
@@ -571,7 +621,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                       if (_model.sixtyFive == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Curating your Snaplist',
@@ -598,7 +648,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                       if (_model.eightyThree == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Generating a snappy name',
@@ -625,7 +675,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                       if (_model.oneHundred == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Wrapping up...',

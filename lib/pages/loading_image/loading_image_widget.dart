@@ -4,10 +4,14 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'loading_image_model.dart';
@@ -117,11 +121,16 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
     super.initState();
     _model = createModel(context, () => LoadingImageModel());
 
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'loadingImage'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('LOADING_IMAGE_loadingImage_ON_INIT_STATE');
+      logFirebaseEvent('loadingImage_update_page_state');
       setState(() {
         _model.ten = true;
       });
+      logFirebaseEvent('loadingImage_backend_call');
       _model.sendPhotoURL =
           await DatacenterAPIGroup.sendUploadedImageCopyCall.call(
         imageUrl: widget.imageUrl,
@@ -130,7 +139,9 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
       if ((_model.sendPhotoURL?.succeeded ?? true)) {
         await Future.wait([
           Future(() async {
+            logFirebaseEvent('loadingImage_wait__delay');
             await Future.delayed(const Duration(milliseconds: 24500));
+            logFirebaseEvent('loadingImage_backend_call');
             _model.getPlaylist =
                 await DatacenterAPIGroup.getPlaylistURLCall.call(
               timestamp: DatacenterAPIGroup.sendUploadedImageCopyCall.timestamp(
@@ -139,6 +150,8 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
               userRef: currentUserReference?.id,
             );
             if ((_model.getPlaylist?.succeeded ?? true)) {
+              logFirebaseEvent('loadingImage_backend_call');
+
               await SnaplistsRecord.collection
                   .doc()
                   .set(createSnaplistsRecordData(
@@ -161,6 +174,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                       (_model.getPlaylist?.jsonBody ?? ''),
                     ),
                   ));
+              logFirebaseEvent('loadingImage_backend_call');
               _model.startPlayback =
                   await SpotifyMediaAPIGroup.startPlayerCall.call(
                 accessToken: FFAppState().accessToken,
@@ -169,19 +183,39 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                 ),
               );
               if ((_model.startPlayback?.succeeded ?? true)) {
-                unawaited(
-                  () async {
-                    await launchURL(
-                        DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
-                      (_model.getPlaylist?.jsonBody ?? ''),
-                    )!);
-                  }(),
-                );
+                if (isAndroid) {
+                  logFirebaseEvent('loadingImage_launch_u_r_l');
+                  unawaited(
+                    () async {
+                      await launchURL(
+                          DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
+                        (_model.getPlaylist?.jsonBody ?? ''),
+                      )!);
+                    }(),
+                  );
+                  logFirebaseEvent('loadingImage_navigate_to');
 
-                context.goNamed('HomePage');
+                  context.goNamed('HomePage');
 
-                return;
+                  return;
+                } else {
+                  logFirebaseEvent('loadingImage_launch_u_r_l');
+                  unawaited(
+                    () async {
+                      await launchURL(
+                          DatacenterAPIGroup.getPlaylistURLCall.contextUri(
+                        (_model.getPlaylist?.jsonBody ?? ''),
+                      )!);
+                    }(),
+                  );
+                  logFirebaseEvent('loadingImage_navigate_to');
+
+                  context.goNamed('HomePage');
+
+                  return;
+                }
               } else {
+                logFirebaseEvent('loadingImage_launch_u_r_l');
                 unawaited(
                   () async {
                     await launchURL(
@@ -193,11 +227,13 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                 return;
               }
             } else {
+              logFirebaseEvent('loadingImage_update_app_state');
               setState(() {
                 FFAppState().makePhoto = false;
                 FFAppState().fileBase64 = '';
                 FFAppState().playlistUrl = '';
               });
+              logFirebaseEvent('loadingImage_navigate_to');
 
               context.goNamed(
                 'fail',
@@ -208,7 +244,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                   ),
                 }.withoutNulls,
                 extra: <String, dynamic>{
-                  kTransitionInfoKey: const TransitionInfo(
+                  kTransitionInfoKey: TransitionInfo(
                     hasTransition: true,
                     transitionType: PageTransitionType.fade,
                     duration: Duration(milliseconds: 0),
@@ -220,7 +256,9 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
             }
           }),
           Future(() async {
+            logFirebaseEvent('loadingImage_wait__delay');
             await Future.delayed(const Duration(milliseconds: 4000));
+            logFirebaseEvent('loadingImage_widget_animation');
             if (animationsMap['textOnActionTriggerAnimation1'] != null) {
               setState(() => hasTextTriggered1 = true);
               SchedulerBinding.instance.addPostFrameCallback((_) async =>
@@ -228,56 +266,72 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                       .controller
                       .forward(from: 0.0));
             }
+            logFirebaseEvent('loadingImage_update_page_state');
             setState(() {
               _model.ten = false;
               _model.twentyNine = true;
             });
+            logFirebaseEvent('loadingImage_wait__delay');
             await Future.delayed(const Duration(milliseconds: 4000));
+            logFirebaseEvent('loadingImage_widget_animation');
             if (animationsMap['textOnActionTriggerAnimation2'] != null) {
               await animationsMap['textOnActionTriggerAnimation2']!
                   .controller
                   .forward(from: 0.0);
             }
+            logFirebaseEvent('loadingImage_update_page_state');
             setState(() {
               _model.twentyNine = false;
               _model.thirtySeven = true;
             });
+            logFirebaseEvent('loadingImage_wait__delay');
             await Future.delayed(const Duration(milliseconds: 4000));
+            logFirebaseEvent('loadingImage_widget_animation');
             if (animationsMap['textOnActionTriggerAnimation3'] != null) {
               await animationsMap['textOnActionTriggerAnimation3']!
                   .controller
                   .forward(from: 0.0);
             }
+            logFirebaseEvent('loadingImage_update_page_state');
             setState(() {
               _model.thirtySeven = false;
               _model.fifty = true;
             });
+            logFirebaseEvent('loadingImage_wait__delay');
             await Future.delayed(const Duration(milliseconds: 4000));
+            logFirebaseEvent('loadingImage_widget_animation');
             if (animationsMap['textOnActionTriggerAnimation4'] != null) {
               await animationsMap['textOnActionTriggerAnimation4']!
                   .controller
                   .forward(from: 0.0);
             }
+            logFirebaseEvent('loadingImage_update_page_state');
             setState(() {
               _model.fifty = false;
               _model.sixtyFive = true;
             });
+            logFirebaseEvent('loadingImage_wait__delay');
             await Future.delayed(const Duration(milliseconds: 4500));
+            logFirebaseEvent('loadingImage_widget_animation');
             if (animationsMap['textOnActionTriggerAnimation5'] != null) {
               await animationsMap['textOnActionTriggerAnimation5']!
                   .controller
                   .forward(from: 0.0);
             }
+            logFirebaseEvent('loadingImage_update_page_state');
             setState(() {
               _model.sixtyFive = false;
               _model.eightyThree = true;
             });
+            logFirebaseEvent('loadingImage_wait__delay');
             await Future.delayed(const Duration(milliseconds: 4000));
+            logFirebaseEvent('loadingImage_widget_animation');
             if (animationsMap['textOnActionTriggerAnimation6'] != null) {
               await animationsMap['textOnActionTriggerAnimation6']!
                   .controller
                   .forward(from: 0.0);
             }
+            logFirebaseEvent('loadingImage_update_page_state');
             setState(() {
               _model.eightyThree = false;
               _model.oneHundred = true;
@@ -286,17 +340,20 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
           }),
         ]);
       } else {
+        logFirebaseEvent('loadingImage_update_app_state');
         setState(() {
           FFAppState().makePhoto = false;
           FFAppState().fileBase64 = '';
           FFAppState().playlistUrl = '';
         });
+        logFirebaseEvent('loadingImage_backend_call');
 
         await FeedbackRecord.collection.doc().set(createFeedbackRecordData(
               userRef: currentUserReference,
               feedback: 'post_image fucked up ',
               isBug: true,
             ));
+        logFirebaseEvent('loadingImage_navigate_to');
 
         context.pushNamed(
           'fail',
@@ -307,7 +364,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
             ),
           }.withoutNulls,
           extra: <String, dynamic>{
-            kTransitionInfoKey: const TransitionInfo(
+            kTransitionInfoKey: TransitionInfo(
               hasTransition: true,
               transitionType: PageTransitionType.fade,
               duration: Duration(milliseconds: 0),
@@ -346,7 +403,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: const Color(0xFF031524),
+          backgroundColor: Color(0xFF031524),
           body: SafeArea(
             top: true,
             child: Column(
@@ -354,10 +411,10 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 100.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 100.0),
                   child: Container(
                     width: double.infinity,
-                    decoration: const BoxDecoration(),
+                    decoration: BoxDecoration(),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -373,7 +430,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                               ),
                             ),
                             Align(
-                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               child: CircularPercentIndicator(
                                 percent: () {
                                   if (_model.ten == true) {
@@ -400,19 +457,19 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                                 animateFromLastPercent: true,
                                 progressColor: () {
                                   if (_model.ten == true) {
-                                    return const Color(0xFFEA42B3);
+                                    return Color(0xFFEA42B3);
                                   } else if (_model.twentyNine == true) {
-                                    return const Color(0xFF41E7F6);
+                                    return Color(0xFF41E7F6);
                                   } else if (_model.thirtySeven == true) {
-                                    return const Color(0xFFF2E645);
+                                    return Color(0xFFF2E645);
                                   } else if (_model.sixtyFive == true) {
-                                    return const Color(0xFF3DD1A9);
+                                    return Color(0xFF3DD1A9);
                                   } else if (_model.eightyThree == true) {
-                                    return const Color(0xFFF2E645);
+                                    return Color(0xFFF2E645);
                                   } else if (_model.oneHundred == true) {
-                                    return const Color(0xFF41E7F6);
+                                    return Color(0xFF41E7F6);
                                   } else if (_model.fifty == true) {
-                                    return const Color(0xFFEA42B3);
+                                    return Color(0xFFEA42B3);
                                   } else {
                                     return Colors.white;
                                   }
@@ -429,7 +486,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                           children: [
                             Container(
                               width: 300.0,
-                              decoration: const BoxDecoration(),
+                              decoration: BoxDecoration(),
                               child: Stack(
                                 children: [
                                   Row(
@@ -439,7 +496,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                                       if (_model.ten == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Analyzing Photo',
@@ -468,7 +525,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                                       if (_model.twentyNine == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Thinking about some music you\'ll like ',
@@ -495,7 +552,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                                       if (_model.thirtySeven == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Searching Spotify for some tracks',
@@ -522,10 +579,10 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                                       if (_model.fifty == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Searching Spotify for some tracks',
+                                            'Grouping your tracks',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -549,7 +606,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                                       if (_model.sixtyFive == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Curating your Snaplist',
@@ -576,10 +633,10 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                                       if (_model.eightyThree == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Generating a snappy name',
+                                            'hmmm… what’s a good name and description? ',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -603,7 +660,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                                       if (_model.oneHundred == true)
                                         Padding(
                                           padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Wrapping up...',
