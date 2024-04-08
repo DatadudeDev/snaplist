@@ -16,6 +16,11 @@
 	<string>Snaplist</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>fr</string>
+	</array>
 
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
@@ -29,7 +34,7 @@
             <key>CFBundleURLSchemes</key>
             <array>
                 <string>com.googleusercontent.apps.893777894200-1efp3542smhdelb87gvtolelknqpe6ru</string>
-                
+                <string>fb741800434601282</string>
             </array>
         </dict>
 
@@ -47,6 +52,10 @@
     <key>FlutterDeepLinkingEnabled</key>
     <true/>
 
+    <key>FacebookAppID</key>
+    <string>741800434601282</string>
+    <key>FacebookDisplayName</key>
+    <string>Snaplist</string>
 
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
@@ -54,14 +63,38 @@
 	<true/>
 
 	<key>NSCameraUsageDescription</key>
-    <string>In order to take a picture or video, this app requires permission to access the camera.</string>
+    <string>In order to generate a Snaplist, access to the camera is required by Snaplist to capture a photo</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-    <string>In order to upload data, this app requires permission to access the photo library.</string>
+    <string>In order to upload data,  Snaplist needs access to your gallery</string>
 	<key>NSMicrophoneUsageDescription</key>
-    <string>This app requires permissions to record audio.</string>
+    <string>Snaplist requires permission to use the microphone to  record your voice for playlist generation</string>
 	<key>PermissionGroupNotification</key>
-    <string>Snaplist requires permission in order to send you notifications. </string>
+    <string>Snaplist requires permission in order to send you notifications about promotions and updates</string>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>fetch</string>
+        <string>remote-notification</string>
+    </array>
 
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>fbapi</string>
+      <string>fbapi20130214</string>
+      <string>fbapi20130410</string>
+      <string>fbapi20130702</string>
+      <string>fbapi20131010</string>
+      <string>fbapi20131219</string>
+      <string>fbapi20140410</string>
+      <string>fbapi20140116</string>
+      <string>fbapi20150313</string>
+      <string>fbapi20150629</string>
+      <string>fbapi20160328</string>
+      <string>fbauth</string>
+      <string>fb-messenger-share-api</string>
+      <string>fbauth2</string>
+      <string>fbshareextension</string>
+
+    </array>
 
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

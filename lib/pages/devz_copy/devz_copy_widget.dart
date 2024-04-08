@@ -114,7 +114,9 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            'Access Token: ',
+                            FFLocalizations.of(context).getText(
+                              'ky3n3npp' /* Access Token:  */,
+                            ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -139,7 +141,9 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            'Refresh Token: ',
+                            FFLocalizations.of(context).getText(
+                              '8d4fiob8' /* Refresh Token:  */,
+                            ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -164,7 +168,9 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            'Playlist URL: ',
+                            FFLocalizations.of(context).getText(
+                              '4fbpl5j4' /* Playlist URL:  */,
+                            ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -190,7 +196,9 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            'Playlist URL: ',
+                            FFLocalizations.of(context).getText(
+                              '68rwt6b2' /* Playlist URL:  */,
+                            ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -199,7 +207,9 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
                                 ),
                           ),
                           Text(
-                            'test',
+                            FFLocalizations.of(context).getText(
+                              'hgloppuv' /* test */,
+                            ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -213,7 +223,9 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            'Username',
+                            FFLocalizations.of(context).getText(
+                              '1g2h7ova' /* Username */,
+                            ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -264,7 +276,9 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
                                 ),
                           ),
                           Text(
-                            '-',
+                            FFLocalizations.of(context).getText(
+                              'oipcpf3s' /* - */,
+                            ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -285,7 +299,9 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
                                 ),
                           ),
                           Text(
-                            '-',
+                            FFLocalizations.of(context).getText(
+                              '2ryr5m1h' /* - */,
+                            ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -381,7 +397,9 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
 
                       setState(() {});
                     },
-                    text: 'Button',
+                    text: FFLocalizations.of(context).getText(
+                      'rzpvrgsz' /* Button */,
+                    ),
                     options: FFButtonOptions(
                       height: 40.0,
                       padding:
@@ -433,7 +451,9 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
                                       ),
                                 ),
                                 Text(
-                                  '-',
+                                  FFLocalizations.of(context).getText(
+                                    'o31z55mm' /* - */,
+                                  ),
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -442,7 +462,9 @@ class _DevzCopyWidgetState extends State<DevzCopyWidget> {
                                       ),
                                 ),
                                 Text(
-                                  '-',
+                                  FFLocalizations.of(context).getText(
+                                    'wwpabfwm' /* - */,
+                                  ),
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(

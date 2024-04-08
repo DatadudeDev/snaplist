@@ -462,7 +462,11 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            'Rediscover\nMusic',
+                                            FFLocalizations.of(context).getText(
+                                              '4n8bflm0' /* Rediscover
+Music */
+                                              ,
+                                            ),
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
                                                 .displaySmall
@@ -483,7 +487,10 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                                 const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 16.0, 0.0, 0.0),
                                             child: Text(
-                                              'For every beautiful moment, there\'s a soundtrack.',
+                                              FFLocalizations.of(context)
+                                                  .getText(
+                                                'omcr2g1s' /* For every beautiful moment, th... */,
+                                              ),
                                               textAlign: TextAlign.center,
                                               style: FlutterFlowTheme.of(
                                                       context)
@@ -511,7 +518,9 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            'Soundtrack  your life',
+                                            FFLocalizations.of(context).getText(
+                                              'ecshglqc' /* Soundtrack  your life */,
+                                            ),
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
                                                 .displaySmall
@@ -532,7 +541,10 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                                 const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 16.0, 0.0, 0.0),
                                             child: Text(
-                                              'A playlist for every moment,  curated by AI. ',
+                                              FFLocalizations.of(context)
+                                                  .getText(
+                                                'fqkm6bke' /* A playlist for every moment,  ... */,
+                                              ),
                                               textAlign: TextAlign.center,
                                               style: FlutterFlowTheme.of(
                                                       context)
@@ -562,7 +574,9 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            'Personalized Music Discovery',
+                                            FFLocalizations.of(context).getText(
+                                              'g3t72lxv' /* Personalized Music Discovery */,
+                                            ),
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
                                                 .displaySmall
@@ -583,7 +597,10 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                                 const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 16.0, 0.0, 0.0),
                                             child: Text(
-                                              'Jam out to previously unheard tracks that are totally your vibe!',
+                                              FFLocalizations.of(context)
+                                                  .getText(
+                                                '9zkxb3yn' /* Jam out to previously unheard ... */,
+                                              ),
                                               textAlign: TextAlign.center,
                                               style: FlutterFlowTheme.of(
                                                       context)
@@ -731,7 +748,10 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                                     .fromSTEB(
                                                         12.0, 0.0, 0.0, 0.0),
                                                 child: Text(
-                                                  'Connect with Spotify',
+                                                  FFLocalizations.of(context)
+                                                      .getText(
+                                                    '5542kelh' /* Connect with Spotify */,
+                                                  ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium

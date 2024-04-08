@@ -66,7 +66,9 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                       ),
                     ),
                     Text(
-                      'Back',
+                      FFLocalizations.of(context).getText(
+                        'm0e9fa7m' /* Back */,
+                      ),
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Readex Pro',
                             letterSpacing: 0.0,
@@ -124,7 +126,9 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   12.0, 0.0, 0.0, 0.0),
                               child: Text(
-                                'Back',
+                                FFLocalizations.of(context).getText(
+                                  'nejbxws5' /* Back */,
+                                ),
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
@@ -141,7 +145,9 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(16.0, 10.0, 0.0, 0.0),
                     child: Text(
-                      'Forgot Password',
+                      FFLocalizations.of(context).getText(
+                        'alms53de' /* Forgot Password */,
+                      ),
                       style:
                           FlutterFlowTheme.of(context).headlineMedium.override(
                                 fontFamily: 'Outfit',
@@ -151,9 +157,11 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 4.0),
+                        const EdgeInsetsDirectional.fromSTEB(16.0, 5.0, 16.0, 5.0),
                     child: Text(
-                      'We will send you an email with a link to reset your password, please enter the email associated with your account below.',
+                      FFLocalizations.of(context).getText(
+                        '8jtjjl17' /* We will send you an email with... */,
+                      ),
                       style: FlutterFlowTheme.of(context).labelMedium.override(
                             fontFamily: 'Readex Pro',
                             letterSpacing: 0.0,
@@ -171,13 +179,17 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                         autofillHints: const [AutofillHints.email],
                         obscureText: false,
                         decoration: InputDecoration(
-                          labelText: 'Your email address...',
+                          labelText: FFLocalizations.of(context).getText(
+                            'idnkar54' /* Your email address... */,
+                          ),
                           labelStyle:
                               FlutterFlowTheme.of(context).labelMedium.override(
                                     fontFamily: 'Readex Pro',
                                     letterSpacing: 0.0,
                                   ),
-                          hintText: 'Enter your email...',
+                          hintText: FFLocalizations.of(context).getText(
+                            'vxe2bu97' /* Enter your email... */,
+                          ),
                           hintStyle:
                               FlutterFlowTheme.of(context).labelMedium.override(
                                     fontFamily: 'Readex Pro',
@@ -241,9 +253,11 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                           logFirebaseEvent('Button-Login_auth');
                           if (_model.emailAddressController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
+                              SnackBar(
                                 content: Text(
-                                  'Email is required!',
+                                  FFLocalizations.of(context).getText(
+                                    'ql7wobav' /* Email is required! */,
+                                  ),
                                 ),
                               ),
                             );
@@ -264,7 +278,9 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                           logFirebaseEvent('Button-Login_navigate_back');
                           context.safePop();
                         },
-                        text: 'Send Link',
+                        text: FFLocalizations.of(context).getText(
+                          '8nozurhg' /* Send Link */,
+                        ),
                         options: FFButtonOptions(
                           width: 270.0,
                           height: 50.0,

@@ -7,6 +7,7 @@ import '../auth_manager.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
 
 import '/backend/backend.dart';
+import 'facebook_auth.dart';
 import 'anonymous_auth.dart';
 import 'apple_auth.dart';
 import 'email_auth.dart';
@@ -45,6 +46,7 @@ class FirebaseAuthManager extends AuthManager
         EmailSignInManager,
         GoogleSignInManager,
         AppleSignInManager,
+        FacebookSignInManager,
         AnonymousSignInManager,
         JwtSignInManager,
         GithubSignInManager,
@@ -116,12 +118,18 @@ class FirebaseAuthManager extends AuthManager
     } on FirebaseAuthException {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Fauled to authenticate. Are you sus? ')),
+        SnackBar(
+            content: Text(FFLocalizations.of(context).getText(
+          'njerxsvh' /* Fauled to authenticate. Are yo... */,
+        ))),
       );
       return null;
     }
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Password reset email has been sent! :) ')),
+      SnackBar(
+          content: Text(FFLocalizations.of(context).getText(
+        'g3q066ki' /* Password reset email has been ... */,
+      ))),
     );
   }
 
@@ -186,8 +194,10 @@ class FirebaseAuthManager extends AuthManager
             .update(() => phoneAuthManager.triggerOnCodeSent = false);
       } else if (phoneAuthManager.phoneAuthError != null) {
         final e = phoneAuthManager.phoneAuthError!;
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Fauled to authenticate. Are you sus? '),
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(FFLocalizations.of(context).getText(
+            'njerxsvh' /* Fauled to authenticate. Are yo... */,
+          )),
         ));
         phoneAuthManager.update(() => phoneAuthManager.phoneAuthError = null);
       }
@@ -276,6 +286,10 @@ class FirebaseAuthManager extends AuthManager
     }
   }
 
+  @override
+  Future<BaseAuthUser?> signInWithFacebook(BuildContext context) =>
+      _signInOrCreateAccount(context, facebookSignIn, 'FACEBOOK');
+
   /// Tries to sign in or create an account using Firebase Auth.
   /// Returns the User object if sign in was successful.
   Future<BaseAuthUser?> _signInOrCreateAccount(
@@ -294,10 +308,15 @@ class FirebaseAuthManager extends AuthManager
           : SnaplistFirebaseUser.fromUserCredential(userCredential);
     } on FirebaseAuthException catch (e) {
       final errorMsg = switch (e.code) {
-        'email-already-in-use' =>
-          'Email address is already in use. Reset your password my G',
-        'INVALID_LOGIN_CREDENTIALS' => 'Invalid uesername or password',
-        _ => 'Fauled to authenticate. Are you sus? ',
+        'email-already-in-use' => FFLocalizations.of(context).getText(
+            'odnxxgor' /* Email is already in use. Reset... */,
+          ),
+        'INVALID_LOGIN_CREDENTIALS' => FFLocalizations.of(context).getText(
+            'izi08ih0' /* Invalid uesername or password */,
+          ),
+        _ => FFLocalizations.of(context).getText(
+            'njerxsvh' /* Fauled to authenticate. Are yo... */,
+          ),
       };
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(

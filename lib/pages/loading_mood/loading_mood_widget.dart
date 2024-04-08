@@ -489,7 +489,9 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Feeling ',
+                                            FFLocalizations.of(context).getText(
+                                              'l3ouy6se' /* Feeling  */,
+                                            ),
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
@@ -538,7 +540,9 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            ', eh',
+                                            FFLocalizations.of(context).getText(
+                                              'r7nfmwkk' /* , eh */,
+                                            ),
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
@@ -567,7 +571,9 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'oooh this one\'s bumpin\'',
+                                            FFLocalizations.of(context).getText(
+                                              'knkpmsj7' /* oooh this one's bumpin' */,
+                                            ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -594,7 +600,9 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Searching Spotify for some tracks',
+                                            FFLocalizations.of(context).getText(
+                                              'onnfvutj' /* Searching Spotify for some tra... */,
+                                            ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -621,7 +629,9 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Curating your Snaplist',
+                                            FFLocalizations.of(context).getText(
+                                              'bnrdcnqh' /* Curating your Snaplist */,
+                                            ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -648,7 +658,9 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Generating a snappy name',
+                                            FFLocalizations.of(context).getText(
+                                              '7161kipw' /* Generating a snappy name */,
+                                            ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -675,7 +687,9 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Wrapping up...',
+                                            FFLocalizations.of(context).getText(
+                                              'doag2hx1' /* Wrapping up... */,
+                                            ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(

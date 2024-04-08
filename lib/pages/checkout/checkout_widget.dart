@@ -90,7 +90,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                 child: Text(
-                  'Order Summary',
+                  FFLocalizations.of(context).getText(
+                    'dosdvvwr' /* Order Summary */,
+                  ),
                   style: FlutterFlowTheme.of(context).headlineSmall.override(
                         fontFamily: 'Outfit',
                         letterSpacing: 0.0,
@@ -100,7 +102,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 8.0),
                 child: Text(
-                  'Review your order below before checking out.',
+                  FFLocalizations.of(context).getText(
+                    'uyv81syp' /* Review your order below before... */,
+                  ),
                   style: FlutterFlowTheme.of(context).labelMedium.override(
                         fontFamily: 'Readex Pro',
                         letterSpacing: 0.0,
@@ -159,7 +163,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Text(
-                                          'Snaplist Premium',
+                                          FFLocalizations.of(context).getText(
+                                            '84zlgc1o' /* Snaplist Premium */,
+                                          ),
                                           style: FlutterFlowTheme.of(context)
                                               .bodyLarge
                                               .override(
@@ -204,9 +210,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                               ),
                             ),
                             Text(
-                              _model.switchListTileValue == true
-                                  ? '\$9.50 (20% OFF)'
-                                  : '\$0.99',
+                              _model.switchListTileValue == false
+                                  ? '\$0.99'
+                                  : '\$9.50 (20% OFF)',
                               textAlign: TextAlign.end,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -235,7 +241,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                               () => _model.switchListTileValue = newValue);
                         },
                         title: Text(
-                          'Save 20%',
+                          FFLocalizations.of(context).getText(
+                            'dlfxxrgv' /* Save 20% */,
+                          ),
                           style: FlutterFlowTheme.of(context)
                               .titleLarge
                               .override(
@@ -245,7 +253,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                               ),
                         ),
                         subtitle: Text(
-                          'With an annual plan',
+                          FFLocalizations.of(context).getText(
+                            'bd142c4k' /* With an annual plan */,
+                          ),
                           style:
                               FlutterFlowTheme.of(context).labelMedium.override(
                                     fontFamily: 'Readex Pro',
@@ -272,7 +282,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          'Price Breakdown',
+                          FFLocalizations.of(context).getText(
+                            'eztryfqg' /* Price Breakdown */,
+                          ),
                           style:
                               FlutterFlowTheme.of(context).bodySmall.override(
                                     fontFamily: 'Readex Pro',
@@ -291,7 +303,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Base Price',
+                          FFLocalizations.of(context).getText(
+                            'ceg7lfc8' /* Base Price */,
+                          ),
                           style:
                               FlutterFlowTheme.of(context).labelMedium.override(
                                     fontFamily: 'Readex Pro',
@@ -319,7 +333,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Annual Discount',
+                          FFLocalizations.of(context).getText(
+                            'w0p46tog' /* Annual Discount */,
+                          ),
                           style:
                               FlutterFlowTheme.of(context).labelMedium.override(
                                     fontFamily: 'Readex Pro',
@@ -347,7 +363,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Taxes',
+                          FFLocalizations.of(context).getText(
+                            'iuxrwm9t' /* Taxes */,
+                          ),
                           style:
                               FlutterFlowTheme.of(context).labelMedium.override(
                                     fontFamily: 'Readex Pro',
@@ -378,7 +396,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              'Total',
+                              FFLocalizations.of(context).getText(
+                                '48wz2fb3' /* Total */,
+                              ),
                               style: FlutterFlowTheme.of(context)
                                   .titleMedium
                                   .override(
@@ -454,8 +474,8 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                           logFirebaseEvent('Button_stripe_payment');
                           final paymentResponse = await processStripePayment(
                             context,
-                            amount: (_model.switchListTileValue == true
-                                    ? 1074.0
+                            amount: (_model.switchListTileValue == false
+                                    ? 112.0
                                     : 1342.0)
                                 .round(),
                             currency: 'CAD',
@@ -563,7 +583,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
 
                         if (shouldSetState) setState(() {});
                       },
-                      text: 'Proceed to Checkout',
+                      text: FFLocalizations.of(context).getText(
+                        'ncykyxew' /* Proceed to Checkout */,
+                      ),
                       options: FFButtonOptions(
                         width: double.infinity,
                         height: 50.0,

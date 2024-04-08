@@ -489,7 +489,9 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Analyzing your photo',
+                                            FFLocalizations.of(context).getText(
+                                              'effqgjc6' /* Analyzing your photo */,
+                                            ),
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
@@ -518,7 +520,9 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Thinking about some music you\'ll like ',
+                                            FFLocalizations.of(context).getText(
+                                              'dfb71cki' /* Thinking about some music you'... */,
+                                            ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -545,7 +549,9 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Searching Spotify for some tracks',
+                                            FFLocalizations.of(context).getText(
+                                              'q7eb9y9n' /* Searching Spotify for some tra... */,
+                                            ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -572,7 +578,9 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Grouping your tracks',
+                                            FFLocalizations.of(context).getText(
+                                              'mmpfslav' /* Grouping your tracks */,
+                                            ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -599,7 +607,9 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Curating your Snaplist',
+                                            FFLocalizations.of(context).getText(
+                                              '8dduvi57' /* Curating your Snaplist */,
+                                            ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -626,7 +636,9 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Generating a snappy name',
+                                            FFLocalizations.of(context).getText(
+                                              'c738erf3' /* Generating a snappy name */,
+                                            ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -653,7 +665,9 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
                                               const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Wrapping up...',
+                                            FFLocalizations.of(context).getText(
+                                              'uwyzfxgw' /* Wrapping up... */,
+                                            ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(

@@ -215,7 +215,9 @@ class _FeedbackModalWidgetState extends State<FeedbackModalWidget> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 5.0),
                       child: Text(
-                        'Thanks for your Feedback! 😃',
+                        FFLocalizations.of(context).getText(
+                          '3rtxmphj' /* Thanks for your Feedback! 😃 */,
+                        ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Readex Pro',
                               fontSize: 12.0,
@@ -227,7 +229,9 @@ class _FeedbackModalWidgetState extends State<FeedbackModalWidget> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(15.0, 3.0, 10.0, 10.0),
                       child: Text(
-                        '~ The Dev Team',
+                        FFLocalizations.of(context).getText(
+                          'zr0fm1db' /* ~ The Dev Team */,
+                        ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Readex Pro',
                               fontSize: 10.0,

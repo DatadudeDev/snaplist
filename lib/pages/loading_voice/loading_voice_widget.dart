@@ -501,7 +501,10 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                                   .fromSTEB(
                                                       0.0, 20.0, 0.0, 0.0),
                                               child: Text(
-                                                'Listening...',
+                                                FFLocalizations.of(context)
+                                                    .getText(
+                                                  'f2tap13x' /* Listening... */,
+                                                ),
                                                 textAlign: TextAlign.center,
                                                 style:
                                                     FlutterFlowTheme.of(context)
@@ -534,7 +537,10 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                                   .fromSTEB(
                                                       0.0, 20.0, 0.0, 0.0),
                                               child: Text(
-                                                'mmmkay I think I\'ve got something...',
+                                                FFLocalizations.of(context)
+                                                    .getText(
+                                                  'nr8px4dd' /* mmmkay I think I've got someth... */,
+                                                ),
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -565,7 +571,10 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                                   .fromSTEB(
                                                       0.0, 20.0, 0.0, 0.0),
                                               child: Text(
-                                                'Searching Spotify for some tracks',
+                                                FFLocalizations.of(context)
+                                                    .getText(
+                                                  'dbdy2q5n' /* Searching Spotify for some tra... */,
+                                                ),
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -596,7 +605,10 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                                   .fromSTEB(
                                                       0.0, 20.0, 0.0, 0.0),
                                               child: Text(
-                                                'Searching Spotify for some tracks',
+                                                FFLocalizations.of(context)
+                                                    .getText(
+                                                  'hr62k2m2' /* Searching Spotify for some tra... */,
+                                                ),
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -627,7 +639,10 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                                   .fromSTEB(
                                                       0.0, 20.0, 0.0, 0.0),
                                               child: Text(
-                                                'Curating your Snaplist',
+                                                FFLocalizations.of(context)
+                                                    .getText(
+                                                  '8o7ouw6l' /* Curating your Snaplist */,
+                                                ),
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -658,7 +673,10 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                                   .fromSTEB(
                                                       0.0, 20.0, 0.0, 0.0),
                                               child: Text(
-                                                'Generating a snappy name',
+                                                FFLocalizations.of(context)
+                                                    .getText(
+                                                  'tm6wpkbd' /* Generating a snappy name */,
+                                                ),
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -689,7 +707,10 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                                   .fromSTEB(
                                                       0.0, 20.0, 0.0, 0.0),
                                               child: Text(
-                                                'Wrapping up...',
+                                                FFLocalizations.of(context)
+                                                    .getText(
+                                                  'yc3f5r4d' /* Wrapping up... */,
+                                                ),
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium

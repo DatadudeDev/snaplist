@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/pages/checkout/checkout_widget.dart';
 import 'dart:async';
 import '/flutter_flow/permissions_util.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +86,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     },
                   ),
                   Text(
-                    'Settings',
+                    FFLocalizations.of(context).getText(
+                      'g1xihsaq' /* Settings */,
+                    ),
                     style: FlutterFlowTheme.of(context).headlineSmall.override(
                           fontFamily: 'Outfit',
                           letterSpacing: 0.0,
@@ -109,7 +112,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(22.0, 5.0, 44.0, 0.0),
                       child: Text(
-                        'Select your account and notification preferences below: ',
+                        FFLocalizations.of(context).getText(
+                          'e7vwv7ka' /* Select your account and notifi... */,
+                        ),
                         maxLines: 2,
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Readex Pro',
@@ -140,7 +145,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               }
             },
             title: Text(
-              'Push Notifications',
+              FFLocalizations.of(context).getText(
+                'cfd5r2w2' /* Push Notifications */,
+              ),
               style: FlutterFlowTheme.of(context).bodyLarge.override(
                     fontFamily: 'Readex Pro',
                     letterSpacing: 0.0,
@@ -148,7 +155,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   ),
             ),
             subtitle: Text(
-              'Receive Push notifications from our application on a semi regular basis.',
+              FFLocalizations.of(context).getText(
+                '5iidujf5' /* Receive Push notifications fro... */,
+              ),
               style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Readex Pro',
                     color: const Color(0xFF8B97A2),
@@ -175,7 +184,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               }
             },
             title: Text(
-              'Email Notifications',
+              FFLocalizations.of(context).getText(
+                'ppbn65lx' /* Email Notifications */,
+              ),
               style: FlutterFlowTheme.of(context).bodyLarge.override(
                     fontFamily: 'Readex Pro',
                     letterSpacing: 0.0,
@@ -183,7 +194,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   ),
             ),
             subtitle: Text(
-              'Receive email notifications from our marketing team about new features.',
+              FFLocalizations.of(context).getText(
+                '8dowd9ak' /* Receive email notifications fr... */,
+              ),
               style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Readex Pro',
                     color: const Color(0xFF8B97A2),
@@ -213,7 +226,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   }
                 },
                 title: Text(
-                  'Data Collection',
+                  FFLocalizations.of(context).getText(
+                    'j9xe16op' /* Data Collection */,
+                  ),
                   style: FlutterFlowTheme.of(context).bodyLarge.override(
                         fontFamily: 'Readex Pro',
                         letterSpacing: 0.0,
@@ -221,7 +236,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                       ),
                 ),
                 subtitle: Text(
-                  'Allow us to collect and store data, per our Privacy Policy  ↗',
+                  FFLocalizations.of(context).getText(
+                    'mcc2iqvn' /* Allow us to collect and store ... */,
+                  ),
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Readex Pro',
                         color: const Color(0xFF8B97A2),
@@ -257,140 +274,322 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-            child: InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                logFirebaseEvent('SETTINGS_PAGE_Container_pezip8ai_ON_TAP');
-                logFirebaseEvent('Container_launch_u_r_l');
-                await launchURL('https://snapli.st/downgrade');
-              },
-              child: Container(
-                width: MediaQuery.sizeOf(context).width * 1.0,
-                height: 80.0,
-                decoration: const BoxDecoration(),
-                child: InkWell(
+          Stack(
+            children: [
+              if (FFAppState().isPremium == true)
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      logFirebaseEvent(
+                          'SETTINGS_PAGE_Container_pezip8ai_ON_TAP');
+                      logFirebaseEvent('Container_launch_u_r_l');
+                      await launchURL('https://snapli.st/downgrade');
+                    },
+                    child: Container(
+                      width: MediaQuery.sizeOf(context).width * 1.0,
+                      height: 80.0,
+                      decoration: const BoxDecoration(),
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          logFirebaseEvent('SETTINGS_PAGE_Row_75r4dv31_ON_TAP');
+                          await Future.wait([
+                            Future(() async {
+                              logFirebaseEvent('Row_backend_call');
+
+                              await PremiumRecord.collection
+                                  .doc()
+                                  .set(createPremiumRecordData(
+                                    user: currentUserReference,
+                                    isPremium: false,
+                                    createdOn: getCurrentTimestamp,
+                                  ));
+                            }),
+                            Future(() async {
+                              logFirebaseEvent('Row_alert_dialog');
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: const Text('Sorry-ish to see you go'),
+                                    content: const Text(
+                                        'Your account has been downgraded to the Basic plan, which was designed for the poors not for your Starbucks sippin’ a\$\$.'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: const Text('I’m awful'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              logFirebaseEvent('Row_navigate_to');
+
+                              context.goNamed('HomePage');
+                            }),
+                          ]);
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      22.0, 0.0, 0.0, 0.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Text(
+                                        FFLocalizations.of(context).getText(
+                                          '2nqjyneu' /* Downgrade Account */,
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyLarge
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      22.0, 0.0, 0.0, 0.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Stack(
+                                            children: [
+                                              Container(
+                                                width:
+                                                    MediaQuery.sizeOf(context)
+                                                            .width *
+                                                        0.65,
+                                                decoration: const BoxDecoration(),
+                                                child: Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 7.5, 0.0, 0.0),
+                                                  child: Text(
+                                                    FFLocalizations.of(context)
+                                                        .getText(
+                                                      'piy7lm9a' /* If you would like to downgrade... */,
+                                                    ),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Readex Pro',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              if (FFAppState().isPremium == false)
+                InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    logFirebaseEvent('SETTINGS_PAGE_Row_75r4dv31_ON_TAP');
-                    await Future.wait([
-                      Future(() async {
-                        logFirebaseEvent('Row_backend_call');
-
-                        await PremiumRecord.collection
-                            .doc()
-                            .set(createPremiumRecordData(
-                              user: currentUserReference,
-                              isPremium: false,
-                              createdOn: getCurrentTimestamp,
-                            ));
-                      }),
-                      Future(() async {
-                        logFirebaseEvent('Row_alert_dialog');
-                        await showDialog(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: const Text('Sorry-ish to see you go'),
-                              content: const Text(
-                                  'Your account has been downgraded to the Basic plan, which was designed for the poors not for your Starbucks sippin’ a\$\$.'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
-                                  child: const Text('I’m awful'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                        logFirebaseEvent('Row_navigate_to');
-
-                        context.goNamed('HomePage');
-                      }),
-                    ]);
-                  },
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                22.0, 0.0, 0.0, 0.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Text(
-                                  'Downgrade Account',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyLarge
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        letterSpacing: 0.0,
-                                      ),
-                                ),
-                              ],
-                            ),
+                    logFirebaseEvent('SETTINGS_PAGE_Stack_z2veuj48_ON_TAP');
+                    logFirebaseEvent('Stack_bottom_sheet');
+                    await showModalBottomSheet(
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      builder: (context) {
+                        return Padding(
+                          padding: MediaQuery.viewInsetsOf(context),
+                          child: const SizedBox(
+                            height: 600.0,
+                            child: CheckoutWidget(),
                           ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                22.0, 0.0, 0.0, 0.0),
+                        );
+                      },
+                    ).then((value) => safeSetState(() {}));
+                  },
+                  child: Stack(
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                        child: Container(
+                          width: MediaQuery.sizeOf(context).width * 1.0,
+                          height: 80.0,
+                          decoration: const BoxDecoration(),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              logFirebaseEvent(
+                                  'SETTINGS_PAGE_Row_e2g9twxu_ON_TAP');
+                              await Future.wait([
+                                Future(() async {
+                                  logFirebaseEvent('Row_backend_call');
+
+                                  await PremiumRecord.collection
+                                      .doc()
+                                      .set(createPremiumRecordData(
+                                        user: currentUserReference,
+                                        isPremium: false,
+                                        createdOn: getCurrentTimestamp,
+                                      ));
+                                }),
+                                Future(() async {
+                                  logFirebaseEvent('Row_alert_dialog');
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: const Text('Sorry-ish to see you go'),
+                                        content: const Text(
+                                            'Your account has been downgraded to the Basic plan, which was designed for the poors not for your Starbucks sippin’ a\$\$.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: const Text('I’m awful'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  logFirebaseEvent('Row_navigate_to');
+
+                                  context.goNamed('HomePage');
+                                }),
+                              ]);
+                            },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Column(
                                   mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Stack(
-                                      children: [
-                                        Container(
-                                          width:
-                                              MediaQuery.sizeOf(context).width *
-                                                  0.65,
-                                          decoration: const BoxDecoration(),
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 7.5, 0.0, 0.0),
-                                            child: Text(
-                                              'If you would like to downgrade your account, please visit this link  ↗',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Readex Pro',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryText,
-                                                    letterSpacing: 0.0,
-                                                  ),
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          22.0, 0.0, 0.0, 0.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            FFLocalizations.of(context).getText(
+                                              'yc9i1lvn' /* Upgrade Account 💎 */,
                                             ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyLarge
+                                                .override(
+                                                  fontFamily: 'Readex Pro',
+                                                  letterSpacing: 0.0,
+                                                ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          22.0, 0.0, 0.0, 0.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Stack(
+                                                children: [
+                                                  Container(
+                                                    width: MediaQuery.sizeOf(
+                                                                context)
+                                                            .width *
+                                                        0.65,
+                                                    decoration: const BoxDecoration(),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  7.5,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        FFLocalizations.of(
+                                                                context)
+                                                            .getText(
+                                                          'gdritdpk' /* If you would like to upgrade y... */,
+                                                        ),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
                               ],
                             ),
                           ),
-                        ],
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ),
+            ],
           ),
           Stack(
             children: [
@@ -439,7 +638,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            'Delete Account',
+                            FFLocalizations.of(context).getText(
+                              'bwf78leh' /* Delete Account */,
+                            ),
                             style:
                                 FlutterFlowTheme.of(context).bodyLarge.override(
                                       fontFamily: 'Readex Pro',
@@ -468,7 +669,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                           0.0, 7.5, 0.0, 0.0),
                                       child: Text(
-                                        'If you would like to delete your account, please visit this link  ↗',
+                                        FFLocalizations.of(context).getText(
+                                          'sfzmns3r' /* If you would like to delete yo... */,
+                                        ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -525,7 +728,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   }),
                 ]);
               },
-              text: 'Save Changes',
+              text: FFLocalizations.of(context).getText(
+                'rwe9odea' /* Save Changes */,
+              ),
               options: FFButtonOptions(
                 width: 190.0,
                 height: 50.0,

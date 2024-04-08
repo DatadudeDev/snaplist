@@ -1,0 +1,4 @@
+NSCameraUsageDescription = "In order to generate a Snaplist, access to the camera is required by Snaplist to capture a photo";
+NSPhotoLibraryUsageDescription = "In order to upload data,  Snaplist needs access to your gallery";
+NSMicrophoneUsageDescription = "Snaplist requires permission to use the microphone to  record your voice for playlist generation";
+PermissionGroupNotification = "Snaplist requires permission in order to send you notifications about promotions and updates";

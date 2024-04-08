@@ -73,7 +73,9 @@ class _InputModalWidgetState extends State<InputModalWidget> {
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
                 child: Text(
-                  'What are we jamming to? ',
+                  FFLocalizations.of(context).getText(
+                    'wqf96uja' /* What are we jamming to?  */,
+                  ),
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Readex Pro',
                         letterSpacing: 0.0,
@@ -123,7 +125,9 @@ class _InputModalWidgetState extends State<InputModalWidget> {
                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                           5.0, 5.0, 0.0, 0.0),
                                       child: Text(
-                                        'Describe your Vibe: ',
+                                        FFLocalizations.of(context).getText(
+                                          'camdolbf' /* Describe your Vibe:  */,
+                                        ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -173,7 +177,10 @@ class _InputModalWidgetState extends State<InputModalWidget> {
                                                   ),
                                               alignLabelWithHint: true,
                                               hintText:
-                                                  'e.g. Summer day at the beach, Wine & Paint Night',
+                                                  FFLocalizations.of(context)
+                                                      .getText(
+                                                'e1x8a9mr' /* e.g. Summer day at the beach, ... */,
+                                              ),
                                               hintStyle: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium
@@ -231,7 +238,9 @@ class _InputModalWidgetState extends State<InputModalWidget> {
                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                           5.0, 0.0, 0.0, 0.0),
                                       child: Text(
-                                        'Inspired by: ',
+                                        FFLocalizations.of(context).getText(
+                                          'et7sa1xm' /* Inspired by:  */,
+                                        ),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -276,7 +285,11 @@ class _InputModalWidgetState extends State<InputModalWidget> {
                                                       letterSpacing: 0.0,
                                                     ),
                                             alignLabelWithHint: true,
-                                            hintText: 'e.g. Pink, Snoop, BTS',
+                                            hintText:
+                                                FFLocalizations.of(context)
+                                                    .getText(
+                                              'pfa79fo6' /* e.g. Pink, Snoop, BTS */,
+                                            ),
                                             hintStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium

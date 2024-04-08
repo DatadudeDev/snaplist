@@ -530,7 +530,11 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            'Rediscover\nMusic',
+                                            FFLocalizations.of(context).getText(
+                                              'kevxpuqx' /* Rediscover
+Music */
+                                              ,
+                                            ),
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
                                                 .displaySmall
@@ -551,7 +555,10 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                 const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 16.0, 0.0, 0.0),
                                             child: Text(
-                                              'For every beautiful moment, there\'s a soundtrack.',
+                                              FFLocalizations.of(context)
+                                                  .getText(
+                                                'cwncw0km' /* For every beautiful moment, th... */,
+                                              ),
                                               textAlign: TextAlign.center,
                                               style: FlutterFlowTheme.of(
                                                       context)
@@ -581,7 +588,9 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            'Soundtrack  your life',
+                                            FFLocalizations.of(context).getText(
+                                              'jyq635mi' /* Soundtrack  your life */,
+                                            ),
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
                                                 .displaySmall
@@ -602,7 +611,10 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                 const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 16.0, 0.0, 0.0),
                                             child: Text(
-                                              'A playlist for every moment,  curated by AI. ',
+                                              FFLocalizations.of(context)
+                                                  .getText(
+                                                '8u1vv5yv' /* A playlist for every moment,  ... */,
+                                              ),
                                               textAlign: TextAlign.center,
                                               style: FlutterFlowTheme.of(
                                                       context)
@@ -632,7 +644,9 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            'Personalized Music Discovery',
+                                            FFLocalizations.of(context).getText(
+                                              'pm0fgtc7' /* Personalized Music Discovery */,
+                                            ),
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
                                                 .displaySmall
@@ -653,7 +667,10 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                 const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 16.0, 0.0, 0.0),
                                             child: Text(
-                                              'Jam out to previously unheard tracks that are totally your vibe!',
+                                              FFLocalizations.of(context)
+                                                  .getText(
+                                                '43ksomvv' /* Jam out to previously unheard ... */,
+                                              ),
                                               textAlign: TextAlign.center,
                                               style: FlutterFlowTheme.of(
                                                       context)
@@ -731,7 +748,9 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
 
                                   context.goNamed('HomePage');
                                 },
-                                text: 'Let\'s get snapping!',
+                                text: FFLocalizations.of(context).getText(
+                                  'zgj71rp4' /* Let's get snapping! */,
+                                ),
                                 options: FFButtonOptions(
                                   width: 260.0,
                                   height: 60.0,

@@ -75,7 +75,9 @@ class _FailWidgetState extends State<FailWidget> {
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                   child: Text(
-                    'OOPS!',
+                    FFLocalizations.of(context).getText(
+                      'l5ikwgls' /* OOPS! */,
+                    ),
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Readex Pro',
                           fontSize: 50.0,
@@ -99,7 +101,9 @@ class _FailWidgetState extends State<FailWidget> {
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(40.0, 0.0, 40.0, 0.0),
                   child: Text(
-                    'Something went wrong… Please restart Snaplist to continue. \n',
+                    FFLocalizations.of(context).getText(
+                      'm6a0gff4' /* Something went wrong… Please r... */,
+                    ),
                     textAlign: TextAlign.center,
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Readex Pro',
@@ -114,7 +118,9 @@ class _FailWidgetState extends State<FailWidget> {
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(40.0, 50.0, 40.0, 0.0),
                     child: Text(
-                      'Error Message: ',
+                      FFLocalizations.of(context).getText(
+                        '7vzhmv5p' /* Error Message:  */,
+                      ),
                       textAlign: TextAlign.center,
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Readex Pro',
@@ -176,7 +182,9 @@ class _FailWidgetState extends State<FailWidget> {
                                     isBug: true,
                                   ));
                             },
-                            text: 'Submit Error',
+                            text: FFLocalizations.of(context).getText(
+                              'a3bedysi' /* Submit Error */,
+                            ),
                             options: FFButtonOptions(
                               height: 40.0,
                               padding: const EdgeInsetsDirectional.fromSTEB(

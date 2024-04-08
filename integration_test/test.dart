@@ -19,6 +19,8 @@ void main() async {
   setUpAll(() async {
     _overrideOnError();
     await initFirebase();
+
+    await FFLocalizations.initialize();
   });
 
   setUp(() async {
