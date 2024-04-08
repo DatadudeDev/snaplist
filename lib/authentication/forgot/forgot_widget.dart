@@ -3,9 +3,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'forgot_model.dart';
 export 'forgot_model.dart';
 
@@ -48,7 +45,7 @@ class _ForgotWidgetState extends State<ForgotWidget> {
         children: [
           Container(
             width: double.infinity,
-            height: 100.0,
+            height: 120.0,
             decoration: BoxDecoration(
               color: FlutterFlowTheme.of(context).secondaryBackground,
             ),
@@ -61,7 +58,7 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                   children: [
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
                       child: Icon(
                         Icons.arrow_back_rounded,
                         color: FlutterFlowTheme.of(context).primaryText,
@@ -81,13 +78,13 @@ class _ForgotWidgetState extends State<ForgotWidget> {
             ),
           ),
           Align(
-            alignment: AlignmentDirectional(0.0, -1.0),
+            alignment: const AlignmentDirectional(0.0, -1.0),
             child: Container(
               width: double.infinity,
-              constraints: BoxConstraints(
+              constraints: const BoxConstraints(
                 maxWidth: 570.0,
               ),
-              decoration: BoxDecoration(),
+              decoration: const BoxDecoration(),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +97,7 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                   ))
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 8.0),
+                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 8.0),
                       child: InkWell(
                         splashColor: Colors.transparent,
                         focusColor: Colors.transparent,
@@ -115,7 +112,7 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 12.0, 0.0, 12.0),
                               child: Icon(
                                 Icons.arrow_back_rounded,
@@ -124,7 +121,7 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   12.0, 0.0, 0.0, 0.0),
                               child: Text(
                                 'Back',
@@ -142,7 +139,7 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                     ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 10.0, 0.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(16.0, 10.0, 0.0, 0.0),
                     child: Text(
                       'Forgot Password',
                       style:
@@ -154,7 +151,7 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 4.0),
+                        const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 4.0),
                     child: Text(
                       'We will send you an email with a link to reset your password, please enter the email associated with your account below.',
                       style: FlutterFlowTheme.of(context).labelMedium.override(
@@ -165,13 +162,13 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                    child: Container(
+                        const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                    child: SizedBox(
                       width: double.infinity,
                       child: TextFormField(
                         controller: _model.emailAddressController,
                         focusNode: _model.emailAddressFocusNode,
-                        autofillHints: [AutofillHints.email],
+                        autofillHints: const [AutofillHints.email],
                         obscureText: false,
                         decoration: InputDecoration(
                           labelText: 'Your email address...',
@@ -217,7 +214,7 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                           filled: true,
                           fillColor:
                               FlutterFlowTheme.of(context).secondaryBackground,
-                          contentPadding: EdgeInsetsDirectional.fromSTEB(
+                          contentPadding: const EdgeInsetsDirectional.fromSTEB(
                               24.0, 24.0, 20.0, 24.0),
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -234,19 +231,19 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.0, 0.0),
+                    alignment: const AlignmentDirectional(0.0, 0.0),
                     child: Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                       child: FFButtonWidget(
                         onPressed: () async {
                           logFirebaseEvent('FORGOT_PAGE_Button-Login_ON_TAP');
                           logFirebaseEvent('Button-Login_auth');
                           if (_model.emailAddressController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
+                              const SnackBar(
                                 content: Text(
-                                  'Email required!',
+                                  'Email is required!',
                                 ),
                               ),
                             );
@@ -271,9 +268,9 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                         options: FFButtonOptions(
                           width: 270.0,
                           height: 50.0,
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: FlutterFlowTheme.of(context).primary,
                           textStyle:
@@ -282,7 +279,7 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                                     letterSpacing: 0.0,
                                   ),
                           elevation: 3.0,
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: Colors.transparent,
                             width: 1.0,
                           ),

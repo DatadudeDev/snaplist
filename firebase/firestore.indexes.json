@@ -29,6 +29,20 @@
       ]
     },
     {
+      "collectionGroup": "premium",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "user",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdOn",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "songs",
       "queryScope": "COLLECTION",
       "fields": [

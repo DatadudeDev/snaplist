@@ -8,11 +8,8 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'spotify_model.dart';
 export 'spotify_model.dart';
 
@@ -39,15 +36,15 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
           curve: Curves.easeOut,
           delay: 0.ms,
           duration: 3200.ms,
-          begin: Offset(0.0, -80.0),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, -80.0),
+          end: const Offset(0.0, 0.0),
         ),
         MoveEffect(
           curve: Curves.easeInOut,
           delay: 3200.ms,
           duration: 3200.ms,
-          begin: Offset(0.0, 0.0),
-          end: Offset(0.0, -80.0),
+          begin: const Offset(0.0, 0.0),
+          end: const Offset(0.0, -80.0),
         ),
       ],
     ),
@@ -66,15 +63,15 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
           curve: Curves.easeInOut,
           delay: 200.ms,
           duration: 300.ms,
-          begin: Offset(0.0, 20.0),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, 20.0),
+          end: const Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
           delay: 200.ms,
           duration: 300.ms,
-          begin: Offset(0.9, 0.9),
-          end: Offset(1.0, 1.0),
+          begin: const Offset(0.9, 0.9),
+          end: const Offset(1.0, 1.0),
         ),
       ],
     ),
@@ -93,15 +90,15 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
           curve: Curves.easeInOut,
           delay: 300.ms,
           duration: 300.ms,
-          begin: Offset(0.0, 20.0),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, 20.0),
+          end: const Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
           delay: 300.ms,
           duration: 300.ms,
-          begin: Offset(0.9, 0.9),
-          end: Offset(1.0, 1.0),
+          begin: const Offset(0.9, 0.9),
+          end: const Offset(1.0, 1.0),
         ),
       ],
     ),
@@ -120,15 +117,15 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
           curve: Curves.easeInOut,
           delay: 200.ms,
           duration: 300.ms,
-          begin: Offset(0.0, 20.0),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, 20.0),
+          end: const Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
           delay: 200.ms,
           duration: 300.ms,
-          begin: Offset(0.9, 0.9),
-          end: Offset(1.0, 1.0),
+          begin: const Offset(0.9, 0.9),
+          end: const Offset(1.0, 1.0),
         ),
       ],
     ),
@@ -147,15 +144,15 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
           curve: Curves.easeInOut,
           delay: 300.ms,
           duration: 300.ms,
-          begin: Offset(0.0, 20.0),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, 20.0),
+          end: const Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
           delay: 300.ms,
           duration: 300.ms,
-          begin: Offset(0.9, 0.9),
-          end: Offset(1.0, 1.0),
+          begin: const Offset(0.9, 0.9),
+          end: const Offset(1.0, 1.0),
         ),
       ],
     ),
@@ -174,15 +171,15 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
           curve: Curves.easeInOut,
           delay: 200.ms,
           duration: 300.ms,
-          begin: Offset(0.0, 20.0),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, 20.0),
+          end: const Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
           delay: 200.ms,
           duration: 300.ms,
-          begin: Offset(0.9, 0.9),
-          end: Offset(1.0, 1.0),
+          begin: const Offset(0.9, 0.9),
+          end: const Offset(1.0, 1.0),
         ),
       ],
     ),
@@ -201,15 +198,15 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
           curve: Curves.easeInOut,
           delay: 300.ms,
           duration: 300.ms,
-          begin: Offset(0.0, 20.0),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, 20.0),
+          end: const Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
           delay: 300.ms,
           duration: 300.ms,
-          begin: Offset(0.9, 0.9),
-          end: Offset(1.0, 1.0),
+          begin: const Offset(0.9, 0.9),
+          end: const Offset(1.0, 1.0),
         ),
       ],
     ),
@@ -231,14 +228,14 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
         await Future.delayed(const Duration(milliseconds: 3000));
         logFirebaseEvent('spotify_page_view');
         await _model.pageViewController?.nextPage(
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           curve: Curves.ease,
         );
         logFirebaseEvent('spotify_wait__delay');
         await Future.delayed(const Duration(milliseconds: 3000));
         logFirebaseEvent('spotify_page_view');
         await _model.pageViewController?.nextPage(
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           curve: Curves.ease,
         );
         logFirebaseEvent('spotify_wait__delay');
@@ -288,7 +285,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                         child: MasonryGridView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
-                              SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                              const SliverSimpleGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
                           ),
                           crossAxisSpacing: 10.0,
@@ -297,7 +294,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                           itemBuilder: (context, index) {
                             return [
                               () => ClipRRect(
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       bottomLeft: Radius.circular(0.0),
                                       bottomRight: Radius.circular(16.0),
                                       topLeft: Radius.circular(0.0),
@@ -320,7 +317,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                     ),
                                   ),
                               () => ClipRRect(
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       bottomLeft: Radius.circular(0.0),
                                       bottomRight: Radius.circular(16.0),
                                       topLeft: Radius.circular(0.0),
@@ -334,7 +331,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                     ),
                                   ),
                               () => ClipRRect(
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       bottomLeft: Radius.circular(16.0),
                                       bottomRight: Radius.circular(0.0),
                                       topLeft: Radius.circular(16.0),
@@ -366,7 +363,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                     ),
                                   ),
                               () => ClipRRect(
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       bottomLeft: Radius.circular(16.0),
                                       bottomRight: Radius.circular(0.0),
                                       topLeft: Radius.circular(16.0),
@@ -398,7 +395,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                     ),
                                   ),
                               () => ClipRRect(
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       bottomLeft: Radius.circular(16.0),
                                       bottomRight: Radius.circular(0.0),
                                       topLeft: Radius.circular(16.0),
@@ -431,10 +428,10 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
               ),
               Expanded(
                 child: Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
+                  alignment: const AlignmentDirectional(0.0, 0.0),
                   child: Container(
                     width: double.infinity,
-                    constraints: BoxConstraints(
+                    constraints: const BoxConstraints(
                       maxWidth: 670.0,
                     ),
                     decoration: BoxDecoration(
@@ -443,13 +440,13 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Container(
+                        SizedBox(
                           width: double.infinity,
                           height: 230.0,
                           child: Stack(
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 50.0),
                                 child: PageView(
                                   controller: _model.pageViewController ??=
@@ -457,7 +454,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                   scrollDirection: Axis.horizontal,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           48.0, 0.0, 48.0, 0.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
@@ -483,7 +480,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                               'textOnPageLoadAnimation1']!),
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 16.0, 0.0, 0.0),
                                             child: Text(
                                               'For every beautiful moment, there\'s a soundtrack.',
@@ -494,7 +491,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                                   .override(
                                                     fontFamily:
                                                         'Plus Jakarta Sans',
-                                                    color: Color(0xFF57636C),
+                                                    color: const Color(0xFF57636C),
                                                     fontSize: 18.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
@@ -506,7 +503,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           48.0, 0.0, 48.0, 0.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
@@ -532,7 +529,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                               'textOnPageLoadAnimation3']!),
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 16.0, 0.0, 0.0),
                                             child: Text(
                                               'A playlist for every moment,  curated by AI. ',
@@ -557,7 +554,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           48.0, 0.0, 48.0, 0.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
@@ -583,7 +580,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                               'textOnPageLoadAnimation5']!),
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 16.0, 0.0, 0.0),
                                             child: Text(
                                               'Jam out to previously unheard tracks that are totally your vibe!',
@@ -611,9 +608,9 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                 ),
                               ),
                               Align(
-                                alignment: AlignmentDirectional(0.0, 1.0),
+                                alignment: const AlignmentDirectional(0.0, 1.0),
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 10.0),
                                   child:
                                       smooth_page_indicator.SmoothPageIndicator(
@@ -625,7 +622,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                       await _model.pageViewController!
                                           .animateToPage(
                                         i,
-                                        duration: Duration(milliseconds: 500),
+                                        duration: const Duration(milliseconds: 500),
                                         curve: Curves.ease,
                                       );
                                     },
@@ -650,7 +647,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 20.0, 0.0, 0.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
@@ -679,10 +676,10 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                       options: FFButtonOptions(
                                         width: 260.0,
                                         height: 60.0,
-                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                             24.0, 0.0, 24.0, 0.0),
                                         iconPadding:
-                                            EdgeInsetsDirectional.fromSTEB(
+                                            const EdgeInsetsDirectional.fromSTEB(
                                                 0.0, 0.0, 0.0, 0.0),
                                         color: FlutterFlowTheme.of(context)
                                             .primary,
@@ -694,7 +691,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                               letterSpacing: 0.0,
                                             ),
                                         elevation: 3.0,
-                                        borderSide: BorderSide(
+                                        borderSide: const BorderSide(
                                           color: Colors.transparent,
                                           width: 1.0,
                                         ),
@@ -705,7 +702,7 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                     Container(
                                       width: 260.0,
                                       height: 60.0,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         color: Color(0xFF1DB954),
                                         borderRadius: BorderRadius.only(
                                           bottomLeft: Radius.circular(12.0),
@@ -724,13 +721,13 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              FaIcon(
+                                              const FaIcon(
                                                 FontAwesomeIcons.spotify,
                                                 color: Colors.black,
                                                 size: 30.0,
                                               ),
                                               Padding(
-                                                padding: EdgeInsetsDirectional
+                                                padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
                                                         12.0, 0.0, 0.0, 0.0),
                                                 child: Text(

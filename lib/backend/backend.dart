@@ -14,6 +14,8 @@ import 'schema/profiles_record.dart';
 import 'schema/playlists_record.dart';
 import 'schema/feedback_record.dart';
 import 'schema/snaplists_record.dart';
+import 'schema/settings_record.dart';
+import 'schema/premium_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -30,6 +32,8 @@ export 'schema/profiles_record.dart';
 export 'schema/playlists_record.dart';
 export 'schema/feedback_record.dart';
 export 'schema/snaplists_record.dart';
+export 'schema/settings_record.dart';
+export 'schema/premium_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -364,6 +368,80 @@ Future<List<SnaplistsRecord>> querySnaplistsRecordOnce({
       singleRecord: singleRecord,
     );
 
+/// Functions to query SettingsRecords (as a Stream and as a Future).
+Future<int> querySettingsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      SettingsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<SettingsRecord>> querySettingsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      SettingsRecord.collection,
+      SettingsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<SettingsRecord>> querySettingsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      SettingsRecord.collection,
+      SettingsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query PremiumRecords (as a Stream and as a Future).
+Future<int> queryPremiumRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      PremiumRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<PremiumRecord>> queryPremiumRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      PremiumRecord.collection,
+      PremiumRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<PremiumRecord>> queryPremiumRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      PremiumRecord.collection,
+      PremiumRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
 Future<int> queryCollectionCount(
   Query collection, {
   Query Function(Query)? queryBuilder,
@@ -489,7 +567,7 @@ Future<FFFirestorePage<T>> queryCollectionPage<T>(
   } else {
     docSnapshot = await query.get();
   }
-  final getDocs = (QuerySnapshot s) => s.docs
+  getDocs(QuerySnapshot s) => s.docs
       .map(
         (d) => safeGet(
           () => recordBuilder(d),

@@ -9,13 +9,10 @@ import 'dart:async';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'onboarding_model.dart';
 export 'onboarding_model.dart';
@@ -48,15 +45,15 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
           curve: Curves.easeOut,
           delay: 0.ms,
           duration: 3200.ms,
-          begin: Offset(0.0, -80.0),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, -80.0),
+          end: const Offset(0.0, 0.0),
         ),
         MoveEffect(
           curve: Curves.easeInOut,
           delay: 3200.ms,
           duration: 3200.ms,
-          begin: Offset(0.0, 0.0),
-          end: Offset(0.0, -80.0),
+          begin: const Offset(0.0, 0.0),
+          end: const Offset(0.0, -80.0),
         ),
       ],
     ),
@@ -75,15 +72,15 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
           curve: Curves.easeInOut,
           delay: 200.ms,
           duration: 300.ms,
-          begin: Offset(0.0, 20.0),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, 20.0),
+          end: const Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
           delay: 200.ms,
           duration: 300.ms,
-          begin: Offset(0.9, 0.9),
-          end: Offset(1.0, 1.0),
+          begin: const Offset(0.9, 0.9),
+          end: const Offset(1.0, 1.0),
         ),
       ],
     ),
@@ -102,15 +99,15 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
           curve: Curves.easeInOut,
           delay: 300.ms,
           duration: 300.ms,
-          begin: Offset(0.0, 20.0),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, 20.0),
+          end: const Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
           delay: 300.ms,
           duration: 300.ms,
-          begin: Offset(0.9, 0.9),
-          end: Offset(1.0, 1.0),
+          begin: const Offset(0.9, 0.9),
+          end: const Offset(1.0, 1.0),
         ),
       ],
     ),
@@ -129,15 +126,15 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
           curve: Curves.easeInOut,
           delay: 200.ms,
           duration: 300.ms,
-          begin: Offset(0.0, 20.0),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, 20.0),
+          end: const Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
           delay: 200.ms,
           duration: 300.ms,
-          begin: Offset(0.9, 0.9),
-          end: Offset(1.0, 1.0),
+          begin: const Offset(0.9, 0.9),
+          end: const Offset(1.0, 1.0),
         ),
       ],
     ),
@@ -156,15 +153,15 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
           curve: Curves.easeInOut,
           delay: 300.ms,
           duration: 300.ms,
-          begin: Offset(0.0, 20.0),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, 20.0),
+          end: const Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
           delay: 300.ms,
           duration: 300.ms,
-          begin: Offset(0.9, 0.9),
-          end: Offset(1.0, 1.0),
+          begin: const Offset(0.9, 0.9),
+          end: const Offset(1.0, 1.0),
         ),
       ],
     ),
@@ -183,15 +180,15 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
           curve: Curves.easeInOut,
           delay: 200.ms,
           duration: 300.ms,
-          begin: Offset(0.0, 20.0),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, 20.0),
+          end: const Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
           delay: 200.ms,
           duration: 300.ms,
-          begin: Offset(0.9, 0.9),
-          end: Offset(1.0, 1.0),
+          begin: const Offset(0.9, 0.9),
+          end: const Offset(1.0, 1.0),
         ),
       ],
     ),
@@ -210,15 +207,15 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
           curve: Curves.easeInOut,
           delay: 300.ms,
           duration: 300.ms,
-          begin: Offset(0.0, 20.0),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, 20.0),
+          end: const Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
           delay: 300.ms,
           duration: 300.ms,
-          begin: Offset(0.9, 0.9),
-          end: Offset(1.0, 1.0),
+          begin: const Offset(0.9, 0.9),
+          end: const Offset(1.0, 1.0),
         ),
       ],
     ),
@@ -295,14 +292,14 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
             await Future.delayed(const Duration(milliseconds: 3000));
             logFirebaseEvent('onboarding_page_view');
             await _model.pageViewController?.nextPage(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               curve: Curves.ease,
             );
             logFirebaseEvent('onboarding_wait__delay');
             await Future.delayed(const Duration(milliseconds: 3000));
             logFirebaseEvent('onboarding_page_view');
             await _model.pageViewController?.nextPage(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               curve: Curves.ease,
             );
             logFirebaseEvent('onboarding_wait__delay');
@@ -356,7 +353,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                         child: MasonryGridView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
-                              SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                              const SliverSimpleGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
                           ),
                           crossAxisSpacing: 10.0,
@@ -365,7 +362,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                           itemBuilder: (context, index) {
                             return [
                               () => ClipRRect(
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       bottomLeft: Radius.circular(0.0),
                                       bottomRight: Radius.circular(16.0),
                                       topLeft: Radius.circular(0.0),
@@ -388,7 +385,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                     ),
                                   ),
                               () => ClipRRect(
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       bottomLeft: Radius.circular(0.0),
                                       bottomRight: Radius.circular(16.0),
                                       topLeft: Radius.circular(0.0),
@@ -402,7 +399,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                     ),
                                   ),
                               () => ClipRRect(
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       bottomLeft: Radius.circular(16.0),
                                       bottomRight: Radius.circular(0.0),
                                       topLeft: Radius.circular(16.0),
@@ -434,7 +431,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                     ),
                                   ),
                               () => ClipRRect(
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       bottomLeft: Radius.circular(16.0),
                                       bottomRight: Radius.circular(0.0),
                                       topLeft: Radius.circular(16.0),
@@ -466,7 +463,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                     ),
                                   ),
                               () => ClipRRect(
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       bottomLeft: Radius.circular(16.0),
                                       bottomRight: Radius.circular(0.0),
                                       topLeft: Radius.circular(16.0),
@@ -499,10 +496,10 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
               ),
               Expanded(
                 child: Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
+                  alignment: const AlignmentDirectional(0.0, 0.0),
                   child: Container(
                     width: double.infinity,
-                    constraints: BoxConstraints(
+                    constraints: const BoxConstraints(
                       maxWidth: 670.0,
                     ),
                     decoration: BoxDecoration(
@@ -511,13 +508,13 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Container(
+                        SizedBox(
                           width: double.infinity,
                           height: 230.0,
                           child: Stack(
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 50.0),
                                 child: PageView(
                                   controller: _model.pageViewController ??=
@@ -525,7 +522,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                   scrollDirection: Axis.horizontal,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           48.0, 0.0, 48.0, 0.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
@@ -551,7 +548,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                               'textOnPageLoadAnimation1']!),
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 16.0, 0.0, 0.0),
                                             child: Text(
                                               'For every beautiful moment, there\'s a soundtrack.',
@@ -576,7 +573,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           48.0, 0.0, 48.0, 0.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
@@ -602,7 +599,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                               'textOnPageLoadAnimation3']!),
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 16.0, 0.0, 0.0),
                                             child: Text(
                                               'A playlist for every moment,  curated by AI. ',
@@ -627,7 +624,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           48.0, 0.0, 48.0, 0.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
@@ -653,7 +650,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                               'textOnPageLoadAnimation5']!),
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 16.0, 0.0, 0.0),
                                             child: Text(
                                               'Jam out to previously unheard tracks that are totally your vibe!',
@@ -681,9 +678,9 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                 ),
                               ),
                               Align(
-                                alignment: AlignmentDirectional(0.0, 1.0),
+                                alignment: const AlignmentDirectional(0.0, 1.0),
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 10.0),
                                   child:
                                       smooth_page_indicator.SmoothPageIndicator(
@@ -695,7 +692,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                       await _model.pageViewController!
                                           .animateToPage(
                                         i,
-                                        duration: Duration(milliseconds: 500),
+                                        duration: const Duration(milliseconds: 500),
                                         curve: Curves.ease,
                                       );
                                     },
@@ -724,7 +721,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 20.0, 0.0, 0.0),
                               child: FFButtonWidget(
                                 onPressed: () async {
@@ -738,9 +735,9 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                 options: FFButtonOptions(
                                   width: 260.0,
                                   height: 60.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       24.0, 0.0, 24.0, 0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
                                   color: FlutterFlowTheme.of(context).primary,
                                   textStyle: FlutterFlowTheme.of(context)
@@ -752,7 +749,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                         fontWeight: FontWeight.w500,
                                       ),
                                   elevation: 3.0,
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Colors.transparent,
                                     width: 1.0,
                                   ),

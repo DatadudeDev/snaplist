@@ -4,14 +4,10 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'loading_voice_model.dart';
@@ -170,6 +166,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                     id: DatacenterAPIGroup.getPlaylistURLCall.id(
                       (_model.getPlaylist?.jsonBody ?? ''),
                     ),
+                    type: 'voice',
                   ));
               logFirebaseEvent('loadingVoice_launch_u_r_l');
               unawaited(
@@ -246,7 +243,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                   ),
                 }.withoutNulls,
                 extra: <String, dynamic>{
-                  kTransitionInfoKey: TransitionInfo(
+                  kTransitionInfoKey: const TransitionInfo(
                     hasTransition: true,
                     transitionType: PageTransitionType.fade,
                     duration: Duration(milliseconds: 0),
@@ -281,7 +278,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                 ),
               }.withoutNulls,
               extra: <String, dynamic>{
-                kTransitionInfoKey: TransitionInfo(
+                kTransitionInfoKey: const TransitionInfo(
                   hasTransition: true,
                   transitionType: PageTransitionType.fade,
                   duration: Duration(milliseconds: 0),
@@ -404,7 +401,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: Color(0xFF031524),
+          backgroundColor: const Color(0xFF031524),
           body: SafeArea(
             top: true,
             child: Stack(
@@ -415,10 +412,10 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                   children: [
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 100.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 100.0),
                       child: Container(
                         width: double.infinity,
-                        decoration: BoxDecoration(),
+                        decoration: const BoxDecoration(),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -434,7 +431,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                   ),
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(0.0, 0.0),
+                                  alignment: const AlignmentDirectional(0.0, 0.0),
                                   child: CircularPercentIndicator(
                                     percent: () {
                                       if (_model.ten == true) {
@@ -461,19 +458,19 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                     animateFromLastPercent: true,
                                     progressColor: () {
                                       if (_model.ten == true) {
-                                        return Color(0xFFEA42B3);
+                                        return const Color(0xFFEA42B3);
                                       } else if (_model.twentyNine == true) {
-                                        return Color(0xFF41E7F6);
+                                        return const Color(0xFF41E7F6);
                                       } else if (_model.thirtySeven == true) {
-                                        return Color(0xFFF2E645);
+                                        return const Color(0xFFF2E645);
                                       } else if (_model.sixtyFive == true) {
-                                        return Color(0xFF3DD1A9);
+                                        return const Color(0xFF3DD1A9);
                                       } else if (_model.eightyThree == true) {
-                                        return Color(0xFFF2E645);
+                                        return const Color(0xFFF2E645);
                                       } else if (_model.oneHundred == true) {
-                                        return Color(0xFF41E7F6);
+                                        return const Color(0xFF41E7F6);
                                       } else if (_model.fifty == true) {
-                                        return Color(0xFFEA42B3);
+                                        return const Color(0xFFEA42B3);
                                       } else {
                                         return Colors.white;
                                       }
@@ -490,7 +487,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                               children: [
                                 Container(
                                   width: 300.0,
-                                  decoration: BoxDecoration(),
+                                  decoration: const BoxDecoration(),
                                   child: Stack(
                                     children: [
                                       Row(
@@ -500,7 +497,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                         children: [
                                           if (_model.ten == true)
                                             Padding(
-                                              padding: EdgeInsetsDirectional
+                                              padding: const EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       0.0, 20.0, 0.0, 0.0),
                                               child: Text(
@@ -533,7 +530,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                         children: [
                                           if (_model.twentyNine == true)
                                             Padding(
-                                              padding: EdgeInsetsDirectional
+                                              padding: const EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       0.0, 20.0, 0.0, 0.0),
                                               child: Text(
@@ -564,7 +561,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                         children: [
                                           if (_model.thirtySeven == true)
                                             Padding(
-                                              padding: EdgeInsetsDirectional
+                                              padding: const EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       0.0, 20.0, 0.0, 0.0),
                                               child: Text(
@@ -595,7 +592,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                         children: [
                                           if (_model.fifty == true)
                                             Padding(
-                                              padding: EdgeInsetsDirectional
+                                              padding: const EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       0.0, 20.0, 0.0, 0.0),
                                               child: Text(
@@ -626,7 +623,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                         children: [
                                           if (_model.sixtyFive == true)
                                             Padding(
-                                              padding: EdgeInsetsDirectional
+                                              padding: const EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       0.0, 20.0, 0.0, 0.0),
                                               child: Text(
@@ -657,7 +654,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                         children: [
                                           if (_model.eightyThree == true)
                                             Padding(
-                                              padding: EdgeInsetsDirectional
+                                              padding: const EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       0.0, 20.0, 0.0, 0.0),
                                               child: Text(
@@ -688,7 +685,7 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                                         children: [
                                           if (_model.oneHundred == true)
                                             Padding(
-                                              padding: EdgeInsetsDirectional
+                                              padding: const EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       0.0, 20.0, 0.0, 0.0),
                                               child: Text(
@@ -722,10 +719,10 @@ class _LoadingVoiceWidgetState extends State<LoadingVoiceWidget>
                 ),
                 if (_model.twentyNine == true)
                   Align(
-                    alignment: AlignmentDirectional(1.0, 1.0),
+                    alignment: const AlignmentDirectional(1.0, 1.0),
                     child: Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 50.0, 175.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 50.0, 175.0),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
                         child: Image.asset(

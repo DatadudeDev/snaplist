@@ -4,14 +4,10 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'loading_image_model.dart';
@@ -173,6 +169,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                     id: DatacenterAPIGroup.getPlaylistURLCall.id(
                       (_model.getPlaylist?.jsonBody ?? ''),
                     ),
+                    type: 'image',
                   ));
               logFirebaseEvent('loadingImage_backend_call');
               _model.startPlayback =
@@ -244,7 +241,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                   ),
                 }.withoutNulls,
                 extra: <String, dynamic>{
-                  kTransitionInfoKey: TransitionInfo(
+                  kTransitionInfoKey: const TransitionInfo(
                     hasTransition: true,
                     transitionType: PageTransitionType.fade,
                     duration: Duration(milliseconds: 0),
@@ -364,7 +361,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
             ),
           }.withoutNulls,
           extra: <String, dynamic>{
-            kTransitionInfoKey: TransitionInfo(
+            kTransitionInfoKey: const TransitionInfo(
               hasTransition: true,
               transitionType: PageTransitionType.fade,
               duration: Duration(milliseconds: 0),
@@ -403,7 +400,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: Color(0xFF031524),
+          backgroundColor: const Color(0xFF031524),
           body: SafeArea(
             top: true,
             child: Column(
@@ -411,10 +408,10 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 100.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 100.0),
                   child: Container(
                     width: double.infinity,
-                    decoration: BoxDecoration(),
+                    decoration: const BoxDecoration(),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -430,7 +427,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(0.0, 0.0),
+                              alignment: const AlignmentDirectional(0.0, 0.0),
                               child: CircularPercentIndicator(
                                 percent: () {
                                   if (_model.ten == true) {
@@ -457,19 +454,19 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                                 animateFromLastPercent: true,
                                 progressColor: () {
                                   if (_model.ten == true) {
-                                    return Color(0xFFEA42B3);
+                                    return const Color(0xFFEA42B3);
                                   } else if (_model.twentyNine == true) {
-                                    return Color(0xFF41E7F6);
+                                    return const Color(0xFF41E7F6);
                                   } else if (_model.thirtySeven == true) {
-                                    return Color(0xFFF2E645);
+                                    return const Color(0xFFF2E645);
                                   } else if (_model.sixtyFive == true) {
-                                    return Color(0xFF3DD1A9);
+                                    return const Color(0xFF3DD1A9);
                                   } else if (_model.eightyThree == true) {
-                                    return Color(0xFFF2E645);
+                                    return const Color(0xFFF2E645);
                                   } else if (_model.oneHundred == true) {
-                                    return Color(0xFF41E7F6);
+                                    return const Color(0xFF41E7F6);
                                   } else if (_model.fifty == true) {
-                                    return Color(0xFFEA42B3);
+                                    return const Color(0xFFEA42B3);
                                   } else {
                                     return Colors.white;
                                   }
@@ -486,7 +483,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                           children: [
                             Container(
                               width: 300.0,
-                              decoration: BoxDecoration(),
+                              decoration: const BoxDecoration(),
                               child: Stack(
                                 children: [
                                   Row(
@@ -496,7 +493,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                                       if (_model.ten == true)
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Analyzing Photo',
@@ -525,7 +522,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                                       if (_model.twentyNine == true)
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Thinking about some music you\'ll like ',
@@ -552,7 +549,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                                       if (_model.thirtySeven == true)
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Searching Spotify for some tracks',
@@ -579,7 +576,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                                       if (_model.fifty == true)
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Grouping your tracks',
@@ -606,7 +603,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                                       if (_model.sixtyFive == true)
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Curating your Snaplist',
@@ -633,7 +630,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                                       if (_model.eightyThree == true)
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'hmmm… what’s a good name and description? ',
@@ -660,7 +657,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                                       if (_model.oneHundred == true)
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Wrapping up...',

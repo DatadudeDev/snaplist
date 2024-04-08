@@ -2,9 +2,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'input_modal_model.dart';
 export 'input_modal_model.dart';
 
@@ -59,12 +56,12 @@ class _InputModalWidgetState extends State<InputModalWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
                 child: Container(
                   width: 70.0,
                   height: 70.0,
                   clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                   ),
                   child: Image.asset(
@@ -74,7 +71,7 @@ class _InputModalWidgetState extends State<InputModalWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
                 child: Text(
                   'What are we jamming to? ',
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -95,12 +92,12 @@ class _InputModalWidgetState extends State<InputModalWidget> {
                   Expanded(
                     child: Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(30.0, 10.0, 30.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(30.0, 10.0, 30.0, 0.0),
                       child: Container(
                         width: double.infinity,
                         height: 200.0,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(12.0),
                             bottomRight: Radius.circular(12.0),
                             topLeft: Radius.circular(12.0),
@@ -115,15 +112,15 @@ class _InputModalWidgetState extends State<InputModalWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   5.0, 0.0, 0.0, 0.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Container(
-                                    decoration: BoxDecoration(),
+                                    decoration: const BoxDecoration(),
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           5.0, 5.0, 0.0, 0.0),
                                       child: Text(
                                         'Describe your Vibe: ',
@@ -144,14 +141,14 @@ class _InputModalWidgetState extends State<InputModalWidget> {
                               children: [
                                 Expanded(
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
                                         5.0, 0.0, 0.0, 0.0),
                                     child: Container(
-                                      decoration: BoxDecoration(),
+                                      decoration: const BoxDecoration(),
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                             5.0, 5.0, 5.0, 5.0),
-                                        child: Container(
+                                        child: SizedBox(
                                           width: double.infinity,
                                           child: TextFormField(
                                             controller: _model.textController1,
@@ -223,15 +220,15 @@ class _InputModalWidgetState extends State<InputModalWidget> {
                               ],
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 20.0, 0.0, 0.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Container(
-                                    decoration: BoxDecoration(),
+                                    decoration: const BoxDecoration(),
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           5.0, 0.0, 0.0, 0.0),
                                       child: Text(
                                         'Inspired by: ',
@@ -252,11 +249,11 @@ class _InputModalWidgetState extends State<InputModalWidget> {
                               children: [
                                 Expanded(
                                   child: Container(
-                                    decoration: BoxDecoration(),
+                                    decoration: const BoxDecoration(),
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           5.0, 5.0, 5.0, 5.0),
-                                      child: Container(
+                                      child: SizedBox(
                                         width: double.infinity,
                                         child: TextFormField(
                                           controller: _model.textController2,
@@ -339,9 +336,9 @@ class _InputModalWidgetState extends State<InputModalWidget> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Align(
-                alignment: AlignmentDirectional(1.0, 0.0),
+                alignment: const AlignmentDirectional(1.0, 0.0),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 30.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 30.0, 0.0),
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
@@ -349,10 +346,8 @@ class _InputModalWidgetState extends State<InputModalWidget> {
                     highlightColor: Colors.transparent,
                     onTap: () async {
                       logFirebaseEvent('INPUT_MODAL_COMP_Icon_g34jm7i0_ON_TAP');
-                      if (_model.textController1.text != null &&
-                          _model.textController1.text != '') {
-                        if (_model.textController2.text != null &&
-                            _model.textController2.text != '') {
+                      if (_model.textController1.text != '') {
+                        if (_model.textController2.text != '') {
                           logFirebaseEvent('Icon_navigate_to');
 
                           context.goNamed(
@@ -374,7 +369,7 @@ class _InputModalWidgetState extends State<InputModalWidget> {
                             'loadingInput',
                             queryParameters: {
                               'input': serializeParam(
-                                '${_model.textController1.text}',
+                                _model.textController1.text,
                                 ParamType.String,
                               ),
                             }.withoutNulls,
@@ -384,8 +379,7 @@ class _InputModalWidgetState extends State<InputModalWidget> {
                           Navigator.pop(context);
                         }
                       } else {
-                        if (_model.textController2.text != null &&
-                            _model.textController2.text != '') {
+                        if (_model.textController2.text != '') {
                           logFirebaseEvent('Icon_navigate_to');
 
                           context.goNamed(

@@ -59,7 +59,8 @@
     <string>In order to upload data, this app requires permission to access the photo library.</string>
 	<key>NSMicrophoneUsageDescription</key>
     <string>This app requires permissions to record audio.</string>
-
+	<key>PermissionGroupNotification</key>
+    <string>Snaplist requires permission in order to send you notifications. </string>
 
 
 	<key>UILaunchStoryboardName</key>

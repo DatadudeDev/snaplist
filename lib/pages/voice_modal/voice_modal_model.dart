@@ -1,15 +1,8 @@
 import '/backend/api_requests/api_calls.dart';
-import '/backend/firebase_storage/storage.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/upload_data.dart';
-import 'dart:async';
 import 'voice_modal_widget.dart' show VoiceModalWidget;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:record/record.dart';
 
 class VoiceModalModel extends FlutterFlowModel<VoiceModalWidget> {
@@ -21,7 +14,9 @@ class VoiceModalModel extends FlutterFlowModel<VoiceModalWidget> {
 
   ///  State fields for stateful widgets in this component.
 
+  AudioPlayer? soundPlayer1;
   AudioRecorder? audioRecorder;
+  AudioPlayer? soundPlayer2;
   String? audio;
   FFUploadedFile recordedFileBytes =
       FFUploadedFile(bytes: Uint8List.fromList([]));

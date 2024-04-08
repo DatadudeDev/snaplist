@@ -13,3 +13,4 @@ export '/pages/loading_upload/loading_upload_widget.dart'
     show LoadingUploadWidget;
 export '/pages/loading_voice/loading_voice_widget.dart' show LoadingVoiceWidget;
 export '/pages/devz_copy/devz_copy_widget.dart' show DevzCopyWidget;
+export '/pages/settings/settings_widget.dart' show SettingsWidget;

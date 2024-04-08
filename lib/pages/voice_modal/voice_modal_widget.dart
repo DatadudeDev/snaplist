@@ -6,8 +6,7 @@ import '/flutter_flow/upload_data.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
 import 'package:record/record.dart';
 import 'voice_modal_model.dart';
@@ -42,6 +41,16 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('VOICE_MODAL_voiceModal_ON_INIT_STATE');
+      logFirebaseEvent('voiceModal_play_sound');
+      _model.soundPlayer1 ??= AudioPlayer();
+      if (_model.soundPlayer1!.playing) {
+        await _model.soundPlayer1!.stop();
+      }
+      _model.soundPlayer1!.setVolume(0.25);
+      _model.soundPlayer1!
+          .setAsset('assets/audios/beep-07a.wav')
+          .then((_) => _model.soundPlayer1!.play());
+
       logFirebaseEvent('voiceModal_start_audio_recording');
       await startAudioRecording(
         context,
@@ -68,7 +77,17 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
       highlightColor: Colors.transparent,
       onTap: () async {
         logFirebaseEvent('VOICE_MODAL_Container_6qnlewv3_ON_TAP');
-        var _shouldSetState = false;
+        var shouldSetState = false;
+        logFirebaseEvent('Container_play_sound');
+        _model.soundPlayer2 ??= AudioPlayer();
+        if (_model.soundPlayer2!.playing) {
+          await _model.soundPlayer2!.stop();
+        }
+        _model.soundPlayer2!.setVolume(0.25);
+        _model.soundPlayer2!
+            .setAsset('assets/audios/beep-07a.wav')
+            .then((_) => _model.soundPlayer2!.play());
+
         logFirebaseEvent('Container_stop_audio_recording');
         await stopAudioRecording(
           audioRecorder: _model.audioRecorder,
@@ -79,7 +98,7 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
           },
         );
 
-        _shouldSetState = true;
+        shouldSetState = true;
         logFirebaseEvent('Container_upload_media_to_firebase');
         {
           setState(() => _model.isDataUploading = true);
@@ -126,7 +145,7 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
               );
             }(),
           );
-          _shouldSetState = true;
+          shouldSetState = true;
           logFirebaseEvent('Container_navigate_to');
 
           context.goNamed(
@@ -139,7 +158,7 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
             }.withoutNulls,
           );
 
-          if (_shouldSetState) setState(() {});
+          if (shouldSetState) setState(() {});
           return;
         } else {
           logFirebaseEvent('Container_navigate_to');
@@ -154,16 +173,16 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
             }.withoutNulls,
           );
 
-          if (_shouldSetState) setState(() {});
+          if (shouldSetState) setState(() {});
           return;
         }
 
-        if (_shouldSetState) setState(() {});
+        if (shouldSetState) setState(() {});
       },
       child: Container(
         width: double.infinity,
         height: 370.0,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.black,
         ),
         child: Column(
@@ -174,7 +193,7 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.asset(
@@ -188,7 +207,7 @@ class _VoiceModalWidgetState extends State<VoiceModalWidget> {
               ],
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
               child: Text(
                 'Tap to Submit',
                 style: FlutterFlowTheme.of(context).bodyMedium.override(

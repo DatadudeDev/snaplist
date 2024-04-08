@@ -6,13 +6,12 @@ import '/backend/schema/util/firestore_util.dart';
 import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
-import '/flutter_flow/flutter_flow_util.dart';
 
 class SnaplistsRecord extends FirestoreRecord {
   SnaplistsRecord._(
-    DocumentReference reference,
-    Map<String, dynamic> data,
-  ) : super(reference, data) {
+    super.reference,
+    super.data,
+  ) {
     _initializeFields();
   }
 
@@ -51,6 +50,11 @@ class SnaplistsRecord extends FirestoreRecord {
   String get id => _id ?? '';
   bool hasId() => _id != null;
 
+  // "type" field.
+  String? _type;
+  String get type => _type ?? '';
+  bool hasType() => _type != null;
+
   void _initializeFields() {
     _userRef = snapshotData['userRef'] as DocumentReference?;
     _name = snapshotData['name'] as String?;
@@ -59,6 +63,7 @@ class SnaplistsRecord extends FirestoreRecord {
     _createdTime = snapshotData['createdTime'] as DateTime?;
     _url = snapshotData['url'] as String?;
     _id = snapshotData['id'] as String?;
+    _type = snapshotData['type'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -103,6 +108,7 @@ Map<String, dynamic> createSnaplistsRecordData({
   DateTime? createdTime,
   String? url,
   String? id,
+  String? type,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -113,6 +119,7 @@ Map<String, dynamic> createSnaplistsRecordData({
       'createdTime': createdTime,
       'url': url,
       'id': id,
+      'type': type,
     }.withoutNulls,
   );
 
@@ -130,7 +137,8 @@ class SnaplistsRecordDocumentEquality implements Equality<SnaplistsRecord> {
         e1?.imageUrl == e2?.imageUrl &&
         e1?.createdTime == e2?.createdTime &&
         e1?.url == e2?.url &&
-        e1?.id == e2?.id;
+        e1?.id == e2?.id &&
+        e1?.type == e2?.type;
   }
 
   @override
@@ -141,7 +149,8 @@ class SnaplistsRecordDocumentEquality implements Equality<SnaplistsRecord> {
         e?.imageUrl,
         e?.createdTime,
         e?.url,
-        e?.id
+        e?.id,
+        e?.type
       ]);
 
   @override

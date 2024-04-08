@@ -4,14 +4,10 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'loading_mood_model.dart';
@@ -189,6 +185,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                     id: DatacenterAPIGroup.getPlaylistURLCall.id(
                       (_model.getPlaylist?.jsonBody ?? ''),
                     ),
+                    type: 'mood',
                   ));
               logFirebaseEvent('loadingMood_backend_call');
               _model.startPlayback =
@@ -255,7 +252,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                   ),
                 }.withoutNulls,
                 extra: <String, dynamic>{
-                  kTransitionInfoKey: TransitionInfo(
+                  kTransitionInfoKey: const TransitionInfo(
                     hasTransition: true,
                     transitionType: PageTransitionType.fade,
                     duration: Duration(milliseconds: 0),
@@ -290,7 +287,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                 ),
               }.withoutNulls,
               extra: <String, dynamic>{
-                kTransitionInfoKey: TransitionInfo(
+                kTransitionInfoKey: const TransitionInfo(
                   hasTransition: true,
                   transitionType: PageTransitionType.fade,
                   duration: Duration(milliseconds: 0),
@@ -400,7 +397,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: Color(0xFF031524),
+          backgroundColor: const Color(0xFF031524),
           body: SafeArea(
             top: true,
             child: Column(
@@ -408,10 +405,10 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 100.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 100.0),
                   child: Container(
                     width: double.infinity,
-                    decoration: BoxDecoration(),
+                    decoration: const BoxDecoration(),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -427,7 +424,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(0.0, 0.0),
+                              alignment: const AlignmentDirectional(0.0, 0.0),
                               child: CircularPercentIndicator(
                                 percent: () {
                                   if (_model.ten == true) {
@@ -452,17 +449,17 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                 animateFromLastPercent: true,
                                 progressColor: () {
                                   if (_model.ten == true) {
-                                    return Color(0xFFEA42B3);
+                                    return const Color(0xFFEA42B3);
                                   } else if (_model.twentyNine == true) {
-                                    return Color(0xFF41E7F6);
+                                    return const Color(0xFF41E7F6);
                                   } else if (_model.thirtySeven == true) {
-                                    return Color(0xFFF2E645);
+                                    return const Color(0xFFF2E645);
                                   } else if (_model.sixtyFive == true) {
-                                    return Color(0xFF3DD1A9);
+                                    return const Color(0xFF3DD1A9);
                                   } else if (_model.eightyThree == true) {
-                                    return Color(0xFFEA42B3);
+                                    return const Color(0xFFEA42B3);
                                   } else if (_model.oneHundred == true) {
-                                    return Color(0xFF41E7F6);
+                                    return const Color(0xFF41E7F6);
                                   } else {
                                     return Colors.white;
                                   }
@@ -479,7 +476,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                           children: [
                             Container(
                               width: 300.0,
-                              decoration: BoxDecoration(),
+                              decoration: const BoxDecoration(),
                               child: Stack(
                                 children: [
                                   Row(
@@ -489,7 +486,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                       if (_model.ten == true)
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Feeling ',
@@ -512,7 +509,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                       if (_model.ten == true)
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             valueOrDefault<String>(
@@ -538,7 +535,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                       if (_model.ten == true)
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             ', eh',
@@ -567,7 +564,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                       if (_model.twentyNine == true)
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'oooh this one\'s bumpin\'',
@@ -594,7 +591,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                       if (_model.thirtySeven == true)
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Searching Spotify for some tracks',
@@ -621,7 +618,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                       if (_model.sixtyFive == true)
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Curating your Snaplist',
@@ -648,7 +645,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                       if (_model.eightyThree == true)
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Generating a snappy name',
@@ -675,7 +672,7 @@ class _LoadingMoodWidgetState extends State<LoadingMoodWidget>
                                       if (_model.oneHundred == true)
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: Text(
                                             'Wrapping up...',

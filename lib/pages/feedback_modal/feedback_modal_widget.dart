@@ -3,13 +3,9 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_toggle_icon.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'feedback_modal_model.dart';
 export 'feedback_modal_model.dart';
 
@@ -61,7 +57,7 @@ class _FeedbackModalWidgetState extends State<FeedbackModalWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 15.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 15.0),
                 child: RatingBar.builder(
                   onRatingUpdate: (newValue) =>
                       setState(() => _model.ratingBarValue = newValue),
@@ -89,12 +85,12 @@ class _FeedbackModalWidgetState extends State<FeedbackModalWidget> {
                   Expanded(
                     child: Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
                       child: Container(
                         width: double.infinity,
                         height: 200.0,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(12.0),
                             bottomRight: Radius.circular(12.0),
                             topLeft: Radius.circular(12.0),
@@ -108,9 +104,9 @@ class _FeedbackModalWidgetState extends State<FeedbackModalWidget> {
                         child: Stack(
                           children: [
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   5.0, 5.0, 5.0, 5.0),
-                              child: Container(
+                              child: SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
                                   controller: _model.textController,
@@ -211,13 +207,13 @@ class _FeedbackModalWidgetState extends State<FeedbackModalWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 0.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 0.0, 0.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 5.0),
+                          const EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 5.0),
                       child: Text(
                         'Thanks for your Feedback! 😃',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -229,7 +225,7 @@ class _FeedbackModalWidgetState extends State<FeedbackModalWidget> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(15.0, 3.0, 10.0, 10.0),
+                          const EdgeInsetsDirectional.fromSTEB(15.0, 3.0, 10.0, 10.0),
                       child: Text(
                         '~ The Dev Team',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -243,7 +239,7 @@ class _FeedbackModalWidgetState extends State<FeedbackModalWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 30.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 30.0, 0.0),
                 child: InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,

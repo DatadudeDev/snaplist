@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '/backend/backend.dart';
-import 'backend/api_requests/api_manager.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:csv/csv.dart';
 import 'package:synchronized/synchronized.dart';
@@ -21,7 +19,7 @@ class FFAppState extends ChangeNotifier {
   }
 
   Future initializePersistedState() async {
-    secureStorage = FlutterSecureStorage();
+    secureStorage = const FlutterSecureStorage();
     await _safeInitAsync(() async {
       _spotifyAuth =
           await secureStorage.getBool('ff_spotifyAuth') ?? _spotifyAuth;
@@ -50,6 +48,18 @@ class FFAppState extends ChangeNotifier {
       _spotifyUsername = await secureStorage.getString('ff_spotifyUsername') ??
           _spotifyUsername;
     });
+    await _safeInitAsync(() async {
+      _isPremium = await secureStorage.getBool('ff_isPremium') ?? _isPremium;
+    });
+    await _safeInitAsync(() async {
+      _isEmailOK = await secureStorage.getBool('ff_isEmailOK') ?? _isEmailOK;
+    });
+    await _safeInitAsync(() async {
+      _isPushOK = await secureStorage.getBool('ff_isPushOK') ?? _isPushOK;
+    });
+    await _safeInitAsync(() async {
+      _isDataOK = await secureStorage.getBool('ff_isDataOK') ?? _isDataOK;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -61,21 +71,21 @@ class FFAppState extends ChangeNotifier {
 
   bool _makePhoto = false;
   bool get makePhoto => _makePhoto;
-  set makePhoto(bool _value) {
-    _makePhoto = _value;
+  set makePhoto(bool value) {
+    _makePhoto = value;
   }
 
   String _fileBase64 = '';
   String get fileBase64 => _fileBase64;
-  set fileBase64(String _value) {
-    _fileBase64 = _value;
+  set fileBase64(String value) {
+    _fileBase64 = value;
   }
 
   bool _spotifyAuth = false;
   bool get spotifyAuth => _spotifyAuth;
-  set spotifyAuth(bool _value) {
-    _spotifyAuth = _value;
-    secureStorage.setBool('ff_spotifyAuth', _value);
+  set spotifyAuth(bool value) {
+    _spotifyAuth = value;
+    secureStorage.setBool('ff_spotifyAuth', value);
   }
 
   void deleteSpotifyAuth() {
@@ -84,9 +94,9 @@ class FFAppState extends ChangeNotifier {
 
   String _accessToken = '';
   String get accessToken => _accessToken;
-  set accessToken(String _value) {
-    _accessToken = _value;
-    secureStorage.setString('ff_accessToken', _value);
+  set accessToken(String value) {
+    _accessToken = value;
+    secureStorage.setString('ff_accessToken', value);
   }
 
   void deleteAccessToken() {
@@ -95,9 +105,9 @@ class FFAppState extends ChangeNotifier {
 
   String _refreshToken = '';
   String get refreshToken => _refreshToken;
-  set refreshToken(String _value) {
-    _refreshToken = _value;
-    secureStorage.setString('ff_refreshToken', _value);
+  set refreshToken(String value) {
+    _refreshToken = value;
+    secureStorage.setString('ff_refreshToken', value);
   }
 
   void deleteRefreshToken() {
@@ -106,89 +116,89 @@ class FFAppState extends ChangeNotifier {
 
   List<dynamic> _tracks = [];
   List<dynamic> get tracks => _tracks;
-  set tracks(List<dynamic> _value) {
-    _tracks = _value;
+  set tracks(List<dynamic> value) {
+    _tracks = value;
   }
 
-  void addToTracks(dynamic _value) {
-    _tracks.add(_value);
+  void addToTracks(dynamic value) {
+    _tracks.add(value);
   }
 
-  void removeFromTracks(dynamic _value) {
-    _tracks.remove(_value);
+  void removeFromTracks(dynamic value) {
+    _tracks.remove(value);
   }
 
-  void removeAtIndexFromTracks(int _index) {
-    _tracks.removeAt(_index);
+  void removeAtIndexFromTracks(int index) {
+    _tracks.removeAt(index);
   }
 
   void updateTracksAtIndex(
-    int _index,
+    int index,
     dynamic Function(dynamic) updateFn,
   ) {
-    _tracks[_index] = updateFn(_tracks[_index]);
+    _tracks[index] = updateFn(_tracks[index]);
   }
 
-  void insertAtIndexInTracks(int _index, dynamic _value) {
-    _tracks.insert(_index, _value);
+  void insertAtIndexInTracks(int index, dynamic value) {
+    _tracks.insert(index, value);
   }
 
   List<dynamic> _Playlists = [];
   List<dynamic> get Playlists => _Playlists;
-  set Playlists(List<dynamic> _value) {
-    _Playlists = _value;
+  set Playlists(List<dynamic> value) {
+    _Playlists = value;
     secureStorage.setStringList(
-        'ff_Playlists', _value.map((x) => jsonEncode(x)).toList());
+        'ff_Playlists', value.map((x) => jsonEncode(x)).toList());
   }
 
   void deletePlaylists() {
     secureStorage.delete(key: 'ff_Playlists');
   }
 
-  void addToPlaylists(dynamic _value) {
-    _Playlists.add(_value);
+  void addToPlaylists(dynamic value) {
+    _Playlists.add(value);
     secureStorage.setStringList(
         'ff_Playlists', _Playlists.map((x) => jsonEncode(x)).toList());
   }
 
-  void removeFromPlaylists(dynamic _value) {
-    _Playlists.remove(_value);
+  void removeFromPlaylists(dynamic value) {
+    _Playlists.remove(value);
     secureStorage.setStringList(
         'ff_Playlists', _Playlists.map((x) => jsonEncode(x)).toList());
   }
 
-  void removeAtIndexFromPlaylists(int _index) {
-    _Playlists.removeAt(_index);
+  void removeAtIndexFromPlaylists(int index) {
+    _Playlists.removeAt(index);
     secureStorage.setStringList(
         'ff_Playlists', _Playlists.map((x) => jsonEncode(x)).toList());
   }
 
   void updatePlaylistsAtIndex(
-    int _index,
+    int index,
     dynamic Function(dynamic) updateFn,
   ) {
-    _Playlists[_index] = updateFn(_Playlists[_index]);
+    _Playlists[index] = updateFn(_Playlists[index]);
     secureStorage.setStringList(
         'ff_Playlists', _Playlists.map((x) => jsonEncode(x)).toList());
   }
 
-  void insertAtIndexInPlaylists(int _index, dynamic _value) {
-    _Playlists.insert(_index, _value);
+  void insertAtIndexInPlaylists(int index, dynamic value) {
+    _Playlists.insert(index, value);
     secureStorage.setStringList(
         'ff_Playlists', _Playlists.map((x) => jsonEncode(x)).toList());
   }
 
   String _playlistUrl = '';
   String get playlistUrl => _playlistUrl;
-  set playlistUrl(String _value) {
-    _playlistUrl = _value;
+  set playlistUrl(String value) {
+    _playlistUrl = value;
   }
 
   String _spotifyUsername = '';
   String get spotifyUsername => _spotifyUsername;
-  set spotifyUsername(String _value) {
-    _spotifyUsername = _value;
-    secureStorage.setString('ff_spotifyUsername', _value);
+  set spotifyUsername(String value) {
+    _spotifyUsername = value;
+    secureStorage.setString('ff_spotifyUsername', value);
   }
 
   void deleteSpotifyUsername() {
@@ -197,125 +207,175 @@ class FFAppState extends ChangeNotifier {
 
   String _ticketTime = '';
   String get ticketTime => _ticketTime;
-  set ticketTime(String _value) {
-    _ticketTime = _value;
+  set ticketTime(String value) {
+    _ticketTime = value;
   }
 
   List<dynamic> _moods = [];
   List<dynamic> get moods => _moods;
-  set moods(List<dynamic> _value) {
-    _moods = _value;
+  set moods(List<dynamic> value) {
+    _moods = value;
   }
 
-  void addToMoods(dynamic _value) {
-    _moods.add(_value);
+  void addToMoods(dynamic value) {
+    _moods.add(value);
   }
 
-  void removeFromMoods(dynamic _value) {
-    _moods.remove(_value);
+  void removeFromMoods(dynamic value) {
+    _moods.remove(value);
   }
 
-  void removeAtIndexFromMoods(int _index) {
-    _moods.removeAt(_index);
+  void removeAtIndexFromMoods(int index) {
+    _moods.removeAt(index);
   }
 
   void updateMoodsAtIndex(
-    int _index,
+    int index,
     dynamic Function(dynamic) updateFn,
   ) {
-    _moods[_index] = updateFn(_moods[_index]);
+    _moods[index] = updateFn(_moods[index]);
   }
 
-  void insertAtIndexInMoods(int _index, dynamic _value) {
-    _moods.insert(_index, _value);
+  void insertAtIndexInMoods(int index, dynamic value) {
+    _moods.insert(index, value);
   }
 
   List<dynamic> _moodDescription = [];
   List<dynamic> get moodDescription => _moodDescription;
-  set moodDescription(List<dynamic> _value) {
-    _moodDescription = _value;
+  set moodDescription(List<dynamic> value) {
+    _moodDescription = value;
   }
 
-  void addToMoodDescription(dynamic _value) {
-    _moodDescription.add(_value);
+  void addToMoodDescription(dynamic value) {
+    _moodDescription.add(value);
   }
 
-  void removeFromMoodDescription(dynamic _value) {
-    _moodDescription.remove(_value);
+  void removeFromMoodDescription(dynamic value) {
+    _moodDescription.remove(value);
   }
 
-  void removeAtIndexFromMoodDescription(int _index) {
-    _moodDescription.removeAt(_index);
+  void removeAtIndexFromMoodDescription(int index) {
+    _moodDescription.removeAt(index);
   }
 
   void updateMoodDescriptionAtIndex(
-    int _index,
+    int index,
     dynamic Function(dynamic) updateFn,
   ) {
-    _moodDescription[_index] = updateFn(_moodDescription[_index]);
+    _moodDescription[index] = updateFn(_moodDescription[index]);
   }
 
-  void insertAtIndexInMoodDescription(int _index, dynamic _value) {
-    _moodDescription.insert(_index, _value);
+  void insertAtIndexInMoodDescription(int index, dynamic value) {
+    _moodDescription.insert(index, value);
   }
 
   List<dynamic> _moodUrl = [];
   List<dynamic> get moodUrl => _moodUrl;
-  set moodUrl(List<dynamic> _value) {
-    _moodUrl = _value;
+  set moodUrl(List<dynamic> value) {
+    _moodUrl = value;
   }
 
-  void addToMoodUrl(dynamic _value) {
-    _moodUrl.add(_value);
+  void addToMoodUrl(dynamic value) {
+    _moodUrl.add(value);
   }
 
-  void removeFromMoodUrl(dynamic _value) {
-    _moodUrl.remove(_value);
+  void removeFromMoodUrl(dynamic value) {
+    _moodUrl.remove(value);
   }
 
-  void removeAtIndexFromMoodUrl(int _index) {
-    _moodUrl.removeAt(_index);
+  void removeAtIndexFromMoodUrl(int index) {
+    _moodUrl.removeAt(index);
   }
 
   void updateMoodUrlAtIndex(
-    int _index,
+    int index,
     dynamic Function(dynamic) updateFn,
   ) {
-    _moodUrl[_index] = updateFn(_moodUrl[_index]);
+    _moodUrl[index] = updateFn(_moodUrl[index]);
   }
 
-  void insertAtIndexInMoodUrl(int _index, dynamic _value) {
-    _moodUrl.insert(_index, _value);
+  void insertAtIndexInMoodUrl(int index, dynamic value) {
+    _moodUrl.insert(index, value);
   }
 
   String _imageURL = '';
   String get imageURL => _imageURL;
-  set imageURL(String _value) {
-    _imageURL = _value;
+  set imageURL(String value) {
+    _imageURL = value;
   }
 
   int _timestamp = 0;
   int get timestamp => _timestamp;
-  set timestamp(int _value) {
-    _timestamp = _value;
+  set timestamp(int value) {
+    _timestamp = value;
   }
 
   String _mood = '';
   String get mood => _mood;
-  set mood(String _value) {
-    _mood = _value;
+  set mood(String value) {
+    _mood = value;
   }
 
   bool _cameraOn = false;
   bool get cameraOn => _cameraOn;
-  set cameraOn(bool _value) {
-    _cameraOn = _value;
+  set cameraOn(bool value) {
+    _cameraOn = value;
   }
 
   bool _wakelock = false;
   bool get wakelock => _wakelock;
-  set wakelock(bool _value) {
-    _wakelock = _value;
+  set wakelock(bool value) {
+    _wakelock = value;
+  }
+
+  bool _isPremium = false;
+  bool get isPremium => _isPremium;
+  set isPremium(bool value) {
+    _isPremium = value;
+    secureStorage.setBool('ff_isPremium', value);
+  }
+
+  void deleteIsPremium() {
+    secureStorage.delete(key: 'ff_isPremium');
+  }
+
+  bool _isEmailOK = false;
+  bool get isEmailOK => _isEmailOK;
+  set isEmailOK(bool value) {
+    _isEmailOK = value;
+    secureStorage.setBool('ff_isEmailOK', value);
+  }
+
+  void deleteIsEmailOK() {
+    secureStorage.delete(key: 'ff_isEmailOK');
+  }
+
+  bool _isPushOK = false;
+  bool get isPushOK => _isPushOK;
+  set isPushOK(bool value) {
+    _isPushOK = value;
+    secureStorage.setBool('ff_isPushOK', value);
+  }
+
+  void deleteIsPushOK() {
+    secureStorage.delete(key: 'ff_isPushOK');
+  }
+
+  bool _isDataOK = false;
+  bool get isDataOK => _isDataOK;
+  set isDataOK(bool value) {
+    _isDataOK = value;
+    secureStorage.setBool('ff_isDataOK', value);
+  }
+
+  void deleteIsDataOK() {
+    secureStorage.delete(key: 'ff_isDataOK');
+  }
+
+  bool _justUpgraded = false;
+  bool get justUpgraded => _justUpgraded;
+  set justUpgraded(bool value) {
+    _justUpgraded = value;
   }
 }
 
@@ -364,12 +424,12 @@ extension FlutterSecureStorageExtensions on FlutterSecureStorage {
         if (result == null || result.isEmpty) {
           return null;
         }
-        return CsvToListConverter()
+        return const CsvToListConverter()
             .convert(result)
             .first
             .map((e) => e.toString())
             .toList();
       });
   Future<void> setStringList(String key, List<String> value) async =>
-      await writeSync(key: key, value: ListToCsvConverter().convert([value]));
+      await writeSync(key: key, value: const ListToCsvConverter().convert([value]));
 }

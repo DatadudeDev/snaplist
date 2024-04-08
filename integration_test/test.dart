@@ -16,7 +16,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 void main() async {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Premium', () async {});
+  setUpAll(() async {
+    _overrideOnError();
+    await initFirebase();
+  });
+
+  setUp(() async {
+    await authManager.signOut();
+    FFAppState.reset();
+    final appState = FFAppState();
+    await appState.initializePersistedState();
+  });
+
+  group('Premium', () {});
 }
 
 // There are certain types of errors that can happen during tests but
