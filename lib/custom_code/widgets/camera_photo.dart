@@ -26,36 +26,61 @@ class CameraPhoto extends StatefulWidget {
   _CameraPhotoState createState() => _CameraPhotoState();
 }
 
-class _CameraPhotoState extends State<CameraPhoto> {
+class _CameraPhotoState extends State<CameraPhoto> with WidgetsBindingObserver {
   CameraController? controller;
   late Future<List<CameraDescription>> _cameras;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _cameras = availableCameras();
   }
 
   @override
-  void didUpdateWidget(covariant CameraPhoto oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (FFAppState().makePhoto) {
-      controller!.takePicture().then((file) async {
-        Uint8List fileAsBytes = await file.readAsBytes();
-        final base64 = base64Encode(fileAsBytes);
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (controller == null || !controller!.value.isInitialized) {
+      return;
+    }
+    if (state == AppLifecycleState.inactive) {
+      controller?.dispose();
+    } else if (state == AppLifecycleState.resumed) {
+      if (controller != null) {
+        onNewCameraSelected(controller!.description);
+      }
+    }
+  }
 
-        FFAppState().update(() {
-          FFAppState().fileBase64 = base64;
-        });
-        FFAppState().update(() {
-          FFAppState().makePhoto = false;
-        });
-      }).catchError((error) {});
+  void onNewCameraSelected(CameraDescription cameraDescription) async {
+    if (controller != null) {
+      await controller!.dispose();
+    }
+    controller = CameraController(
+      cameraDescription,
+      ResolutionPreset.medium,
+      enableAudio: false,
+      imageFormatGroup: ImageFormatGroup.jpeg,
+    );
+
+    // If the controller is updated then update the UI.
+    controller?.addListener(() {
+      if (mounted) setState(() {});
+    });
+
+    try {
+      await controller!.initialize();
+    } on CameraException catch (e) {
+      print('Error initializing camera: $e');
+    }
+
+    if (mounted) {
+      setState(() {});
     }
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     controller?.dispose();
     super.dispose();
   }
@@ -68,22 +93,7 @@ class _CameraPhotoState extends State<CameraPhoto> {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData && snapshot.data!.isNotEmpty) {
             if (controller == null) {
-              controller = CameraController(
-                  snapshot.data![0], ResolutionPreset.max,
-                  enableAudio:
-                      false, // Disable audio to focus only on the camera
-                  imageFormatGroup:
-                      ImageFormatGroup.jpeg // Use JPEG format for images
-                  );
-              controller!.initialize().then((_) {
-                if (!mounted) {
-                  return;
-                }
-                setState(() {
-                  controller!.setFlashMode(
-                      FlashMode.off); // Ensure the flash is always off
-                });
-              });
+              onNewCameraSelected(snapshot.data![0]);
             }
             return controller!.value.isInitialized
                 ? MaterialApp(

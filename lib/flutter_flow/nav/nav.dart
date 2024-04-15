@@ -5,8 +5,6 @@ import 'package:provider/provider.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
-import '/backend/push_notifications/push_notifications_handler.dart'
-    show PushNotificationsHandler;
 import '/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -123,6 +121,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
             ),
             upgraded: params.getParam(
               'upgraded',
+              ParamType.bool,
+            ),
+            downgraded: params.getParam(
+              'downgraded',
               ParamType.bool,
             ),
           ),
@@ -416,13 +418,13 @@ class FFRoute {
                   color: FlutterFlowTheme.of(context).secondaryBackground,
                   child: Center(
                     child: Image.asset(
-                      'assets/images/IMG_0258.gif',
+                      'assets/images/IMG_0438-1713137102772.png',
                       width: 200.0,
                       fit: BoxFit.cover,
                     ),
                   ),
                 )
-              : PushNotificationsHandler(child: page);
+              : page;
 
           final transitionInfo = state.transitionInfo;
           return transitionInfo.hasTransition

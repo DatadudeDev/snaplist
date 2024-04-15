@@ -35,14 +35,14 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
         MoveEffect(
           curve: Curves.easeOut,
           delay: 0.ms,
-          duration: 3200.ms,
+          duration: 0.ms,
           begin: const Offset(0.0, -80.0),
           end: const Offset(0.0, 0.0),
         ),
         MoveEffect(
           curve: Curves.easeInOut,
-          delay: 3200.ms,
-          duration: 3200.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: const Offset(0.0, 0.0),
           end: const Offset(0.0, -80.0),
         ),
@@ -51,25 +51,25 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
     'textOnPageLoadAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
-        VisibilityEffect(duration: 200.ms),
+        VisibilityEffect(duration: 1.ms),
         FadeEffect(
           curve: Curves.easeInOut,
-          delay: 200.ms,
-          duration: 300.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: 0.0,
           end: 1.0,
         ),
         MoveEffect(
           curve: Curves.easeInOut,
-          delay: 200.ms,
-          duration: 300.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: const Offset(0.0, 20.0),
           end: const Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
-          delay: 200.ms,
-          duration: 300.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: const Offset(0.9, 0.9),
           end: const Offset(1.0, 1.0),
         ),
@@ -78,25 +78,25 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
     'textOnPageLoadAnimation2': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
-        VisibilityEffect(duration: 300.ms),
+        VisibilityEffect(duration: 1.ms),
         FadeEffect(
           curve: Curves.easeInOut,
-          delay: 300.ms,
-          duration: 300.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: 0.0,
           end: 1.0,
         ),
         MoveEffect(
           curve: Curves.easeInOut,
-          delay: 300.ms,
-          duration: 300.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: const Offset(0.0, 20.0),
           end: const Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
-          delay: 300.ms,
-          duration: 300.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: const Offset(0.9, 0.9),
           end: const Offset(1.0, 1.0),
         ),
@@ -105,25 +105,25 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
     'textOnPageLoadAnimation3': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
-        VisibilityEffect(duration: 200.ms),
+        VisibilityEffect(duration: 1.ms),
         FadeEffect(
           curve: Curves.easeInOut,
-          delay: 200.ms,
-          duration: 300.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: 0.0,
           end: 1.0,
         ),
         MoveEffect(
           curve: Curves.easeInOut,
-          delay: 200.ms,
-          duration: 300.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: const Offset(0.0, 20.0),
           end: const Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
-          delay: 200.ms,
-          duration: 300.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: const Offset(0.9, 0.9),
           end: const Offset(1.0, 1.0),
         ),
@@ -132,25 +132,25 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
     'textOnPageLoadAnimation4': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
-        VisibilityEffect(duration: 300.ms),
+        VisibilityEffect(duration: 1.ms),
         FadeEffect(
           curve: Curves.easeInOut,
-          delay: 300.ms,
-          duration: 300.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: 0.0,
           end: 1.0,
         ),
         MoveEffect(
           curve: Curves.easeInOut,
-          delay: 300.ms,
-          duration: 300.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: const Offset(0.0, 20.0),
           end: const Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
-          delay: 300.ms,
-          duration: 300.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: const Offset(0.9, 0.9),
           end: const Offset(1.0, 1.0),
         ),
@@ -159,25 +159,25 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
     'textOnPageLoadAnimation5': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
-        VisibilityEffect(duration: 200.ms),
+        VisibilityEffect(duration: 1.ms),
         FadeEffect(
           curve: Curves.easeInOut,
-          delay: 200.ms,
-          duration: 300.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: 0.0,
           end: 1.0,
         ),
         MoveEffect(
           curve: Curves.easeInOut,
-          delay: 200.ms,
-          duration: 300.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: const Offset(0.0, 20.0),
           end: const Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
-          delay: 200.ms,
-          duration: 300.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: const Offset(0.9, 0.9),
           end: const Offset(1.0, 1.0),
         ),
@@ -186,25 +186,25 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
     'textOnPageLoadAnimation6': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
-        VisibilityEffect(duration: 300.ms),
+        VisibilityEffect(duration: 1.ms),
         FadeEffect(
           curve: Curves.easeInOut,
-          delay: 300.ms,
-          duration: 300.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: 0.0,
           end: 1.0,
         ),
         MoveEffect(
           curve: Curves.easeInOut,
-          delay: 300.ms,
-          duration: 300.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: const Offset(0.0, 20.0),
           end: const Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
-          delay: 300.ms,
-          duration: 300.ms,
+          delay: 0.ms,
+          duration: 0.ms,
           begin: const Offset(0.9, 0.9),
           end: const Offset(1.0, 1.0),
         ),
@@ -461,27 +461,33 @@ class _SpotifyWidgetState extends State<SpotifyWidget>
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            FFLocalizations.of(context).getText(
-                                              '4n8bflm0' /* Rediscover
+                                          Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 10.0, 0.0, 0.0),
+                                            child: Text(
+                                              FFLocalizations.of(context)
+                                                  .getText(
+                                                '4n8bflm0' /* Rediscover
 Music */
-                                              ,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.of(context)
-                                                .displaySmall
-                                                .override(
-                                                  fontFamily:
-                                                      'Plus Jakarta Sans',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryText,
-                                                  fontSize: 36.0,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                          ).animateOnPageLoad(animationsMap[
-                                              'textOnPageLoadAnimation1']!),
+                                                ,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .displaySmall
+                                                  .override(
+                                                    fontFamily: 'Poppins',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    fontSize: 36.0,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                            ).animateOnPageLoad(animationsMap[
+                                                'textOnPageLoadAnimation1']!),
+                                          ),
                                           Padding(
                                             padding:
                                                 const EdgeInsetsDirectional.fromSTEB(

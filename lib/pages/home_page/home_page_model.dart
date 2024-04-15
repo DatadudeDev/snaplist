@@ -28,6 +28,8 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
 
   bool isPaused = false;
 
+  int? currentIndex = 2;
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
@@ -41,15 +43,13 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   ApiCallResponse? refreshAccessToken2;
   // Stores action output result for [Firestore Query - Query a collection] action in HomePage widget.
   PremiumRecord? checkPremium;
-  // State field(s) for Carousel widget.
-  CarouselController? carouselController;
+  // State field(s) for TabBar widget.
+  TabController? tabBarController;
+  int get tabBarCurrentIndex =>
+      tabBarController != null ? tabBarController!.index : 0;
 
-  int carouselCurrentIndex = 2;
-
-  // Stores action output result for [Backend Call - API (Pause Music)] action in IconButton widget.
-  ApiCallResponse? pauseMusicCopy;
-  // Stores action output result for [Backend Call - API (Pause Music)] action in IconButton widget.
-  ApiCallResponse? pauseMusic;
+  // Stores action output result for [Backend Call - API (Pause Music)] action in Column widget.
+  ApiCallResponse? pauseMusic2;
   bool isDataUploading1 = false;
   FFUploadedFile uploadedLocalFile1 =
       FFUploadedFile(bytes: Uint8List.fromList([]));
@@ -60,10 +60,22 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
       FFUploadedFile(bytes: Uint8List.fromList([]));
   String uploadedFileUrl2 = '';
 
-  // State field(s) for TabBar widget.
-  TabController? tabBarController;
-  int get tabBarCurrentIndex =>
-      tabBarController != null ? tabBarController!.index : 0;
+  // State field(s) for navCarousel widget.
+  CarouselController? navCarouselController;
+
+  int navCarouselCurrentIndex = 2;
+
+  // Stores action output result for [Backend Call - API (Pause Music)] action in Container widget.
+  ApiCallResponse? apiResultpso;
+  bool isDataUploading3 = false;
+  FFUploadedFile uploadedLocalFile3 =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+  String uploadedFileUrl3 = '';
+
+  bool isDataUploading4 = false;
+  FFUploadedFile uploadedLocalFile4 =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+  String uploadedFileUrl4 = '';
 
   @override
   void initState(BuildContext context) {}

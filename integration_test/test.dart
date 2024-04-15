@@ -2,8 +2,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:snaplist/flutter_flow/flutter_flow_drop_down.dart';
 import 'package:snaplist/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:snaplist/flutter_flow/flutter_flow_widgets.dart';
+import 'package:snaplist/flutter_flow/flutter_flow_theme.dart';
 import 'package:snaplist/index.dart';
 import 'package:snaplist/main.dart';
 import 'package:snaplist/flutter_flow/flutter_flow_util.dart';
@@ -19,6 +21,8 @@ void main() async {
   setUpAll(() async {
     _overrideOnError();
     await initFirebase();
+
+    await FlutterFlowTheme.initialize();
 
     await FFLocalizations.initialize();
   });

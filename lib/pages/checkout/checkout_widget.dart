@@ -61,10 +61,14 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
             )
           ],
           borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(0.0),
-            bottomRight: Radius.circular(0.0),
+            bottomLeft: Radius.circular(12.0),
+            bottomRight: Radius.circular(12.0),
             topLeft: Radius.circular(12.0),
             topRight: Radius.circular(12.0),
+          ),
+          border: Border.all(
+            color: Colors.white,
+            width: 2.0,
           ),
         ),
         child: Padding(
@@ -75,29 +79,47 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
             children: [
               Row(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    width: 60.0,
-                    height: 4.0,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                      borderRadius: BorderRadius.circular(2.0),
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                    child: Text(
+                      FFLocalizations.of(context).getText(
+                        'dosdvvwr' /* Order Summary */,
+                      ),
+                      style:
+                          FlutterFlowTheme.of(context).headlineSmall.override(
+                                fontFamily: 'Outfit',
+                                letterSpacing: 0.0,
+                              ),
+                    ),
+                  ),
+                  Align(
+                    alignment: const AlignmentDirectional(1.0, -1.0),
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          logFirebaseEvent(
+                              'CHECKOUT_COMP_Icon_57c1vjcy_ON_TAP');
+                          logFirebaseEvent('Icon_close_dialog,_drawer,_etc');
+                          Navigator.pop(context);
+                        },
+                        child: Icon(
+                          Icons.clear,
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                          size: 30.0,
+                        ),
+                      ),
                     ),
                   ),
                 ],
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-                child: Text(
-                  FFLocalizations.of(context).getText(
-                    'dosdvvwr' /* Order Summary */,
-                  ),
-                  style: FlutterFlowTheme.of(context).headlineSmall.override(
-                        fontFamily: 'Outfit',
-                        letterSpacing: 0.0,
-                      ),
-                ),
               ),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 8.0),
@@ -144,10 +166,10 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
                               child: Image.asset(
-                                'assets/images/output-onlinepngtools_(15).png',
-                                width: 40.0,
-                                height: 40.0,
-                                fit: BoxFit.cover,
+                                'assets/images/IMG_0445-1713210096620.png',
+                                width: 60.0,
+                                height: 60.0,
+                                fit: BoxFit.contain,
                               ),
                             ),
                             Expanded(
@@ -212,7 +234,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                             Text(
                               _model.switchListTileValue == false
                                   ? '\$0.99'
-                                  : '\$9.50 (20% OFF)',
+                                  : '\$9.50',
                               textAlign: TextAlign.end,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -263,8 +285,8 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                   ),
                         ),
                         tileColor: FlutterFlowTheme.of(context).primaryText,
-                        activeColor: FlutterFlowTheme.of(context).secondary,
-                        activeTrackColor: FlutterFlowTheme.of(context).primary,
+                        activeColor: FlutterFlowTheme.of(context).primaryText,
+                        activeTrackColor: FlutterFlowTheme.of(context).tertiary,
                         dense: false,
                         controlAffinity: ListTileControlAffinity.trailing,
                       ),
@@ -374,7 +396,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                         ),
                         Text(
                           _model.switchListTileValue == true
-                              ? '\$1.54'
+                              ? '\$1.24'
                               : '\$0.13',
                           style:
                               FlutterFlowTheme.of(context).bodyLarge.override(
@@ -427,7 +449,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                         ),
                         Text(
                           _model.switchListTileValue == true
-                              ? '\$13.42'
+                              ? '\$10.74'
                               : '\$1.12',
                           style: FlutterFlowTheme.of(context)
                               .displaySmall
@@ -476,7 +498,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                             context,
                             amount: (_model.switchListTileValue == false
                                     ? 112.0
-                                    : 1342.0)
+                                    : 1074.0)
                                 .round(),
                             currency: 'CAD',
                             customerEmail: currentUserEmail,
@@ -593,7 +615,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                             const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         iconPadding:
                             const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).secondary,
+                        color: FlutterFlowTheme.of(context).primary,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Readex Pro',

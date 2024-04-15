@@ -373,6 +373,7 @@ class DatacenterAPIGroup {
   static GetPlaylistURLInputCall getPlaylistURLInputCall =
       GetPlaylistURLInputCall();
   static GetMoodsCall getMoodsCall = GetMoodsCall();
+  static GetPlacesCall getPlacesCall = GetPlacesCall();
   static PostMoodCall postMoodCall = PostMoodCall();
   static PostInputCall postInputCall = PostInputCall();
   static PostVoiceCall postVoiceCall = PostVoiceCall();
@@ -606,6 +607,45 @@ class GetMoodsCall {
   List? moodList(dynamic response) => getJsonField(
         response,
         r'''$.moods''',
+        true,
+      ) as List?;
+}
+
+class GetPlacesCall {
+  Future<ApiCallResponse> call() async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'get Places',
+      apiUrl: '${DatacenterAPIGroup.baseUrl}/v1/get_places',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-type': 'application/json',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List<String>? name(dynamic response) => (getJsonField(
+        response,
+        r'''$.places[:].name''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  List? places(dynamic response) => getJsonField(
+        response,
+        r'''$.places''',
+        true,
+      ) as List?;
+  List? gps(dynamic response) => getJsonField(
+        response,
+        r'''$.places[:].gps''',
         true,
       ) as List?;
 }

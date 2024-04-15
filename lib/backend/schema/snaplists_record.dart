@@ -55,6 +55,11 @@ class SnaplistsRecord extends FirestoreRecord {
   String get type => _type ?? '';
   bool hasType() => _type != null;
 
+  // "userImage" field.
+  bool? _userImage;
+  bool get userImage => _userImage ?? false;
+  bool hasUserImage() => _userImage != null;
+
   void _initializeFields() {
     _userRef = snapshotData['userRef'] as DocumentReference?;
     _name = snapshotData['name'] as String?;
@@ -64,6 +69,7 @@ class SnaplistsRecord extends FirestoreRecord {
     _url = snapshotData['url'] as String?;
     _id = snapshotData['id'] as String?;
     _type = snapshotData['type'] as String?;
+    _userImage = snapshotData['userImage'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -109,6 +115,7 @@ Map<String, dynamic> createSnaplistsRecordData({
   String? url,
   String? id,
   String? type,
+  bool? userImage,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -120,6 +127,7 @@ Map<String, dynamic> createSnaplistsRecordData({
       'url': url,
       'id': id,
       'type': type,
+      'userImage': userImage,
     }.withoutNulls,
   );
 
@@ -138,7 +146,8 @@ class SnaplistsRecordDocumentEquality implements Equality<SnaplistsRecord> {
         e1?.createdTime == e2?.createdTime &&
         e1?.url == e2?.url &&
         e1?.id == e2?.id &&
-        e1?.type == e2?.type;
+        e1?.type == e2?.type &&
+        e1?.userImage == e2?.userImage;
   }
 
   @override
@@ -150,7 +159,8 @@ class SnaplistsRecordDocumentEquality implements Equality<SnaplistsRecord> {
         e?.createdTime,
         e?.url,
         e?.id,
-        e?.type
+        e?.type,
+        e?.userImage
       ]);
 
   @override

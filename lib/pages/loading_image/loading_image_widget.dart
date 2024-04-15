@@ -39,7 +39,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
         FadeEffect(
           curve: Curves.easeOut,
           delay: 0.ms,
-          duration: 600.ms,
+          duration: 0.ms,
           begin: 1.0,
           end: 0.0,
         ),
@@ -52,7 +52,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
         FadeEffect(
           curve: Curves.easeOut,
           delay: 0.ms,
-          duration: 600.ms,
+          duration: 0.ms,
           begin: 1.0,
           end: 0.0,
         ),
@@ -65,7 +65,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
         FadeEffect(
           curve: Curves.easeOut,
           delay: 0.ms,
-          duration: 600.ms,
+          duration: 0.ms,
           begin: 1.0,
           end: 0.0,
         ),
@@ -78,7 +78,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
         FadeEffect(
           curve: Curves.easeOut,
           delay: 0.ms,
-          duration: 600.ms,
+          duration: 0.ms,
           begin: 1.0,
           end: 0.0,
         ),
@@ -91,7 +91,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
         FadeEffect(
           curve: Curves.easeOut,
           delay: 0.ms,
-          duration: 600.ms,
+          duration: 0.ms,
           begin: 1.0,
           end: 0.0,
         ),
@@ -104,7 +104,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
         FadeEffect(
           curve: Curves.easeOut,
           delay: 0.ms,
-          duration: 600.ms,
+          duration: 0.ms,
           begin: 1.0,
           end: 0.0,
         ),
@@ -135,8 +135,6 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
       if ((_model.sendPhotoURL?.succeeded ?? true)) {
         await Future.wait([
           Future(() async {
-            logFirebaseEvent('loadingImage_wait__delay');
-            await Future.delayed(const Duration(milliseconds: 24500));
             logFirebaseEvent('loadingImage_backend_call');
             _model.getPlaylist =
                 await DatacenterAPIGroup.getPlaylistURLCall.call(
@@ -170,6 +168,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                       (_model.getPlaylist?.jsonBody ?? ''),
                     ),
                     type: 'image',
+                    userImage: true,
                   ));
               logFirebaseEvent('loadingImage_backend_call');
               _model.startPlayback =
@@ -179,39 +178,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                   (_model.getPlaylist?.jsonBody ?? ''),
                 ),
               );
-              if ((_model.startPlayback?.succeeded ?? true)) {
-                if (isAndroid) {
-                  logFirebaseEvent('loadingImage_launch_u_r_l');
-                  unawaited(
-                    () async {
-                      await launchURL(
-                          DatacenterAPIGroup.getPlaylistURLCall.playlistUrl(
-                        (_model.getPlaylist?.jsonBody ?? ''),
-                      )!);
-                    }(),
-                  );
-                  logFirebaseEvent('loadingImage_navigate_to');
-
-                  context.goNamed('HomePage');
-
-                  return;
-                } else {
-                  logFirebaseEvent('loadingImage_launch_u_r_l');
-                  unawaited(
-                    () async {
-                      await launchURL(
-                          DatacenterAPIGroup.getPlaylistURLCall.contextUri(
-                        (_model.getPlaylist?.jsonBody ?? ''),
-                      )!);
-                    }(),
-                  );
-                  logFirebaseEvent('loadingImage_navigate_to');
-
-                  context.goNamed('HomePage');
-
-                  return;
-                }
-              } else {
+              if (isAndroid) {
                 logFirebaseEvent('loadingImage_launch_u_r_l');
                 unawaited(
                   () async {
@@ -221,6 +188,25 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                     )!);
                   }(),
                 );
+                logFirebaseEvent('loadingImage_navigate_to');
+
+                context.goNamed('HomePage');
+
+                return;
+              } else {
+                logFirebaseEvent('loadingImage_launch_u_r_l');
+                unawaited(
+                  () async {
+                    await launchURL(
+                        DatacenterAPIGroup.getPlaylistURLCall.contextUri(
+                      (_model.getPlaylist?.jsonBody ?? ''),
+                    )!);
+                  }(),
+                );
+                logFirebaseEvent('loadingImage_navigate_to');
+
+                context.goNamed('HomePage');
+
                 return;
               }
             } else {
@@ -400,7 +386,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: const Color(0xFF031524),
+          backgroundColor: FlutterFlowTheme.of(context).alternate,
           body: SafeArea(
             top: true,
             child: Column(
@@ -420,7 +406,7 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                             ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
                               child: Image.asset(
-                                'assets/images/f9a037eb45548f6f79d1f73fae94f701.gif',
+                                'assets/images/IMG_0441-1713140029091.gif',
                                 width: double.infinity,
                                 height: 340.0,
                                 fit: BoxFit.cover,
@@ -454,19 +440,23 @@ class _LoadingImageWidgetState extends State<LoadingImageWidget>
                                 animateFromLastPercent: true,
                                 progressColor: () {
                                   if (_model.ten == true) {
-                                    return const Color(0xFFEA42B3);
+                                    return FlutterFlowTheme.of(context).primary;
                                   } else if (_model.twentyNine == true) {
-                                    return const Color(0xFF41E7F6);
+                                    return FlutterFlowTheme.of(context)
+                                        .secondary;
                                   } else if (_model.thirtySeven == true) {
-                                    return const Color(0xFFF2E645);
+                                    return FlutterFlowTheme.of(context)
+                                        .tertiary;
                                   } else if (_model.sixtyFive == true) {
-                                    return const Color(0xFF3DD1A9);
+                                    return FlutterFlowTheme.of(context).primary;
                                   } else if (_model.eightyThree == true) {
-                                    return const Color(0xFFF2E645);
+                                    return FlutterFlowTheme.of(context)
+                                        .secondary;
                                   } else if (_model.oneHundred == true) {
-                                    return const Color(0xFF41E7F6);
+                                    return FlutterFlowTheme.of(context)
+                                        .tertiary;
                                   } else if (_model.fifty == true) {
-                                    return const Color(0xFFEA42B3);
+                                    return FlutterFlowTheme.of(context).primary;
                                   } else {
                                     return Colors.white;
                                   }

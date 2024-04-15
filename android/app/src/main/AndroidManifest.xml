@@ -75,7 +75,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBBzVycKke2mKHYdJlxidz4TDgmco1tW98"/>
 
         <meta-data android:name="com.google.android.gms.wallet.api.enabled" android:value="true"/>
     </application>

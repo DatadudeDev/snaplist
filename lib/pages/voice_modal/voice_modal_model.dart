@@ -17,11 +17,6 @@ class VoiceModalModel extends FlutterFlowModel<VoiceModalWidget> {
 
   AudioPlayer? soundPlayer1;
   AudioRecorder? audioRecorder;
-  // State field(s) for Carousel widget.
-  CarouselController? carouselController;
-
-  int carouselCurrentIndex = 0;
-
   AudioPlayer? soundPlayer2;
   String? audio;
   FFUploadedFile recordedFileBytes =
@@ -31,8 +26,12 @@ class VoiceModalModel extends FlutterFlowModel<VoiceModalWidget> {
       FFUploadedFile(bytes: Uint8List.fromList([]));
   String uploadedFileUrl = '';
 
-  // Stores action output result for [Backend Call - API (Resume Music)] action in Image widget.
+  // Stores action output result for [Backend Call - API (Resume Music)] action in Container widget.
   ApiCallResponse? apiResult2c4;
+  // State field(s) for Carousel widget.
+  CarouselController? carouselController;
+
+  int carouselCurrentIndex = 0;
 
   @override
   void initState(BuildContext context) {}

@@ -39,7 +39,7 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
         FadeEffect(
           curve: Curves.easeOut,
           delay: 0.ms,
-          duration: 600.ms,
+          duration: 0.ms,
           begin: 1.0,
           end: 0.0,
         ),
@@ -52,7 +52,7 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
         FadeEffect(
           curve: Curves.easeOut,
           delay: 0.ms,
-          duration: 600.ms,
+          duration: 0.ms,
           begin: 1.0,
           end: 0.0,
         ),
@@ -65,7 +65,7 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
         FadeEffect(
           curve: Curves.easeOut,
           delay: 0.ms,
-          duration: 600.ms,
+          duration: 0.ms,
           begin: 1.0,
           end: 0.0,
         ),
@@ -78,7 +78,7 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
         FadeEffect(
           curve: Curves.easeOut,
           delay: 0.ms,
-          duration: 600.ms,
+          duration: 0.ms,
           begin: 1.0,
           end: 0.0,
         ),
@@ -91,7 +91,7 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
         FadeEffect(
           curve: Curves.easeOut,
           delay: 0.ms,
-          duration: 600.ms,
+          duration: 0.ms,
           begin: 1.0,
           end: 0.0,
         ),
@@ -104,7 +104,7 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
         FadeEffect(
           curve: Curves.easeOut,
           delay: 0.ms,
-          duration: 600.ms,
+          duration: 0.ms,
           begin: 1.0,
           end: 0.0,
         ),
@@ -168,6 +168,7 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
                       (_model.getPlaylist?.jsonBody ?? ''),
                     ),
                     type: 'upload',
+                    userImage: true,
                   ));
               logFirebaseEvent('loadingUpload_backend_call');
               _model.startPlayback =
@@ -393,7 +394,7 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: const Color(0xFF031524),
+          backgroundColor: Colors.black,
           body: SafeArea(
             top: true,
             child: Column(
@@ -413,7 +414,7 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
                             ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
                               child: Image.asset(
-                                'assets/images/f9a037eb45548f6f79d1f73fae94f701.gif',
+                                'assets/images/IMG_0441-1713140029091.gif',
                                 width: double.infinity,
                                 height: 340.0,
                                 fit: BoxFit.cover,
@@ -447,19 +448,23 @@ class _LoadingUploadWidgetState extends State<LoadingUploadWidget>
                                 animateFromLastPercent: true,
                                 progressColor: () {
                                   if (_model.ten == true) {
-                                    return const Color(0xFFEA42B3);
+                                    return FlutterFlowTheme.of(context).primary;
                                   } else if (_model.twentyNine == true) {
-                                    return const Color(0xFF41E7F6);
+                                    return FlutterFlowTheme.of(context)
+                                        .secondary;
                                   } else if (_model.thirtySeven == true) {
-                                    return const Color(0xFFF2E645);
+                                    return FlutterFlowTheme.of(context)
+                                        .tertiary;
                                   } else if (_model.sixtyFive == true) {
-                                    return const Color(0xFF3DD1A9);
+                                    return FlutterFlowTheme.of(context).primary;
                                   } else if (_model.eightyThree == true) {
-                                    return const Color(0xFFF2E645);
+                                    return FlutterFlowTheme.of(context)
+                                        .secondary;
                                   } else if (_model.oneHundred == true) {
-                                    return const Color(0xFF41E7F6);
+                                    return FlutterFlowTheme.of(context)
+                                        .tertiary;
                                   } else if (_model.fifty == true) {
-                                    return const Color(0xFFEA42B3);
+                                    return FlutterFlowTheme.of(context).primary;
                                   } else {
                                     return Colors.white;
                                   }

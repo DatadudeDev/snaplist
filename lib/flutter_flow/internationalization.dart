@@ -183,25 +183,17 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Forgot Password',
       'fr': 'Mot de passe oublié',
     },
-    'x92cvywu': {
-      'en': 'Or sign up with: ',
+    'zs17z8k6': {
+      'en': 'Or Sign up with: ',
       'fr': 'Ou inscrivez-vous avec :',
     },
-    'fonmqfcn': {
-      'en': 'Apple   ',
-      'fr': 'Apple',
+    'hk8yodjp': {
+      'en': ' Listen on',
+      'fr': '',
     },
-    'hq1dsjgw': {
-      'en': 'Spotify',
-      'fr': 'Spotify',
-    },
-    '9s04zr6j': {
-      'en': 'Facebook',
-      'fr': 'Amazon',
-    },
-    'ncvedo80': {
-      'en': 'Google',
-      'fr': 'Google',
+    '9mwtdkqb': {
+      'en': 'TIDAL',
+      'fr': '',
     },
     'y3pv86ts': {
       'en': 'Log In',
@@ -239,25 +231,17 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Forgot Password',
       'fr': 'Mot de passe oublié',
     },
-    'u6dv2z2f': {
+    'mz27k56k': {
       'en': 'Or log in with: ',
       'fr': 'Ou inscrivez-vous avec :',
     },
-    'jzdc5dan': {
-      'en': 'Apple   ',
-      'fr': 'Apple',
+    'uuiguxud': {
+      'en': ' Listen on',
+      'fr': '',
     },
-    '5xuv3rr5': {
-      'en': 'Spotify',
-      'fr': 'Spotify',
-    },
-    '3y4ehpuo': {
-      'en': 'Facebook',
-      'fr': 'Amazon',
-    },
-    'pnvrtv9v': {
-      'en': 'Google',
-      'fr': 'Google',
+    'rw08sty2': {
+      'en': 'TIDAL',
+      'fr': '',
     },
     'nxcwi81h': {
       'en': 'Home',
@@ -339,30 +323,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   },
   // HomePage
   {
-    'gajew59w': {
-      'en': 'Text',
-      'fr': 'Texte',
-    },
-    'o1dcf2dm': {
-      'en': 'Voice',
-      'fr': 'Voix',
-    },
-    'yu89ajxj': {
-      'en': 'Camera',
-      'fr': 'Caméra',
-    },
-    '14d00ovr': {
-      'en': 'Magic',
-      'fr': 'Magie',
-    },
-    'jm7yxc9v': {
-      'en': 'Upload',
-      'fr': 'Télécharger',
-    },
-    'qmz4q0k3': {
-      'en': 'Unlock voice control with Snaplist+',
-      'fr': '',
-    },
     'h34n2i95': {
       'en': 'Snaplist+',
       'fr': 'Snaplist',
@@ -380,7 +340,7 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'fr': '(à venir)',
     },
     'mj3cs1s8': {
-      'en': 'Explore',
+      'en': 'Preferences',
       'fr': 'Explorer',
     },
     'lkk1fqkt': {
@@ -391,21 +351,21 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Settings',
       'fr': 'Paramètres',
     },
-    'wsg0nxkt': {
+    'v5dj6jcx': {
       'en': 'Moods',
-      'fr': 'Humeurs',
+      'fr': '',
     },
-    'xvzwoqt8': {
+    '4zmkjckh': {
       'en': 'Recents',
-      'fr': 'Récents',
+      'fr': '',
     },
-    'qzqctpne': {
+    '6rn1igup': {
       'en': 'Nothing here yet 😲 ',
-      'fr': 'Rien ici pour l\'instant 😲',
+      'fr': '',
     },
-    'vshaspw3': {
+    'pjku8rtr': {
       'en': 'Snap a vibe or select a mood to get started!  ',
-      'fr': 'Prenez une ambiance ou sélectionnez une ambiance pour commencer !',
+      'fr': '',
     },
     'wxj1dj0s': {
       'en': 'Feedback',
@@ -414,6 +374,26 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     '17muqkkw': {
       'en': 'Log out',
       'fr': 'Dégager',
+    },
+    'fv7hvey9': {
+      'en': 'Text',
+      'fr': '',
+    },
+    'sbtjsm2p': {
+      'en': 'Voice',
+      'fr': '',
+    },
+    'xa85xl3g': {
+      'en': 'Snap',
+      'fr': '',
+    },
+    'onapfzje': {
+      'en': 'Upload',
+      'fr': '',
+    },
+    'yn3vo78e': {
+      'en': 'Explore',
+      'fr': '',
     },
     'tzctgcay': {
       'en': 'Home',
@@ -728,6 +708,43 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'fr':
           'Sélectionnez votre compte et vos préférences de notification ci-dessous :',
     },
+    'f7uwsilp': {
+      'en': 'App Connect',
+      'fr': 'Supprimer le compte',
+    },
+    'rwv1vkr8': {
+      'en': 'Select your preferred music app',
+      'fr':
+          'Si vous souhaitez supprimer votre compte, veuillez visiter ce lien ↗',
+    },
+    '62mncfsy': {
+      'en': 'Spotify',
+      'fr': '',
+    },
+    'o0jesudb': {
+      'en': 'YouTube Music',
+      'fr': '',
+    },
+    'r4taif53': {
+      'en': 'Apple Music',
+      'fr': '',
+    },
+    'elfz2aeg': {
+      'en': 'Tidal',
+      'fr': '',
+    },
+    'ry886c01': {
+      'en': 'Amazon Music',
+      'fr': '',
+    },
+    '67n76u4l': {
+      'en': 'Apps',
+      'fr': '',
+    },
+    'dbil8u9c': {
+      'en': 'Search for an item...',
+      'fr': '',
+    },
     'cfd5r2w2': {
       'en': 'Push Notifications',
       'fr': 'Notifications push',
@@ -758,7 +775,7 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
           'Permettez-nous de collecter et de stocker des données, conformément à notre politique de confidentialité ↗',
     },
     '2nqjyneu': {
-      'en': 'Downgrade Account',
+      'en': 'Downgrade Account 😭',
       'fr': 'Rétrograder le compte',
     },
     'piy7lm9a': {
@@ -767,11 +784,11 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'fr':
           'Si vous souhaitez rétrograder votre compte, veuillez visiter ce lien ↗',
     },
-    'yc9i1lvn': {
+    'u7kb2xxc': {
       'en': 'Upgrade Account 💎',
       'fr': 'Rétrograder le compte',
     },
-    'gdritdpk': {
+    'vxlbn3m6': {
       'en':
           'If you would like to upgrade your account to Snaplist+, click here. ↗',
       'fr':
@@ -809,42 +826,46 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   },
   // inputModal
   {
-    'wqf96uja': {
-      'en': 'What are we jamming to? ',
-      'fr': 'Sur quoi on joue ?',
+    'ma5l4iaj': {
+      'en': 'Describe\nyour vibe',
+      'fr': '',
     },
-    'camdolbf': {
-      'en': 'Describe your Vibe: ',
-      'fr': 'Décrivez votre ambiance :',
+    'rsve2g3d': {
+      'en': 'Beach day, Road trip, Party…',
+      'fr': '',
     },
-    'e1x8a9mr': {
-      'en': 'e.g. Summer day at the beach, Wine & Paint Night',
-      'fr': 'i.e. Journée à la plage, Peinture et Vin',
+    '65ykvap9': {
+      'en': 'Inspired by',
+      'fr': '',
     },
-    'et7sa1xm': {
-      'en': 'Inspired by: ',
-      'fr': 'Inspiré par:',
+    '03n4ryjr': {
+      'en': 'Beyoncé, Queen, Drake…',
+      'fr': '',
     },
-    'pfa79fo6': {
-      'en': 'e.g. Pink, Snoop, BTS',
-      'fr': 'par exemple. Pink, Snoop, BTS',
+    'uipezycc': {
+      'en': 'Cancel',
+      'fr': '',
+    },
+    'yala83uc': {
+      'en': 'Submit',
+      'fr': '',
     },
   },
   // voiceModal
   {
-    '5pzdz67r': {
+    'ddpcyqmt': {
       'en': '“Gym Leg Day with Beyoncé”',
       'fr': '',
     },
-    'qqbh71x8': {
+    'lpm53zms': {
       'en': '“Play me some jazz”',
       'fr': '',
     },
-    'qnzwaroi': {
+    'bp7wqybq': {
       'en': 'Getting ready for a date 💋',
       'fr': '',
     },
-    'bbjtbzw7': {
+    '95eyiwrc': {
       'en': '“Nature sounds for sleeping”',
       'fr': '',
     },
@@ -912,6 +933,36 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     '4ybtnlbj': {
       'en': 'Close',
+      'fr': '',
+    },
+  },
+  // nonGrats
+  {
+    'asi2l03j': {
+      'en': 'oh nooooooo!',
+      'fr': '',
+    },
+    'v4g9z4or': {
+      'en': 'We’ll be here if you change your mind, you bastard. ',
+      'fr': '',
+    },
+    '6rcp71rn': {
+      'en': 'Close',
+      'fr': '',
+    },
+  },
+  // places
+  {
+    'i362tvoj': {
+      'en': 'Hello World',
+      'fr': '',
+    },
+    'sk37gq54': {
+      'en': 'Search',
+      'fr': '',
+    },
+    '58xtg9cz': {
+      'en': 'Submit',
       'fr': '',
     },
   },

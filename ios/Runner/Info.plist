@@ -70,11 +70,6 @@
     <string>Snaplist requires permission to use the microphone to  record your voice for playlist generation</string>
 	<key>PermissionGroupNotification</key>
     <string>Snaplist requires permission in order to send you notifications about promotions and updates</string>
-    <key>UIBackgroundModes</key>
-    <array>
-        <string>fetch</string>
-        <string>remote-notification</string>
-    </array>
 
     <key>LSApplicationQueriesSchemes</key>
     <array>

@@ -147,6 +147,7 @@ class _FeedbackModalWidgetState extends State<FeedbackModalWidget> {
                                         letterSpacing: 0.0,
                                       ),
                                   maxLines: 10,
+                                  minLines: 1,
                                   maxLength: 250,
                                   maxLengthEnforcement:
                                       MaxLengthEnforcement.enforced,

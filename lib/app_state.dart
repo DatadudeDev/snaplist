@@ -49,6 +49,17 @@ class FFAppState extends ChangeNotifier {
           _spotifyUsername;
     });
     await _safeInitAsync(() async {
+      _moods = (await secureStorage.getStringList('ff_moods'))?.map((x) {
+            try {
+              return jsonDecode(x);
+            } catch (e) {
+              print("Can't decode persisted json. Error: $e.");
+              return {};
+            }
+          }).toList() ??
+          _moods;
+    });
+    await _safeInitAsync(() async {
       _isPremium = await secureStorage.getBool('ff_isPremium') ?? _isPremium;
     });
     await _safeInitAsync(() async {
@@ -59,6 +70,20 @@ class FFAppState extends ChangeNotifier {
     });
     await _safeInitAsync(() async {
       _isDataOK = await secureStorage.getBool('ff_isDataOK') ?? _isDataOK;
+    });
+    await _safeInitAsync(() async {
+      _places = (await secureStorage.getStringList('ff_places'))?.map((x) {
+            try {
+              return jsonDecode(x);
+            } catch (e) {
+              print("Can't decode persisted json. Error: $e.");
+              return {};
+            }
+          }).toList() ??
+          _places;
+    });
+    await _safeInitAsync(() async {
+      _musicApp = await secureStorage.getString('ff_musicApp') ?? _musicApp;
     });
   }
 
@@ -215,18 +240,30 @@ class FFAppState extends ChangeNotifier {
   List<dynamic> get moods => _moods;
   set moods(List<dynamic> value) {
     _moods = value;
+    secureStorage.setStringList(
+        'ff_moods', value.map((x) => jsonEncode(x)).toList());
+  }
+
+  void deleteMoods() {
+    secureStorage.delete(key: 'ff_moods');
   }
 
   void addToMoods(dynamic value) {
     _moods.add(value);
+    secureStorage.setStringList(
+        'ff_moods', _moods.map((x) => jsonEncode(x)).toList());
   }
 
   void removeFromMoods(dynamic value) {
     _moods.remove(value);
+    secureStorage.setStringList(
+        'ff_moods', _moods.map((x) => jsonEncode(x)).toList());
   }
 
   void removeAtIndexFromMoods(int index) {
     _moods.removeAt(index);
+    secureStorage.setStringList(
+        'ff_moods', _moods.map((x) => jsonEncode(x)).toList());
   }
 
   void updateMoodsAtIndex(
@@ -234,10 +271,14 @@ class FFAppState extends ChangeNotifier {
     dynamic Function(dynamic) updateFn,
   ) {
     _moods[index] = updateFn(_moods[index]);
+    secureStorage.setStringList(
+        'ff_moods', _moods.map((x) => jsonEncode(x)).toList());
   }
 
   void insertAtIndexInMoods(int index, dynamic value) {
     _moods.insert(index, value);
+    secureStorage.setStringList(
+        'ff_moods', _moods.map((x) => jsonEncode(x)).toList());
   }
 
   List<dynamic> _moodDescription = [];
@@ -376,6 +417,62 @@ class FFAppState extends ChangeNotifier {
   bool get justUpgraded => _justUpgraded;
   set justUpgraded(bool value) {
     _justUpgraded = value;
+  }
+
+  List<dynamic> _places = [];
+  List<dynamic> get places => _places;
+  set places(List<dynamic> value) {
+    _places = value;
+    secureStorage.setStringList(
+        'ff_places', value.map((x) => jsonEncode(x)).toList());
+  }
+
+  void deletePlaces() {
+    secureStorage.delete(key: 'ff_places');
+  }
+
+  void addToPlaces(dynamic value) {
+    _places.add(value);
+    secureStorage.setStringList(
+        'ff_places', _places.map((x) => jsonEncode(x)).toList());
+  }
+
+  void removeFromPlaces(dynamic value) {
+    _places.remove(value);
+    secureStorage.setStringList(
+        'ff_places', _places.map((x) => jsonEncode(x)).toList());
+  }
+
+  void removeAtIndexFromPlaces(int index) {
+    _places.removeAt(index);
+    secureStorage.setStringList(
+        'ff_places', _places.map((x) => jsonEncode(x)).toList());
+  }
+
+  void updatePlacesAtIndex(
+    int index,
+    dynamic Function(dynamic) updateFn,
+  ) {
+    _places[index] = updateFn(_places[index]);
+    secureStorage.setStringList(
+        'ff_places', _places.map((x) => jsonEncode(x)).toList());
+  }
+
+  void insertAtIndexInPlaces(int index, dynamic value) {
+    _places.insert(index, value);
+    secureStorage.setStringList(
+        'ff_places', _places.map((x) => jsonEncode(x)).toList());
+  }
+
+  String _musicApp = '';
+  String get musicApp => _musicApp;
+  set musicApp(String value) {
+    _musicApp = value;
+    secureStorage.setString('ff_musicApp', value);
+  }
+
+  void deleteMusicApp() {
+    secureStorage.delete(key: 'ff_musicApp');
   }
 }
 

@@ -234,7 +234,6 @@ class _ForgotWidgetState extends State<ForgotWidget> {
                               letterSpacing: 0.0,
                             ),
                         maxLines: null,
-                        minLines: null,
                         keyboardType: TextInputType.emailAddress,
                         cursorColor: FlutterFlowTheme.of(context).primary,
                         validator: _model.emailAddressControllerValidator
