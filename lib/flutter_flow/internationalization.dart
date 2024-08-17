@@ -107,34 +107,42 @@ Locale createLocale(String language) => language.contains('_')
 final kTranslationsMap = <Map<String, Map<String, String>>>[
   // spotify
   {
-    '4n8bflm0': {
-      'en': 'Rediscover\nMusic',
+    'cdjfp883': {
+      'en': 'Discover Music \nwith AI',
       'fr': 'Redécouvrir\nMusique',
     },
-    'omcr2g1s': {
-      'en': 'For every beautiful moment, there\'s a soundtrack.',
+    'bsuits9i': {
+      'en': 'Capture the sound of every moment. ',
       'fr': 'Pour chaque beau moment, il y a une chanson.',
     },
     'ecshglqc': {
-      'en': 'Soundtrack  your life',
+      'en': 'Soundtrack  \nyour life',
       'fr': 'Mettez en musique votre vie',
     },
     'fqkm6bke': {
-      'en': 'A playlist for every moment,  curated by AI. ',
+      'en': 'Add color to those greyscale moments',
       'fr': 'Une playlist pour chaque instant, organisée par l\'IA.',
     },
-    'g3t72lxv': {
+    'oiabmdab': {
       'en': 'Personalized Music Discovery',
       'fr': 'Découverte musicale personnalisée',
     },
-    '9zkxb3yn': {
-      'en': 'Jam out to previously unheard tracks that are totally your vibe!',
+    'mdc439nc': {
+      'en': 'Your music. Your way. All day. ',
       'fr':
           'Jouez sur des morceaux inédits qui correspondent totalement à votre ambiance !',
     },
-    '5542kelh': {
-      'en': 'Connect with Spotify',
-      'fr': 'Connectez-vous avec Spotify',
+    '1tezfutg': {
+      'en': 'Select your preferred Music App',
+      'fr': '',
+    },
+    '9ms40imp': {
+      'en': ' Listen on',
+      'fr': '',
+    },
+    'ebdyeqtz': {
+      'en': 'TIDAL',
+      'fr': '',
     },
     'm69xs079': {
       'en': 'Home',
@@ -143,6 +151,10 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   },
   // login
   {
+    's8iqd11t': {
+      'en': 'Snaplist',
+      'fr': '',
+    },
     't0gj8kx2': {
       'en': 'Signup',
       'fr': '',
@@ -187,14 +199,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Or Sign up with: ',
       'fr': 'Ou inscrivez-vous avec :',
     },
-    'hk8yodjp': {
-      'en': ' Listen on',
-      'fr': '',
-    },
-    '9mwtdkqb': {
-      'en': 'TIDAL',
-      'fr': '',
-    },
     'y3pv86ts': {
       'en': 'Log In',
       'fr': '',
@@ -223,7 +227,11 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Privacy Policy',
       'fr': '',
     },
-    '81bsa10n': {
+    'qof2v5ht': {
+      'en': 'Sign Up',
+      'fr': 'S\'inscrire',
+    },
+    'f3yc03ib': {
       'en': 'Log In',
       'fr': 'Se connecter',
     },
@@ -231,17 +239,9 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Forgot Password',
       'fr': 'Mot de passe oublié',
     },
-    'mz27k56k': {
-      'en': 'Or log in with: ',
+    'ye287grq': {
+      'en': 'Or Sign in with: ',
       'fr': 'Ou inscrivez-vous avec :',
-    },
-    'uuiguxud': {
-      'en': ' Listen on',
-      'fr': '',
-    },
-    'rw08sty2': {
-      'en': 'TIDAL',
-      'fr': '',
     },
     'nxcwi81h': {
       'en': 'Home',
@@ -288,19 +288,19 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   // onboarding
   {
     'kevxpuqx': {
-      'en': 'Rediscover\nMusic',
+      'en': 'Discover Music \nwith AI',
       'fr': 'Redécouvrir\nMusique',
     },
     'cwncw0km': {
-      'en': 'For every beautiful moment, there\'s a soundtrack.',
+      'en': 'Start listening to unique playlists, custom made just for you. ',
       'fr': 'Pour chaque beau moment, il y a une chanson.',
     },
     'jyq635mi': {
-      'en': 'Soundtrack  your life',
+      'en': 'Soundtrack  \nyour life',
       'fr': 'Mettez en musique votre vie',
     },
     '8u1vv5yv': {
-      'en': 'A playlist for every moment,  curated by AI. ',
+      'en': 'Add color to those greyscale moments',
       'fr': 'Une playlist pour chaque instant, organisée par l\'IA.',
     },
     'pm0fgtc7': {
@@ -308,7 +308,7 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'fr': 'Découverte musicale personnalisée',
     },
     '43ksomvv': {
-      'en': 'Jam out to previously unheard tracks that are totally your vibe!',
+      'en': 'Start listening to unique playlists, custom made just for you. ',
       'fr':
           'Jouez sur des morceaux inédits qui correspondent totalement à votre ambiance !',
     },
@@ -335,35 +335,27 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Profile',
       'fr': 'Profil',
     },
-    'yugs08t2': {
-      'en': '(coming soon)',
-      'fr': '(à venir)',
-    },
     'mj3cs1s8': {
-      'en': 'Preferences',
+      'en': 'Themes',
       'fr': 'Explorer',
-    },
-    'lkk1fqkt': {
-      'en': '(coming soon)',
-      'fr': '(à venir)',
     },
     'avja8n0b': {
       'en': 'Settings',
       'fr': 'Paramètres',
     },
-    'v5dj6jcx': {
+    '5dia9sm9': {
       'en': 'Moods',
       'fr': '',
     },
-    '4zmkjckh': {
+    's5nuvh4d': {
       'en': 'Recents',
       'fr': '',
     },
-    '6rn1igup': {
+    '9mruy8zt': {
       'en': 'Nothing here yet 😲 ',
       'fr': '',
     },
-    'pjku8rtr': {
+    'py41lyfo': {
       'en': 'Snap a vibe or select a mood to get started!  ',
       'fr': '',
     },
@@ -375,23 +367,23 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Log out',
       'fr': 'Dégager',
     },
-    'fv7hvey9': {
+    'f3f7xeag': {
       'en': 'Text',
       'fr': '',
     },
-    'sbtjsm2p': {
+    'okue7ar8': {
       'en': 'Voice',
       'fr': '',
     },
-    'xa85xl3g': {
+    'v5ep4u5m': {
       'en': 'Snap',
       'fr': '',
     },
-    'onapfzje': {
+    'fjb0ukr3': {
       'en': 'Upload',
       'fr': '',
     },
-    'yn3vo78e': {
+    'h3xuk0o1': {
       'en': 'Explore',
       'fr': '',
     },
@@ -453,31 +445,31 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   },
   // loadingImage
   {
-    'igwbarva': {
+    'xt9s04a6': {
       'en': 'Analyzing Photo',
       'fr': 'Analyser une photo',
     },
-    'nf85wo1g': {
+    'bh3wq3vm': {
       'en': 'Thinking about some music you\'ll like ',
       'fr': 'Je pense à une musique que tu aimeras',
     },
-    'k3pxewtr': {
+    'a2id7jrh': {
       'en': 'Searching Spotify for some tracks',
       'fr': 'Recherche de chansons sur Spotify',
     },
-    'n04ja3i8': {
+    'x1nqshwm': {
       'en': 'Grouping your tracks',
       'fr': 'Regrouper vos chansons',
     },
-    'hz81hvda': {
+    'g8uj0cqy': {
       'en': 'Curating your Snaplist',
       'fr': 'Organiser votre Snaplist',
     },
-    'rgxp6lc8': {
-      'en': 'hmmm… what’s a good name and description? ',
+    'bj78q3ro': {
+      'en': 'hmmmm … let me think….',
       'fr': 'hmmm… qu\'est-ce qu\'un bon nom et une bonne description ?',
     },
-    'aszm6cq7': {
+    '836cob3t': {
       'en': 'Wrapping up...',
       'fr': 'Terminer…',
     },
@@ -613,31 +605,31 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   },
   // loadingVoice
   {
-    'f2tap13x': {
+    'dv723umj': {
       'en': 'Listening...',
       'fr': 'J’écoute...',
     },
-    'nr8px4dd': {
+    'hrwgh3rs': {
       'en': 'mmmkay I think I\'ve got something...',
       'fr': 'mmmkay, je pense que j\'ai quelque chose...',
     },
-    'dbdy2q5n': {
+    'onfvbd1m': {
       'en': 'Searching Spotify for some tracks',
       'fr': 'Rechercher does chansons sur Spotify',
     },
-    'hr62k2m2': {
+    'ivvnd9kg': {
       'en': 'Searching Spotify for some tracks',
       'fr': 'Rechercher does chansons sur Spotify',
     },
-    '8o7ouw6l': {
+    'yzi4tlcq': {
       'en': 'Curating your Snaplist',
       'fr': 'Organiser votre Snaplist',
     },
-    'tm6wpkbd': {
+    '8vdf3u97': {
       'en': 'Generating a snappy name',
       'fr': 'Générer un nom',
     },
-    'yc3f5r4d': {
+    'skw14fr6': {
       'en': 'Wrapping up...',
       'fr': 'Terminer...',
     },
@@ -813,6 +805,152 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'fr': 'Maison',
     },
   },
+  // settingsCopy
+  {
+    '1e3j4deq': {
+      'en': 'Settings',
+      'fr': 'Paramètres',
+    },
+    'cqfvr1l4': {
+      'en': 'Select your account and notification preferences below: ',
+      'fr':
+          'Sélectionnez votre compte et vos préférences de notification ci-dessous :',
+    },
+    'q5fh4s4s': {
+      'en': 'App Connect',
+      'fr': 'Supprimer le compte',
+    },
+    'qjomgbv8': {
+      'en': 'Select your preferred music app',
+      'fr':
+          'Si vous souhaitez supprimer votre compte, veuillez visiter ce lien ↗',
+    },
+    '1qc6jo95': {
+      'en': 'Spotify',
+      'fr': '',
+    },
+    '407l6qn7': {
+      'en': 'YouTube Music',
+      'fr': '',
+    },
+    'l2u8umcg': {
+      'en': 'Apple Music',
+      'fr': '',
+    },
+    '1jhq8fj1': {
+      'en': 'Tidal',
+      'fr': '',
+    },
+    '26mseo8i': {
+      'en': 'Amazon Music',
+      'fr': '',
+    },
+    'sncn0r3o': {
+      'en': 'Apps',
+      'fr': '',
+    },
+    'tihtyhf6': {
+      'en': 'Search for an item...',
+      'fr': '',
+    },
+    'k0s4bgxm': {
+      'en': 'Push Notifications',
+      'fr': 'Notifications push',
+    },
+    'g6lvhfph': {
+      'en':
+          'Receive Push notifications from our application on a semi regular basis.',
+      'fr':
+          'Recevez des notifications Push de notre application de manière semi-régulière.',
+    },
+    'htegb90v': {
+      'en': 'Email Notifications',
+      'fr': 'Notifications par email',
+    },
+    'sxoe1i32': {
+      'en':
+          'Receive email notifications from our marketing team about new features.',
+      'fr':
+          'Recevez des notifications par e-mail de notre équipe marketing concernant les nouvelles fonctionnalités.',
+    },
+    'pb5p4ryt': {
+      'en': 'Data Collection',
+      'fr': 'Collecte de données',
+    },
+    'e7haftu4': {
+      'en': 'Allow us to collect and store data, per our Privacy Policy  ↗',
+      'fr':
+          'Permettez-nous de collecter et de stocker des données, conformément à notre politique de confidentialité ↗',
+    },
+    'e1x31wu6': {
+      'en': 'Downgrade Account 😭',
+      'fr': 'Rétrograder le compte',
+    },
+    '4k1msdz1': {
+      'en':
+          'If you would like to downgrade your account, please visit this link  ↗',
+      'fr':
+          'Si vous souhaitez rétrograder votre compte, veuillez visiter ce lien ↗',
+    },
+    '4boat7su': {
+      'en': 'Delete Account',
+      'fr': 'Supprimer le compte',
+    },
+    'vqyq5kix': {
+      'en':
+          'If you would like to delete your account, please visit this link  ↗',
+      'fr':
+          'Si vous souhaitez supprimer votre compte, veuillez visiter ce lien ↗',
+    },
+    'y0g5wvzj': {
+      'en': 'Save Changes',
+      'fr': 'Sauvegarder les modifications',
+    },
+    'iafcc4lf': {
+      'en': 'Home',
+      'fr': 'Maison',
+    },
+  },
+  // themes
+  {
+    'kwklew3q': {
+      'en': 'Settings',
+      'fr': 'Paramètres',
+    },
+    'zbzefdpk': {
+      'en': 'Select your account and notification preferences below: ',
+      'fr':
+          'Sélectionnez votre compte et vos préférences de notification ci-dessous :',
+    },
+    'pytxaprf': {
+      'en': 'Dark/Light Mode',
+      'fr': '',
+    },
+    '3wfnw2rd': {
+      'en': 'Snaplist was designed for use with Dark Mode',
+      'fr': '',
+    },
+    'o2oxrpea': {
+      'en': 'Accent Color',
+      'fr': '',
+    },
+    'yb5d56b1': {
+      'en': 'If you really hate our colors that much...',
+      'fr': '',
+    },
+    'k3xkkifg': {
+      'en': 'Reset',
+      'fr': '',
+    },
+    '2s3qqr5u': {
+      'en': 'Save Changes',
+      'fr': 'Sauvegarder les modifications',
+    },
+    '2zkef8vi': {
+      'en': 'Home',
+      'fr': 'Maison',
+    },
+  },
   // feedbackModal
   {
     '3rtxmphj': {
@@ -928,7 +1066,7 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'fr': '',
     },
     '9xo4v3ew': {
-      'en': 'You have successfully upgraded your account to Snaplist Premium',
+      'en': 'You have successfully upgraded your account to Snaplist+',
       'fr': '',
     },
     '4ybtnlbj': {
@@ -963,6 +1101,32 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     '58xtg9cz': {
       'en': 'Submit',
+      'fr': '',
+    },
+  },
+  // voiceModalCopy
+  {
+    'pu14wkqh': {
+      'en': 'Godmode Portal',
+      'fr': '',
+    },
+    '9ws971ff': {
+      'en': 'STATUS:',
+      'fr': '',
+    },
+    '0v3imf0e': {
+      'en': '  ACTIVE',
+      'fr': '',
+    },
+    'es1tly3e': {
+      'en': '  INACTIVE',
+      'fr': '',
+    },
+  },
+  // placesModal
+  {
+    '8lb92u9m': {
+      'en': 'Select Location',
       'fr': '',
     },
   },

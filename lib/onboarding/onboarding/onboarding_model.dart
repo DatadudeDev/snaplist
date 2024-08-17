@@ -14,7 +14,6 @@ class OnboardingModel extends FlutterFlowModel<OnboardingWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // Stores action output result for [Backend Call - API (Access Refresh Token)] action in onboarding widget.
   ApiCallResponse? mobileRes;
   // State field(s) for PageView widget.
@@ -30,7 +29,5 @@ class OnboardingModel extends FlutterFlowModel<OnboardingWidget> {
   void initState(BuildContext context) {}
 
   @override
-  void dispose() {
-    unfocusNode.dispose();
-  }
+  void dispose() {}
 }

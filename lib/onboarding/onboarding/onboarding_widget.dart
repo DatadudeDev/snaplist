@@ -35,191 +35,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final animationsMap = {
-    'containerOnPageLoadAnimation': AnimationInfo(
-      loop: true,
-      reverse: true,
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        MoveEffect(
-          curve: Curves.easeOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: const Offset(0.0, -80.0),
-          end: const Offset(0.0, 0.0),
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: const Offset(0.0, 0.0),
-          end: const Offset(0.0, -80.0),
-        ),
-      ],
-    ),
-    'textOnPageLoadAnimation1': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 1.ms),
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: const Offset(0.0, 20.0),
-          end: const Offset(0.0, 0.0),
-        ),
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: const Offset(0.9, 0.9),
-          end: const Offset(1.0, 1.0),
-        ),
-      ],
-    ),
-    'textOnPageLoadAnimation2': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 1.ms),
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: const Offset(0.0, 20.0),
-          end: const Offset(0.0, 0.0),
-        ),
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: const Offset(0.9, 0.9),
-          end: const Offset(1.0, 1.0),
-        ),
-      ],
-    ),
-    'textOnPageLoadAnimation3': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 1.ms),
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: const Offset(0.0, 20.0),
-          end: const Offset(0.0, 0.0),
-        ),
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: const Offset(0.9, 0.9),
-          end: const Offset(1.0, 1.0),
-        ),
-      ],
-    ),
-    'textOnPageLoadAnimation4': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 1.ms),
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: const Offset(0.0, 20.0),
-          end: const Offset(0.0, 0.0),
-        ),
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: const Offset(0.9, 0.9),
-          end: const Offset(1.0, 1.0),
-        ),
-      ],
-    ),
-    'textOnPageLoadAnimation5': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 1.ms),
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: const Offset(0.0, 20.0),
-          end: const Offset(0.0, 0.0),
-        ),
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: const Offset(0.9, 0.9),
-          end: const Offset(1.0, 1.0),
-        ),
-      ],
-    ),
-    'textOnPageLoadAnimation6': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 1.ms),
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: const Offset(0.0, 20.0),
-          end: const Offset(0.0, 0.0),
-        ),
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 0.ms,
-          begin: const Offset(0.9, 0.9),
-          end: const Offset(1.0, 1.0),
-        ),
-      ],
-    ),
-  };
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
@@ -240,22 +56,21 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
             code: widget.code,
             redirectUri: 'snaplist://snaplist.com/spotify',
           );
+
           if ((_model.mobileRes?.succeeded ?? true)) {
             logFirebaseEvent('onboarding_update_page_state');
-            setState(() {
-              _model.response = (_model.mobileRes?.jsonBody ?? '');
-            });
+            _model.response = (_model.mobileRes?.jsonBody ?? '');
+            setState(() {});
             logFirebaseEvent('onboarding_update_app_state');
-            setState(() {
-              FFAppState().accessToken = getJsonField(
-                _model.response,
-                r'''$.access_token''',
-              ).toString().toString();
-              FFAppState().refreshToken = getJsonField(
-                _model.response,
-                r'''$.refresh_token''',
-              ).toString().toString();
-            });
+            FFAppState().accessToken = getJsonField(
+              _model.response,
+              r'''$.access_token''',
+            ).toString().toString();
+            FFAppState().refreshToken = getJsonField(
+              _model.response,
+              r'''$.refresh_token''',
+            ).toString().toString();
+            setState(() {});
             logFirebaseEvent('onboarding_backend_call');
             unawaited(
               () async {
@@ -308,6 +123,192 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
         }),
       ]);
     });
+
+    animationsMap.addAll({
+      'containerOnPageLoadAnimation': AnimationInfo(
+        loop: true,
+        reverse: true,
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          MoveEffect(
+            curve: Curves.easeOut,
+            delay: 0.0.ms,
+            duration: 3200.0.ms,
+            begin: const Offset(0.0, -80.0),
+            end: const Offset(0.0, 0.0),
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 3200.0.ms,
+            duration: 3200.0.ms,
+            begin: const Offset(0.0, 0.0),
+            end: const Offset(0.0, -80.0),
+          ),
+        ],
+      ),
+      'textOnPageLoadAnimation1': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 200.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 300.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.0, 20.0),
+            end: const Offset(0.0, 0.0),
+          ),
+          ScaleEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.9, 0.9),
+            end: const Offset(1.0, 1.0),
+          ),
+        ],
+      ),
+      'textOnPageLoadAnimation2': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 300.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 300.0.ms,
+            duration: 300.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 300.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.0, 20.0),
+            end: const Offset(0.0, 0.0),
+          ),
+          ScaleEffect(
+            curve: Curves.easeInOut,
+            delay: 300.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.9, 0.9),
+            end: const Offset(1.0, 1.0),
+          ),
+        ],
+      ),
+      'textOnPageLoadAnimation3': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 200.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 300.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.0, 20.0),
+            end: const Offset(0.0, 0.0),
+          ),
+          ScaleEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.9, 0.9),
+            end: const Offset(1.0, 1.0),
+          ),
+        ],
+      ),
+      'textOnPageLoadAnimation4': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 300.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 300.0.ms,
+            duration: 300.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 300.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.0, 20.0),
+            end: const Offset(0.0, 0.0),
+          ),
+          ScaleEffect(
+            curve: Curves.easeInOut,
+            delay: 300.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.9, 0.9),
+            end: const Offset(1.0, 1.0),
+          ),
+        ],
+      ),
+      'textOnPageLoadAnimation5': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 200.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 300.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.0, 20.0),
+            end: const Offset(0.0, 0.0),
+          ),
+          ScaleEffect(
+            curve: Curves.easeInOut,
+            delay: 200.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.9, 0.9),
+            end: const Offset(1.0, 1.0),
+          ),
+        ],
+      ),
+      'textOnPageLoadAnimation6': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 300.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 300.0.ms,
+            duration: 300.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 300.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.0, 20.0),
+            end: const Offset(0.0, 0.0),
+          ),
+          ScaleEffect(
+            curve: Curves.easeInOut,
+            delay: 300.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.9, 0.9),
+            end: const Offset(1.0, 1.0),
+          ),
+        ],
+      ),
+    });
   }
 
   @override
@@ -322,9 +323,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
     context.watch<FFAppState>();
 
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -336,7 +335,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
               ClipRRect(
                 child: Container(
                   width: double.infinity,
-                  height: 420.0,
+                  height: MediaQuery.sizeOf(context).height * 0.45,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                   ),
@@ -345,7 +344,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                     children: [
                       Container(
                         width: double.infinity,
-                        height: 600.0,
+                        height: MediaQuery.sizeOf(context).height * 0.45,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -510,7 +509,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                       children: [
                         SizedBox(
                           width: double.infinity,
-                          height: 230.0,
+                          height: MediaQuery.sizeOf(context).height * 0.3,
                           child: Stack(
                             children: [
                               Padding(
@@ -523,7 +522,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                   children: [
                                     Padding(
                                       padding: const EdgeInsetsDirectional.fromSTEB(
-                                          48.0, 0.0, 48.0, 0.0),
+                                          24.0, 0.0, 24.0, 0.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -531,20 +530,19 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                         children: [
                                           Text(
                                             FFLocalizations.of(context).getText(
-                                              'kevxpuqx' /* Rediscover
-Music */
+                                              'kevxpuqx' /* Discover Music 
+with AI */
                                               ,
                                             ),
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
                                                 .displaySmall
                                                 .override(
-                                                  fontFamily:
-                                                      'Plus Jakarta Sans',
+                                                  fontFamily: 'Poppins',
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryText,
-                                                  fontSize: 36.0,
+                                                  fontSize: 30.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -553,23 +551,22 @@ Music */
                                           Padding(
                                             padding:
                                                 const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 16.0, 0.0, 0.0),
+                                                    0.0, 5.0, 0.0, 0.0),
                                             child: Text(
                                               FFLocalizations.of(context)
                                                   .getText(
-                                                'cwncw0km' /* For every beautiful moment, th... */,
+                                                'cwncw0km' /* Start listening to unique play... */,
                                               ),
                                               textAlign: TextAlign.center,
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .labelLarge
                                                   .override(
-                                                    fontFamily:
-                                                        'Plus Jakarta Sans',
+                                                    fontFamily: 'Poppins',
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .secondaryText,
-                                                    fontSize: 18.0,
+                                                    fontSize: 16.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
                                                   ),
@@ -581,7 +578,7 @@ Music */
                                     ),
                                     Padding(
                                       padding: const EdgeInsetsDirectional.fromSTEB(
-                                          48.0, 0.0, 48.0, 0.0),
+                                          24.0, 0.0, 24.0, 0.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -589,18 +586,19 @@ Music */
                                         children: [
                                           Text(
                                             FFLocalizations.of(context).getText(
-                                              'jyq635mi' /* Soundtrack  your life */,
+                                              'jyq635mi' /* Soundtrack  
+your life */
+                                              ,
                                             ),
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
                                                 .displaySmall
                                                 .override(
-                                                  fontFamily:
-                                                      'Plus Jakarta Sans',
+                                                  fontFamily: 'Poppins',
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryText,
-                                                  fontSize: 36.0,
+                                                  fontSize: 30.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -609,19 +607,18 @@ Music */
                                           Padding(
                                             padding:
                                                 const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 16.0, 0.0, 0.0),
+                                                    0.0, 5.0, 0.0, 0.0),
                                             child: Text(
                                               FFLocalizations.of(context)
                                                   .getText(
-                                                '8u1vv5yv' /* A playlist for every moment,  ... */,
+                                                '8u1vv5yv' /* Add color to those greyscale m... */,
                                               ),
                                               textAlign: TextAlign.center,
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .labelLarge
                                                   .override(
-                                                    fontFamily:
-                                                        'Plus Jakarta Sans',
+                                                    fontFamily: 'Poppins',
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .secondaryText,
@@ -637,7 +634,7 @@ Music */
                                     ),
                                     Padding(
                                       padding: const EdgeInsetsDirectional.fromSTEB(
-                                          48.0, 0.0, 48.0, 0.0),
+                                          24.0, 0.0, 24.0, 0.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -651,12 +648,11 @@ Music */
                                             style: FlutterFlowTheme.of(context)
                                                 .displaySmall
                                                 .override(
-                                                  fontFamily:
-                                                      'Plus Jakarta Sans',
+                                                  fontFamily: 'Poppins',
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryText,
-                                                  fontSize: 36.0,
+                                                  fontSize: 30.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
@@ -665,19 +661,18 @@ Music */
                                           Padding(
                                             padding:
                                                 const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 16.0, 0.0, 0.0),
+                                                    0.0, 5.0, 0.0, 0.0),
                                             child: Text(
                                               FFLocalizations.of(context)
                                                   .getText(
-                                                '43ksomvv' /* Jam out to previously unheard ... */,
+                                                '43ksomvv' /* Start listening to unique play... */,
                                               ),
                                               textAlign: TextAlign.center,
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .labelLarge
                                                   .override(
-                                                    fontFamily:
-                                                        'Plus Jakarta Sans',
+                                                    fontFamily: 'Poppins',
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .secondaryText,
@@ -712,6 +707,7 @@ Music */
                                         duration: const Duration(milliseconds: 500),
                                         curve: Curves.ease,
                                       );
+                                      setState(() {});
                                     },
                                     effect: smooth_page_indicator
                                         .ExpandingDotsEffect(
@@ -743,7 +739,7 @@ Music */
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   logFirebaseEvent(
-                                      'ONBOARDING_LET\'S_GET_SNAPPING!_BTN_ON_T');
+                                      'ONBOARDING_LETS_GET_SNAPPING_BTN_ON_TAP');
                                   logFirebaseEvent('Button_navigate_to');
 
                                   context.goNamed('HomePage');
@@ -758,11 +754,11 @@ Music */
                                       24.0, 0.0, 24.0, 0.0),
                                   iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  color: FlutterFlowTheme.of(context).primary,
+                                  color: FFAppState().accentColor ?? FlutterFlowTheme.of(context).primary,
                                   textStyle: FlutterFlowTheme.of(context)
                                       .titleSmall
                                       .override(
-                                        fontFamily: 'Readex Pro',
+                                        fontFamily: 'Poppins',
                                         fontSize: 18.0,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.w500,

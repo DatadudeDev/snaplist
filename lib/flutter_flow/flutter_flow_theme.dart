@@ -129,18 +129,18 @@ class LightModeTheme extends FlutterFlowTheme {
   @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color(0xFFC37CE4);
-  late Color secondary = const Color(0xFFF175B3);
-  late Color tertiary = const Color(0xFFA16F9C);
-  late Color alternate = const Color(0xFFE0E3E7);
-  late Color primaryText = const Color(0xFF303847);
-  late Color secondaryText = const Color(0xFF57636C);
-  late Color primaryBackground = const Color(0xFFCAC5CC);
-  late Color secondaryBackground = const Color(0xFFFFFFFF);
+  late Color primary = const Color(0xFFE61C5D);
+  late Color secondary = const Color(0xFFEB4A7E);
+  late Color tertiary = const Color(0xFFF5D10A);
+  late Color alternate = const Color(0xFF000000);
+  late Color primaryText = const Color(0xFFFCF7FF);
+  late Color secondaryText = const Color(0xFF95A1AC);
+  late Color primaryBackground = const Color(0xFF1D2428);
+  late Color secondaryBackground = const Color(0xFF000000);
   late Color accent1 = const Color(0x4C4B39EF);
   late Color accent2 = const Color(0x4D39D2C0);
   late Color accent3 = const Color(0x4DEE8B60);
-  late Color accent4 = const Color(0xCCFFFFFF);
+  late Color accent4 = const Color(0xB2262D34);
   late Color success = const Color(0xFF249689);
   late Color warning = const Color(0xFFF9CF58);
   late Color error = const Color(0xFFFF5963);
@@ -189,51 +189,51 @@ class ThemeTypography extends Typography {
 
   final FlutterFlowTheme theme;
 
-  String get displayLargeFamily => 'Outfit';
+  String get displayLargeFamily => 'Poppins';
   TextStyle get displayLarge => GoogleFonts.getFont(
-        'Outfit',
+        'Poppins',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 64.0,
       );
-  String get displayMediumFamily => 'Outfit';
+  String get displayMediumFamily => 'Poppins';
   TextStyle get displayMedium => GoogleFonts.getFont(
-        'Outfit',
+        'Poppins',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 44.0,
       );
-  String get displaySmallFamily => 'Outfit';
+  String get displaySmallFamily => 'Poppins';
   TextStyle get displaySmall => GoogleFonts.getFont(
-        'Outfit',
+        'Poppins',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 36.0,
       );
-  String get headlineLargeFamily => 'Outfit';
+  String get headlineLargeFamily => 'Poppins';
   TextStyle get headlineLarge => GoogleFonts.getFont(
-        'Outfit',
+        'Poppins',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 32.0,
       );
-  String get headlineMediumFamily => 'Outfit';
+  String get headlineMediumFamily => 'Poppins';
   TextStyle get headlineMedium => GoogleFonts.getFont(
-        'Outfit',
+        'Poppins',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 24.0,
       );
-  String get headlineSmallFamily => 'Outfit';
+  String get headlineSmallFamily => 'Poppins';
   TextStyle get headlineSmall => GoogleFonts.getFont(
-        'Outfit',
+        'Poppins',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 24.0,
       );
-  String get titleLargeFamily => 'Outfit';
+  String get titleLargeFamily => 'Poppins';
   TextStyle get titleLarge => GoogleFonts.getFont(
-        'Outfit',
+        'Poppins',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 22.0,
@@ -337,6 +337,7 @@ extension TextStyleHelper on TextStyle {
     bool useGoogleFonts = true,
     TextDecoration? decoration,
     double? lineHeight,
+    List<Shadow>? shadows,
   }) =>
       useGoogleFonts
           ? GoogleFonts.getFont(
@@ -348,6 +349,7 @@ extension TextStyleHelper on TextStyle {
               fontStyle: fontStyle ?? this.fontStyle,
               decoration: decoration,
               height: lineHeight,
+              shadows: shadows,
             )
           : copyWith(
               fontFamily: fontFamily,
@@ -358,5 +360,6 @@ extension TextStyleHelper on TextStyle {
               fontStyle: fontStyle,
               decoration: decoration,
               height: lineHeight,
+              shadows: shadows,
             );
 }

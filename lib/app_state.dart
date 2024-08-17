@@ -85,6 +85,11 @@ class FFAppState extends ChangeNotifier {
     await _safeInitAsync(() async {
       _musicApp = await secureStorage.getString('ff_musicApp') ?? _musicApp;
     });
+    await _safeInitAsync(() async {
+      _accentColor =
+          _colorFromIntValue(await secureStorage.getInt('ff_accentColor')) ??
+              _accentColor;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -146,26 +151,26 @@ class FFAppState extends ChangeNotifier {
   }
 
   void addToTracks(dynamic value) {
-    _tracks.add(value);
+    tracks.add(value);
   }
 
   void removeFromTracks(dynamic value) {
-    _tracks.remove(value);
+    tracks.remove(value);
   }
 
   void removeAtIndexFromTracks(int index) {
-    _tracks.removeAt(index);
+    tracks.removeAt(index);
   }
 
   void updateTracksAtIndex(
     int index,
     dynamic Function(dynamic) updateFn,
   ) {
-    _tracks[index] = updateFn(_tracks[index]);
+    tracks[index] = updateFn(_tracks[index]);
   }
 
   void insertAtIndexInTracks(int index, dynamic value) {
-    _tracks.insert(index, value);
+    tracks.insert(index, value);
   }
 
   List<dynamic> _Playlists = [];
@@ -181,19 +186,19 @@ class FFAppState extends ChangeNotifier {
   }
 
   void addToPlaylists(dynamic value) {
-    _Playlists.add(value);
+    Playlists.add(value);
     secureStorage.setStringList(
         'ff_Playlists', _Playlists.map((x) => jsonEncode(x)).toList());
   }
 
   void removeFromPlaylists(dynamic value) {
-    _Playlists.remove(value);
+    Playlists.remove(value);
     secureStorage.setStringList(
         'ff_Playlists', _Playlists.map((x) => jsonEncode(x)).toList());
   }
 
   void removeAtIndexFromPlaylists(int index) {
-    _Playlists.removeAt(index);
+    Playlists.removeAt(index);
     secureStorage.setStringList(
         'ff_Playlists', _Playlists.map((x) => jsonEncode(x)).toList());
   }
@@ -202,13 +207,13 @@ class FFAppState extends ChangeNotifier {
     int index,
     dynamic Function(dynamic) updateFn,
   ) {
-    _Playlists[index] = updateFn(_Playlists[index]);
+    Playlists[index] = updateFn(_Playlists[index]);
     secureStorage.setStringList(
         'ff_Playlists', _Playlists.map((x) => jsonEncode(x)).toList());
   }
 
   void insertAtIndexInPlaylists(int index, dynamic value) {
-    _Playlists.insert(index, value);
+    Playlists.insert(index, value);
     secureStorage.setStringList(
         'ff_Playlists', _Playlists.map((x) => jsonEncode(x)).toList());
   }
@@ -249,19 +254,19 @@ class FFAppState extends ChangeNotifier {
   }
 
   void addToMoods(dynamic value) {
-    _moods.add(value);
+    moods.add(value);
     secureStorage.setStringList(
         'ff_moods', _moods.map((x) => jsonEncode(x)).toList());
   }
 
   void removeFromMoods(dynamic value) {
-    _moods.remove(value);
+    moods.remove(value);
     secureStorage.setStringList(
         'ff_moods', _moods.map((x) => jsonEncode(x)).toList());
   }
 
   void removeAtIndexFromMoods(int index) {
-    _moods.removeAt(index);
+    moods.removeAt(index);
     secureStorage.setStringList(
         'ff_moods', _moods.map((x) => jsonEncode(x)).toList());
   }
@@ -270,13 +275,13 @@ class FFAppState extends ChangeNotifier {
     int index,
     dynamic Function(dynamic) updateFn,
   ) {
-    _moods[index] = updateFn(_moods[index]);
+    moods[index] = updateFn(_moods[index]);
     secureStorage.setStringList(
         'ff_moods', _moods.map((x) => jsonEncode(x)).toList());
   }
 
   void insertAtIndexInMoods(int index, dynamic value) {
-    _moods.insert(index, value);
+    moods.insert(index, value);
     secureStorage.setStringList(
         'ff_moods', _moods.map((x) => jsonEncode(x)).toList());
   }
@@ -288,26 +293,26 @@ class FFAppState extends ChangeNotifier {
   }
 
   void addToMoodDescription(dynamic value) {
-    _moodDescription.add(value);
+    moodDescription.add(value);
   }
 
   void removeFromMoodDescription(dynamic value) {
-    _moodDescription.remove(value);
+    moodDescription.remove(value);
   }
 
   void removeAtIndexFromMoodDescription(int index) {
-    _moodDescription.removeAt(index);
+    moodDescription.removeAt(index);
   }
 
   void updateMoodDescriptionAtIndex(
     int index,
     dynamic Function(dynamic) updateFn,
   ) {
-    _moodDescription[index] = updateFn(_moodDescription[index]);
+    moodDescription[index] = updateFn(_moodDescription[index]);
   }
 
   void insertAtIndexInMoodDescription(int index, dynamic value) {
-    _moodDescription.insert(index, value);
+    moodDescription.insert(index, value);
   }
 
   List<dynamic> _moodUrl = [];
@@ -317,26 +322,26 @@ class FFAppState extends ChangeNotifier {
   }
 
   void addToMoodUrl(dynamic value) {
-    _moodUrl.add(value);
+    moodUrl.add(value);
   }
 
   void removeFromMoodUrl(dynamic value) {
-    _moodUrl.remove(value);
+    moodUrl.remove(value);
   }
 
   void removeAtIndexFromMoodUrl(int index) {
-    _moodUrl.removeAt(index);
+    moodUrl.removeAt(index);
   }
 
   void updateMoodUrlAtIndex(
     int index,
     dynamic Function(dynamic) updateFn,
   ) {
-    _moodUrl[index] = updateFn(_moodUrl[index]);
+    moodUrl[index] = updateFn(_moodUrl[index]);
   }
 
   void insertAtIndexInMoodUrl(int index, dynamic value) {
-    _moodUrl.insert(index, value);
+    moodUrl.insert(index, value);
   }
 
   String _imageURL = '';
@@ -432,19 +437,19 @@ class FFAppState extends ChangeNotifier {
   }
 
   void addToPlaces(dynamic value) {
-    _places.add(value);
+    places.add(value);
     secureStorage.setStringList(
         'ff_places', _places.map((x) => jsonEncode(x)).toList());
   }
 
   void removeFromPlaces(dynamic value) {
-    _places.remove(value);
+    places.remove(value);
     secureStorage.setStringList(
         'ff_places', _places.map((x) => jsonEncode(x)).toList());
   }
 
   void removeAtIndexFromPlaces(int index) {
-    _places.removeAt(index);
+    places.removeAt(index);
     secureStorage.setStringList(
         'ff_places', _places.map((x) => jsonEncode(x)).toList());
   }
@@ -453,13 +458,13 @@ class FFAppState extends ChangeNotifier {
     int index,
     dynamic Function(dynamic) updateFn,
   ) {
-    _places[index] = updateFn(_places[index]);
+    places[index] = updateFn(_places[index]);
     secureStorage.setStringList(
         'ff_places', _places.map((x) => jsonEncode(x)).toList());
   }
 
   void insertAtIndexInPlaces(int index, dynamic value) {
-    _places.insert(index, value);
+    places.insert(index, value);
     secureStorage.setStringList(
         'ff_places', _places.map((x) => jsonEncode(x)).toList());
   }
@@ -474,6 +479,23 @@ class FFAppState extends ChangeNotifier {
   void deleteMusicApp() {
     secureStorage.delete(key: 'ff_musicApp');
   }
+
+  Color _accentColor = const Color(0xffe61c5d);
+  Color get accentColor => _accentColor;
+  set accentColor(Color value) {
+    _accentColor = value;
+    secureStorage.setInt('ff_accentColor', value.value);
+  }
+
+  void deleteAccentColor() {
+    secureStorage.delete(key: 'ff_accentColor');
+  }
+
+  bool _godmode = false;
+  bool get godmode => _godmode;
+  set godmode(bool value) {
+    _godmode = value;
+  }
 }
 
 void _safeInit(Function() initializeField) {
@@ -486,6 +508,13 @@ Future _safeInitAsync(Function() initializeField) async {
   try {
     await initializeField();
   } catch (_) {}
+}
+
+Color? _colorFromIntValue(int? val) {
+  if (val == null) {
+    return null;
+  }
+  return Color(val);
 }
 
 extension FlutterSecureStorageExtensions on FlutterSecureStorage {

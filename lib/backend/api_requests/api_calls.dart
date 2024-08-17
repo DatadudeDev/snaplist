@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
@@ -10,7 +11,7 @@ const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 /// Start Spotify Account API Group Code
 
 class SpotifyAccountAPIGroup {
-  static String baseUrl = 'https://accounts.spotify.com/';
+  static String getBaseUrl() => 'https://accounts.spotify.com/';
   static Map<String, String> headers = {
     'Content-Type': 'application/x-www-form-urlencoded',
   };
@@ -26,9 +27,11 @@ class AccessRefreshTokenCall {
     String? base64 = '',
     String? redirectUri = '',
   }) async {
+    final baseUrl = SpotifyAccountAPIGroup.getBaseUrl();
+
     return ApiManager.instance.makeApiCall(
       callName: 'Access Refresh Token',
-      apiUrl: '${SpotifyAccountAPIGroup.baseUrl}api/token',
+      apiUrl: '${baseUrl}api/token',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -44,6 +47,7 @@ class AccessRefreshTokenCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -63,9 +67,11 @@ class AcqurireNewAccessTokenCall {
     String? refreshToken = '',
     String? base64 = '',
   }) async {
+    final baseUrl = SpotifyAccountAPIGroup.getBaseUrl();
+
     return ApiManager.instance.makeApiCall(
       callName: 'Acqurire New Access Token',
-      apiUrl: '${SpotifyAccountAPIGroup.baseUrl}api/token',
+      apiUrl: '${baseUrl}api/token',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -80,6 +86,7 @@ class AcqurireNewAccessTokenCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -95,7 +102,7 @@ class AcqurireNewAccessTokenCall {
 /// Start Spotify Media API Group Code
 
 class SpotifyMediaAPIGroup {
-  static String baseUrl = 'https://api.spotify.com/';
+  static String getBaseUrl() => 'https://api.spotify.com/';
   static Map<String, String> headers = {};
   static RecentlyPlayedTracksCall recentlyPlayedTracksCall =
       RecentlyPlayedTracksCall();
@@ -112,9 +119,11 @@ class RecentlyPlayedTracksCall {
   Future<ApiCallResponse> call({
     String? accessToken = '',
   }) async {
+    final baseUrl = SpotifyMediaAPIGroup.getBaseUrl();
+
     return ApiManager.instance.makeApiCall(
       callName: 'Recently played tracks',
-      apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/me/player/recently-played',
+      apiUrl: '${baseUrl}v1/me/player/recently-played',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $accessToken',
@@ -124,6 +133,7 @@ class RecentlyPlayedTracksCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -133,9 +143,11 @@ class GetPlaylistCall {
   Future<ApiCallResponse> call({
     String? accessToken = '',
   }) async {
+    final baseUrl = SpotifyMediaAPIGroup.getBaseUrl();
+
     return ApiManager.instance.makeApiCall(
       callName: 'Get Playlist',
-      apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/me/playlists',
+      apiUrl: '${baseUrl}v1/me/playlists',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $accessToken',
@@ -145,6 +157,7 @@ class GetPlaylistCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -154,9 +167,11 @@ class GetProfileCall {
   Future<ApiCallResponse> call({
     String? accessToken = '',
   }) async {
+    final baseUrl = SpotifyMediaAPIGroup.getBaseUrl();
+
     return ApiManager.instance.makeApiCall(
       callName: 'Get Profile',
-      apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/me/',
+      apiUrl: '${baseUrl}v1/me/',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $accessToken',
@@ -168,6 +183,7 @@ class GetProfileCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -183,9 +199,11 @@ class GetPlaylistImagesCall {
     String? id = '',
     String? accessToken = '',
   }) async {
+    final baseUrl = SpotifyMediaAPIGroup.getBaseUrl();
+
     return ApiManager.instance.makeApiCall(
       callName: 'get Playlist Images',
-      apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/playlists/$id/images',
+      apiUrl: '${baseUrl}v1/playlists/$id/images',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $accessToken',
@@ -200,6 +218,7 @@ class GetPlaylistImagesCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -209,9 +228,11 @@ class GetDeviceIDCall {
   Future<ApiCallResponse> call({
     String? accessToken = '',
   }) async {
+    final baseUrl = SpotifyMediaAPIGroup.getBaseUrl();
+
     return ApiManager.instance.makeApiCall(
       callName: 'get Device ID',
-      apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/me/player/devices',
+      apiUrl: '${baseUrl}v1/me/player/devices',
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer $accessToken',
@@ -221,6 +242,7 @@ class GetDeviceIDCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -291,13 +313,15 @@ class StartPlayerCall {
     String? accessToken = '',
     String? contextUri = '',
   }) async {
+    final baseUrl = SpotifyMediaAPIGroup.getBaseUrl();
+
     final ffApiRequestBody = '''
 {
   "context_uri": "$contextUri"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'start Player',
-      apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/me/player/play',
+      apiUrl: '${baseUrl}v1/me/player/play',
       callType: ApiCallType.PUT,
       headers: {
         'Authorization': 'Bearer $accessToken',
@@ -310,6 +334,7 @@ class StartPlayerCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -319,9 +344,11 @@ class ResumeMusicCall {
   Future<ApiCallResponse> call({
     String? accessToken = '',
   }) async {
+    final baseUrl = SpotifyMediaAPIGroup.getBaseUrl();
+
     return ApiManager.instance.makeApiCall(
       callName: 'Resume Music',
-      apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/me/player/play',
+      apiUrl: '${baseUrl}v1/me/player/play',
       callType: ApiCallType.PUT,
       headers: {
         'Authorization': 'Bearer $accessToken',
@@ -332,6 +359,7 @@ class ResumeMusicCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -341,9 +369,11 @@ class PauseMusicCall {
   Future<ApiCallResponse> call({
     String? accessToken = '',
   }) async {
+    final baseUrl = SpotifyMediaAPIGroup.getBaseUrl();
+
     return ApiManager.instance.makeApiCall(
       callName: 'Pause Music',
-      apiUrl: '${SpotifyMediaAPIGroup.baseUrl}v1/me/player/pause',
+      apiUrl: '${baseUrl}v1/me/player/pause',
       callType: ApiCallType.PUT,
       headers: {
         'Authorization': 'Bearer $accessToken',
@@ -354,6 +384,7 @@ class PauseMusicCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -364,7 +395,7 @@ class PauseMusicCall {
 /// Start Datacenter API Group Code
 
 class DatacenterAPIGroup {
-  static String baseUrl = 'https://api.datadude.dev';
+  static String getBaseUrl() => 'https://api.datadude.dev';
   static Map<String, String> headers = {};
   static SendUploadedImageCall sendUploadedImageCall = SendUploadedImageCall();
   static SendUploadedImageCopyCall sendUploadedImageCopyCall =
@@ -384,6 +415,8 @@ class SendUploadedImageCall {
     String? imageBase64 = '123',
     String? userRef = '123',
   }) async {
+    final baseUrl = DatacenterAPIGroup.getBaseUrl();
+
     final ffApiRequestBody = '''
 {
   "image": "$imageBase64",
@@ -391,7 +424,7 @@ class SendUploadedImageCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Send Uploaded Image',
-      apiUrl: '${DatacenterAPIGroup.baseUrl}/v1/post_image',
+      apiUrl: '$baseUrl/v1/post_image',
       callType: ApiCallType.POST,
       headers: {
         'Content-type': 'application/json',
@@ -403,6 +436,7 @@ class SendUploadedImageCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -418,6 +452,8 @@ class SendUploadedImageCopyCall {
     String? imageUrl = '123',
     String? userRef = '123',
   }) async {
+    final baseUrl = DatacenterAPIGroup.getBaseUrl();
+
     final ffApiRequestBody = '''
 {
   "imageUrl": "$imageUrl",
@@ -425,7 +461,7 @@ class SendUploadedImageCopyCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Send Uploaded Image Copy',
-      apiUrl: '${DatacenterAPIGroup.baseUrl}/v1/post_image',
+      apiUrl: '$baseUrl/v1/post_image',
       callType: ApiCallType.POST,
       headers: {
         'Content-type': 'application/json',
@@ -437,6 +473,7 @@ class SendUploadedImageCopyCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -452,9 +489,11 @@ class GetPlaylistURLCall {
     String? userRef = '',
     int? timestamp,
   }) async {
+    final baseUrl = DatacenterAPIGroup.getBaseUrl();
+
     return ApiManager.instance.makeApiCall(
       callName: 'get Playlist URL',
-      apiUrl: '${DatacenterAPIGroup.baseUrl}/v1/get_playlist',
+      apiUrl: '$baseUrl/v1/get_playlist',
       callType: ApiCallType.GET,
       headers: {
         'Content-type': 'application/json',
@@ -467,6 +506,7 @@ class GetPlaylistURLCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -506,9 +546,11 @@ class GetPlaylistURLInputCall {
     String? userRef = '',
     int? timestamp,
   }) async {
+    final baseUrl = DatacenterAPIGroup.getBaseUrl();
+
     return ApiManager.instance.makeApiCall(
       callName: 'get Playlist URL Input',
-      apiUrl: '${DatacenterAPIGroup.baseUrl}/v1/get_playlist_input',
+      apiUrl: '$baseUrl/v1/get_playlist_input',
       callType: ApiCallType.GET,
       headers: {
         'Content-type': 'application/json',
@@ -521,6 +563,7 @@ class GetPlaylistURLInputCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -561,9 +604,11 @@ class GetPlaylistURLInputCall {
 
 class GetMoodsCall {
   Future<ApiCallResponse> call() async {
+    final baseUrl = DatacenterAPIGroup.getBaseUrl();
+
     return ApiManager.instance.makeApiCall(
       callName: 'get Moods',
-      apiUrl: '${DatacenterAPIGroup.baseUrl}/v1/get_moods',
+      apiUrl: '$baseUrl/v1/get_moods',
       callType: ApiCallType.GET,
       headers: {
         'Content-type': 'application/json',
@@ -573,6 +618,7 @@ class GetMoodsCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -613,9 +659,11 @@ class GetMoodsCall {
 
 class GetPlacesCall {
   Future<ApiCallResponse> call() async {
+    final baseUrl = DatacenterAPIGroup.getBaseUrl();
+
     return ApiManager.instance.makeApiCall(
       callName: 'get Places',
-      apiUrl: '${DatacenterAPIGroup.baseUrl}/v1/get_places',
+      apiUrl: '$baseUrl/v1/get_places',
       callType: ApiCallType.GET,
       headers: {
         'Content-type': 'application/json',
@@ -625,6 +673,7 @@ class GetPlacesCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -655,6 +704,8 @@ class PostMoodCall {
     String? mood = '',
     String? userRef = '',
   }) async {
+    final baseUrl = DatacenterAPIGroup.getBaseUrl();
+
     final ffApiRequestBody = '''
 {
   "mood": "$mood",
@@ -662,7 +713,7 @@ class PostMoodCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Post Mood',
-      apiUrl: '${DatacenterAPIGroup.baseUrl}/v1/post_mood',
+      apiUrl: '$baseUrl/v1/post_mood',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
@@ -674,6 +725,7 @@ class PostMoodCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -684,6 +736,8 @@ class PostInputCall {
     String? input = '',
     String? userRef = '',
   }) async {
+    final baseUrl = DatacenterAPIGroup.getBaseUrl();
+
     final ffApiRequestBody = '''
 {
   "input": "$input",
@@ -691,7 +745,7 @@ class PostInputCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Post Input',
-      apiUrl: '${DatacenterAPIGroup.baseUrl}/v1/post_input',
+      apiUrl: '$baseUrl/v1/post_input',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
@@ -703,6 +757,7 @@ class PostInputCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -713,6 +768,8 @@ class PostVoiceCall {
     String? voice = '',
     String? userRef = '',
   }) async {
+    final baseUrl = DatacenterAPIGroup.getBaseUrl();
+
     final ffApiRequestBody = '''
 {
   "voice": "$voice",
@@ -720,7 +777,7 @@ class PostVoiceCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Post Voice',
-      apiUrl: '${DatacenterAPIGroup.baseUrl}/v1/post_voice',
+      apiUrl: '$baseUrl/v1/post_voice',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
@@ -732,6 +789,7 @@ class PostVoiceCall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      isStreamingApi: false,
       alwaysAllowBody: false,
     );
   }
@@ -744,10 +802,381 @@ class PostVoiceCall {
 
 /// End Datacenter API Group Code
 
+/// Start Datacenter API DEV Group Code
+
+class DatacenterAPIDEVGroup {
+  static String getBaseUrl() => 'https://api-dev.datadude.dev';
+  static Map<String, String> headers = {};
+  static PostPhotoDevCall postPhotoDevCall = PostPhotoDevCall();
+  static GetPlaylistURLDevCall getPlaylistURLDevCall = GetPlaylistURLDevCall();
+  static GetPlaylistInputDevCall getPlaylistInputDevCall =
+      GetPlaylistInputDevCall();
+  static GetMoodsDevCall getMoodsDevCall = GetMoodsDevCall();
+  static GetPlacesDevCall getPlacesDevCall = GetPlacesDevCall();
+  static PostMoodDevCall postMoodDevCall = PostMoodDevCall();
+  static PostInputDevCall postInputDevCall = PostInputDevCall();
+  static PostVoiceDevCall postVoiceDevCall = PostVoiceDevCall();
+}
+
+class PostPhotoDevCall {
+  Future<ApiCallResponse> call({
+    String? imageBase64 = '123',
+    String? userRef = '123',
+  }) async {
+    final baseUrl = DatacenterAPIDEVGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "image": "$imageBase64",
+  "userRef": "$userRef"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Post Photo Dev',
+      apiUrl: '$baseUrl/v1/post_image',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-type': 'application/json',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? timestamp(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.timestamp''',
+      ));
+}
+
+class GetPlaylistURLDevCall {
+  Future<ApiCallResponse> call({
+    String? userRef = '',
+    int? timestamp,
+  }) async {
+    final baseUrl = DatacenterAPIDEVGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'get Playlist URL Dev',
+      apiUrl: '$baseUrl/v1/get_playlist',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-type': 'application/json',
+      },
+      params: {
+        'userRef': userRef,
+        'timestamp': timestamp,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? playlistUrl(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.url''',
+      ));
+  String? description(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.description''',
+      ));
+  String? imageUrl(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.image_url''',
+      ));
+  String? name(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.name''',
+      ));
+  String? userRef(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.userRef''',
+      ));
+  String? id(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.id''',
+      ));
+  String? contextUri(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.context_uri''',
+      ));
+}
+
+class GetPlaylistInputDevCall {
+  Future<ApiCallResponse> call({
+    String? userRef = '',
+    int? timestamp,
+  }) async {
+    final baseUrl = DatacenterAPIDEVGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'Get Playlist Input Dev',
+      apiUrl: '$baseUrl/v1/get_playlist_input',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-type': 'application/json',
+      },
+      params: {
+        'userRef': userRef,
+        'timestamp': timestamp,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? playlistUrl(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.url''',
+      ));
+  String? description(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.description''',
+      ));
+  String? imageUrl(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.image_url''',
+      ));
+  String? name(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.name''',
+      ));
+  String? userRef(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.userRef''',
+      ));
+  String? id(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.id''',
+      ));
+  String? imageBase64(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].image_base64''',
+      ));
+  dynamic contextUri(dynamic response) => getJsonField(
+        response,
+        r'''$.context_uri''',
+      );
+}
+
+class GetMoodsDevCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = DatacenterAPIDEVGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'get Moods Dev',
+      apiUrl: '$baseUrl/v1/get_moods',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-type': 'application/json',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List<String>? description(dynamic response) => (getJsonField(
+        response,
+        r'''$.moods[:].Description''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  List<String>? mood(dynamic response) => (getJsonField(
+        response,
+        r'''$.moods[:].mood''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  List<String>? url(dynamic response) => (getJsonField(
+        response,
+        r'''$.moods[:].url''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  List? moodList(dynamic response) => getJsonField(
+        response,
+        r'''$.moods''',
+        true,
+      ) as List?;
+}
+
+class GetPlacesDevCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = DatacenterAPIDEVGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'get Places Dev',
+      apiUrl: '$baseUrl/v1/get_places',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-type': 'application/json',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List<String>? name(dynamic response) => (getJsonField(
+        response,
+        r'''$.places[:].name''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  List? places(dynamic response) => getJsonField(
+        response,
+        r'''$.places''',
+        true,
+      ) as List?;
+  List? gps(dynamic response) => getJsonField(
+        response,
+        r'''$.places[:].gps''',
+        true,
+      ) as List?;
+}
+
+class PostMoodDevCall {
+  Future<ApiCallResponse> call({
+    String? mood = '',
+    String? userRef = '',
+  }) async {
+    final baseUrl = DatacenterAPIDEVGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "mood": "$mood",
+  "userRef": "$userRef"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Post Mood Dev',
+      apiUrl: '$baseUrl/v1/post_mood',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class PostInputDevCall {
+  Future<ApiCallResponse> call({
+    String? input = '',
+    String? userRef = '',
+  }) async {
+    final baseUrl = DatacenterAPIDEVGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "input": "$input",
+  "userRef": "$userRef"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Post Input Dev',
+      apiUrl: '$baseUrl/v1/post_input',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class PostVoiceDevCall {
+  Future<ApiCallResponse> call({
+    String? voice = '',
+    String? userRef = '',
+  }) async {
+    final baseUrl = DatacenterAPIDEVGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "voice": "$voice",
+  "userRef": "$userRef"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Post Voice Dev',
+      apiUrl: '$baseUrl/v1/post_voice',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  int? timestamp(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.timestamp''',
+      ));
+}
+
+/// End Datacenter API DEV Group Code
+
 /// Start Datacenter API Two Group Code
 
 class DatacenterAPITwoGroup {
-  static String baseUrl = 'https://api2.datadude.dev/';
+  static String getBaseUrl() => 'https://api2.datadude.dev/';
   static Map<String, String> headers = {
     'Content-type': 'application/json',
   };
@@ -771,11 +1200,21 @@ class ApiPagingParams {
       'PagingParams(nextPageNumber: $nextPageNumber, numItems: $numItems, lastResponse: $lastResponse,)';
 }
 
+String _toEncodable(dynamic item) {
+  if (item is DocumentReference) {
+    return item.path;
+  }
+  return item;
+}
+
 String _serializeList(List? list) {
   list ??= <String>[];
   try {
-    return json.encode(list);
+    return json.encode(list, toEncodable: _toEncodable);
   } catch (_) {
+    if (kDebugMode) {
+      print("List serialization failed. Returning empty list.");
+    }
     return '[]';
   }
 }
@@ -783,8 +1222,11 @@ String _serializeList(List? list) {
 String _serializeJson(dynamic jsonVar, [bool isList = false]) {
   jsonVar ??= (isList ? [] : {});
   try {
-    return json.encode(jsonVar);
+    return json.encode(jsonVar, toEncodable: _toEncodable);
   } catch (_) {
+    if (kDebugMode) {
+      print("Json serialization failed. Returning empty json.");
+    }
     return isList ? '[]' : '{}';
   }
 }
