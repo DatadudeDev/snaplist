@@ -397,7 +397,7 @@ class PauseMusicCall {
 class DatacenterAPIGroup {
   static String getBaseUrl() => 'https://api.datadude.dev';
   static Map<String, String> headers = {};
-  static SendUploadedImageCall sendUploadedImageCall = SendUploadedImageCall();
+  static PostImageCall postImageCall = PostImageCall();
   static SendUploadedImageCopyCall sendUploadedImageCopyCall =
       SendUploadedImageCopyCall();
   static GetPlaylistURLCall getPlaylistURLCall = GetPlaylistURLCall();
@@ -410,10 +410,11 @@ class DatacenterAPIGroup {
   static PostVoiceCall postVoiceCall = PostVoiceCall();
 }
 
-class SendUploadedImageCall {
+class PostImageCall {
   Future<ApiCallResponse> call({
     String? imageBase64 = '123',
     String? userRef = '123',
+    int? playlistLength,
   }) async {
     final baseUrl = DatacenterAPIGroup.getBaseUrl();
 
@@ -423,7 +424,7 @@ class SendUploadedImageCall {
   "userRef": "$userRef"
 }''';
     return ApiManager.instance.makeApiCall(
-      callName: 'Send Uploaded Image',
+      callName: 'Post Image',
       apiUrl: '$baseUrl/v1/post_image',
       callType: ApiCallType.POST,
       headers: {
@@ -703,6 +704,7 @@ class PostMoodCall {
   Future<ApiCallResponse> call({
     String? mood = '',
     String? userRef = '',
+    int? playlistLength,
   }) async {
     final baseUrl = DatacenterAPIGroup.getBaseUrl();
 
@@ -735,6 +737,7 @@ class PostInputCall {
   Future<ApiCallResponse> call({
     String? input = '',
     String? userRef = '',
+    int? playlistLength,
   }) async {
     final baseUrl = DatacenterAPIGroup.getBaseUrl();
 
@@ -767,6 +770,7 @@ class PostVoiceCall {
   Future<ApiCallResponse> call({
     String? voice = '',
     String? userRef = '',
+    int? playlistLength,
   }) async {
     final baseUrl = DatacenterAPIGroup.getBaseUrl();
 
@@ -822,6 +826,7 @@ class PostPhotoDevCall {
   Future<ApiCallResponse> call({
     String? imageBase64 = '123',
     String? userRef = '123',
+    int? playlistLength,
   }) async {
     final baseUrl = DatacenterAPIDEVGroup.getBaseUrl();
 
@@ -1074,6 +1079,7 @@ class PostMoodDevCall {
   Future<ApiCallResponse> call({
     String? mood = '',
     String? userRef = '',
+    int? playlistLength,
   }) async {
     final baseUrl = DatacenterAPIDEVGroup.getBaseUrl();
 
@@ -1106,6 +1112,7 @@ class PostInputDevCall {
   Future<ApiCallResponse> call({
     String? input = '',
     String? userRef = '',
+    int? playlistLength,
   }) async {
     final baseUrl = DatacenterAPIDEVGroup.getBaseUrl();
 
@@ -1138,6 +1145,7 @@ class PostVoiceDevCall {
   Future<ApiCallResponse> call({
     String? voice = '',
     String? userRef = '',
+    int? playlistLength,
   }) async {
     final baseUrl = DatacenterAPIDEVGroup.getBaseUrl();
 

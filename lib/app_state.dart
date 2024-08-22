@@ -90,6 +90,22 @@ class FFAppState extends ChangeNotifier {
           _colorFromIntValue(await secureStorage.getInt('ff_accentColor')) ??
               _accentColor;
     });
+    await _safeInitAsync(() async {
+      _comfortZone =
+          await secureStorage.getDouble('ff_comfortZone') ?? _comfortZone;
+    });
+    await _safeInitAsync(() async {
+      _genrePreferences =
+          (await secureStorage.getStringList('ff_genrePreferences'))?.map((x) {
+                try {
+                  return jsonDecode(x);
+                } catch (e) {
+                  print("Can't decode persisted json. Error: $e.");
+                  return {};
+                }
+              }).toList() ??
+              _genrePreferences;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -241,7 +257,38 @@ class FFAppState extends ChangeNotifier {
     _ticketTime = value;
   }
 
-  List<dynamic> _moods = [];
+  List<dynamic> _moods = [
+    jsonDecode(
+        '{\"mood\":\"Party\",\"Description\":\"NO RAEGRETS\",\"url\":\"https://imgur.com/57hN3R5.png\"}'),
+    jsonDecode(
+        '{\"mood\":\"Stoned\",\"Description\":\"Don\'t munchie in silence, friend\",\"url\":\"https://imgur.com/WGsrbJG.png\"}'),
+    jsonDecode(
+        '{\"mood\":\"Heartbroken\",\"Description\":\"😘\",\"url\":\"https://imgur.com/aTnFhBf.png\"}'),
+    jsonDecode(
+        '{\"mood\":\"Romantic\",\"Description\":\"get you some\",\"url\":\"https://imgur.com/ODpQ8gE.png\"}'),
+    jsonDecode(
+        '{\"mood\":\"Confident\",\"Description\":\"Winning at max volume\",\"url\":\"https://imgur.com/r7L6COw.png\"}'),
+    jsonDecode(
+        '{\"mood\":\"Euphoric\",\"Description\":\"Cloud Nine, eh?\",\"url\":\"https://imgur.com/HyGABDA.png\"}'),
+    jsonDecode(
+        '{\"mood\":\"Boozy\",\"Description\":\"Auto Jukebox: Bangers only\",\"url\":\"https://imgur.com/SBeHzPp.png\"}'),
+    jsonDecode(
+        '{\"mood\":\"Chill\",\"Description\":\"Relax, unwind, enjoy.\",\"url\":\"https://imgur.com/NAW38Mp.png\"}'),
+    jsonDecode(
+        '{\"mood\":\"Anxious\",\"Description\":\"Calm tracks to relax with\",\"url\":\"https://imgur.com/pPCetLu.png\"}'),
+    jsonDecode(
+        '{\"mood\":\"Sad\",\"Description\":\"Let \'em flow\",\"url\":\"https://imgur.com/r5ic93s.png\"}'),
+    jsonDecode(
+        '{\"mood\":\"Sleepy\",\"Description\":\"Better make this one longer...\",\"url\":\"https://imgur.com/RFNdgSU.png\"}'),
+    jsonDecode(
+        '{\"mood\":\"Angry\",\"Description\":\"For those pillow screaming moments\",\"url\":\"https://imgur.com/l5u4Fh7.png\"}'),
+    jsonDecode(
+        '{\"mood\":\"Silly\",\"Description\":\"For when no one\'s looking\",\"url\":\"https://imgur.com/aPKiSID.png\"}'),
+    jsonDecode(
+        '{\"mood\":\"Smart\",\"Description\":\"Only the Classics, my dear Watson\",\"url\":\"https://imgur.com/IdHhcdY.png\"}'),
+    jsonDecode(
+        '{\"mood\":\"Depressed\",\"Description\":\"Lowkey Jams for lowkey Fams \",\"url\":\"https://imgur.com/ziv3jg1.png\"}')
+  ];
   List<dynamic> get moods => _moods;
   set moods(List<dynamic> value) {
     _moods = value;
@@ -495,6 +542,68 @@ class FFAppState extends ChangeNotifier {
   bool get godmode => _godmode;
   set godmode(bool value) {
     _godmode = value;
+  }
+
+  String _defaultPlaylistLength = '';
+  String get defaultPlaylistLength => _defaultPlaylistLength;
+  set defaultPlaylistLength(String value) {
+    _defaultPlaylistLength = value;
+  }
+
+  double _comfortZone = 0.0;
+  double get comfortZone => _comfortZone;
+  set comfortZone(double value) {
+    _comfortZone = value;
+    secureStorage.setDouble('ff_comfortZone', value);
+  }
+
+  void deleteComfortZone() {
+    secureStorage.delete(key: 'ff_comfortZone');
+  }
+
+  List<dynamic> _genrePreferences = [];
+  List<dynamic> get genrePreferences => _genrePreferences;
+  set genrePreferences(List<dynamic> value) {
+    _genrePreferences = value;
+    secureStorage.setStringList(
+        'ff_genrePreferences', value.map((x) => jsonEncode(x)).toList());
+  }
+
+  void deleteGenrePreferences() {
+    secureStorage.delete(key: 'ff_genrePreferences');
+  }
+
+  void addToGenrePreferences(dynamic value) {
+    genrePreferences.add(value);
+    secureStorage.setStringList('ff_genrePreferences',
+        _genrePreferences.map((x) => jsonEncode(x)).toList());
+  }
+
+  void removeFromGenrePreferences(dynamic value) {
+    genrePreferences.remove(value);
+    secureStorage.setStringList('ff_genrePreferences',
+        _genrePreferences.map((x) => jsonEncode(x)).toList());
+  }
+
+  void removeAtIndexFromGenrePreferences(int index) {
+    genrePreferences.removeAt(index);
+    secureStorage.setStringList('ff_genrePreferences',
+        _genrePreferences.map((x) => jsonEncode(x)).toList());
+  }
+
+  void updateGenrePreferencesAtIndex(
+    int index,
+    dynamic Function(dynamic) updateFn,
+  ) {
+    genrePreferences[index] = updateFn(_genrePreferences[index]);
+    secureStorage.setStringList('ff_genrePreferences',
+        _genrePreferences.map((x) => jsonEncode(x)).toList());
+  }
+
+  void insertAtIndexInGenrePreferences(int index, dynamic value) {
+    genrePreferences.insert(index, value);
+    secureStorage.setStringList('ff_genrePreferences',
+        _genrePreferences.map((x) => jsonEncode(x)).toList());
   }
 }
 

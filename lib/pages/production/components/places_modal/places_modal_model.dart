@@ -7,11 +7,6 @@ class PlacesModalModel extends FlutterFlowModel<PlacesModalWidget> {
 
   bool isBug = false;
 
-  ///  State fields for stateful widgets in this component.
-
-  // State field(s) for PlacePicker widget.
-  FFPlace placePickerValue = const FFPlace();
-
   @override
   void initState(BuildContext context) {}
 

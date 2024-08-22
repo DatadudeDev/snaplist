@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
+import '/backend/push_notifications/push_notifications_handler.dart'
+    show PushNotificationsHandler;
 import '/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -127,6 +129,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
               'downgraded',
               ParamType.bool,
             ),
+            carouselIndex: params.getParam(
+              'carouselIndex',
+              ParamType.int,
+            ),
           ),
         ),
         FFRoute(
@@ -234,12 +240,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
           path: '/settings',
           requireAuth: true,
           builder: (context, params) => const SettingsWidget(),
-        ),
-        FFRoute(
-          name: 'settingsCopy',
-          path: '/settingsCopy',
-          requireAuth: true,
-          builder: (context, params) => const SettingsCopyWidget(),
         ),
         FFRoute(
           name: 'themes',
@@ -440,7 +440,7 @@ class FFRoute {
                     ),
                   ),
                 )
-              : page;
+              : PushNotificationsHandler(child: page);
 
           final transitionInfo = state.transitionInfo;
           return transitionInfo.hasTransition

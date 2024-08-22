@@ -47,14 +47,12 @@ class _InputModalWidgetState extends State<InputModalWidget> {
     context.watch<FFAppState>();
 
     return Container(
-      width: MediaQuery.sizeOf(context).width * 1.0,
-      height: MediaQuery.sizeOf(context).height * 1.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
@@ -186,7 +184,7 @@ your vibe */
                                                         _model.textController1,
                                                     focusNode: _model
                                                         .textFieldFocusNode1,
-                                                    autofocus: true,
+                                                    autofocus: false,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
                                                       labelText:
@@ -339,7 +337,7 @@ your vibe */
                                                             .textController2,
                                                         focusNode: _model
                                                             .textFieldFocusNode2,
-                                                        autofocus: true,
+                                                        autofocus: false,
                                                         obscureText: false,
                                                         decoration:
                                                             InputDecoration(
@@ -428,8 +426,29 @@ your vibe */
                                   onPressed: () async {
                                     logFirebaseEvent(
                                         'INPUT_MODAL_COMP_CANCEL_BTN_ON_TAP');
-                                    logFirebaseEvent('Button_bottom_sheet');
-                                    Navigator.pop(context);
+                                    await Future.wait([
+                                      Future(() async {
+                                        logFirebaseEvent(
+                                            'Button_clear_text_fields_pin_codes');
+                                        setState(() {
+                                          _model.textController1?.clear();
+                                          _model.textController2?.clear();
+                                        });
+                                      }),
+                                      Future(() async {
+                                        logFirebaseEvent('Button_navigate_to');
+
+                                        context.pushNamed(
+                                          'HomePage',
+                                          queryParameters: {
+                                            'carouselIndex': serializeParam(
+                                              2,
+                                              ParamType.int,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+                                      }),
+                                    ]);
                                   },
                                   text: FFLocalizations.of(context).getText(
                                     'uipezycc' /* Cancel */,

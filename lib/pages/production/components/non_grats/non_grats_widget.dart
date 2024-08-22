@@ -70,7 +70,7 @@ class _NonGratsWidgetState extends State<NonGratsWidget> {
           children: [
             Container(
               decoration: const BoxDecoration(
-                color: Color(0xB014181B),
+                color: Color(0xD914181B),
               ),
               child: Stack(
                 children: [
@@ -94,7 +94,7 @@ class _NonGratsWidgetState extends State<NonGratsWidget> {
                             const EdgeInsetsDirectional.fromSTEB(12.0, 5.0, 0.0, 0.0),
                         child: Text(
                           FFLocalizations.of(context).getText(
-                            'v4g9z4or' /* We’ll be here if you change yo... */,
+                            'v4g9z4or' /* We're devastated to see you go... */,
                           ),
                           textAlign: TextAlign.center,
                           style:
@@ -110,18 +110,21 @@ class _NonGratsWidgetState extends State<NonGratsWidget> {
                 ],
               ),
             ),
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(25.0),
-                bottomRight: Radius.circular(25.0),
-                topLeft: Radius.circular(25.0),
-                topRight: Radius.circular(25.0),
-              ),
-              child: Image.asset(
-                'assets/images/IMG_0282-1712614282392.gif',
-                width: 250.0,
-                height: 250.0,
-                fit: BoxFit.cover,
+            Opacity(
+              opacity: 0.5,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(25.0),
+                  bottomRight: Radius.circular(25.0),
+                  topLeft: Radius.circular(25.0),
+                  topRight: Radius.circular(25.0),
+                ),
+                child: Image.asset(
+                  'assets/images/crazy-girlfriend.gif',
+                  width: 250.0,
+                  height: 250.0,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Padding(
@@ -137,7 +140,7 @@ class _NonGratsWidgetState extends State<NonGratsWidget> {
                 ),
                 options: FFButtonOptions(
                   width: 160.0,
-                  height: 50.0,
+                  height: 35.0,
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   iconPadding:
                       const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),

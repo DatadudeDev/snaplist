@@ -47,7 +47,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
       padding: const EdgeInsetsDirectional.fromSTEB(0.0, 44.0, 0.0, 0.0),
       child: Container(
         width: double.infinity,
-        height: 500.0,
+        height: 525.0,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
           boxShadow: const [
@@ -81,19 +81,43 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-                    child: Text(
-                      FFLocalizations.of(context).getText(
-                        'dosdvvwr' /* Order Summary */,
-                      ),
-                      style:
-                          FlutterFlowTheme.of(context).headlineSmall.override(
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                        child: Text(
+                          FFLocalizations.of(context).getText(
+                            'dosdvvwr' /* Upgrade to */,
+                          ),
+                          style: FlutterFlowTheme.of(context)
+                              .headlineSmall
+                              .override(
                                 fontFamily: 'Poppins',
                                 letterSpacing: 0.0,
                               ),
-                    ),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(7.0, 10.0, 0.0, 0.0),
+                        child: Text(
+                          FFLocalizations.of(context).getText(
+                            'b77u28rq' /* Snaplist + */,
+                          ),
+                          style: FlutterFlowTheme.of(context)
+                              .headlineSmall
+                              .override(
+                                fontFamily: 'Poppins',
+                                color: FFAppState().accentColor ?? FlutterFlowTheme.of(context).secondary,
+                                fontSize: 26.0,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.w800,
+                              ),
+                        ),
+                      ),
+                    ],
                   ),
                   Align(
                     alignment: const AlignmentDirectional(1.0, -1.0),
@@ -122,13 +146,14 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 8.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 7.0, 0.0, 8.0),
                 child: Text(
                   FFLocalizations.of(context).getText(
                     'uyv81syp' /* Review your order below before... */,
                   ),
                   style: FlutterFlowTheme.of(context).labelMedium.override(
                         fontFamily: 'Readex Pro',
+                        fontSize: 12.0,
                         letterSpacing: 0.0,
                       ),
                 ),
@@ -166,7 +191,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
                               child: Image.asset(
-                                'assets/images/IMG_0445-1713210096620.png',
+                                'assets/images/output-onlinepngtools(1).png',
                                 width: 60.0,
                                 height: 60.0,
                                 fit: BoxFit.contain,
@@ -266,13 +291,12 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                           FFLocalizations.of(context).getText(
                             'dlfxxrgv' /* Save 20% */,
                           ),
-                          style: FlutterFlowTheme.of(context)
-                              .titleLarge
-                              .override(
-                                fontFamily: 'Poppins',
-                                color: FlutterFlowTheme.of(context).secondary,
-                                letterSpacing: 0.0,
-                              ),
+                          style:
+                              FlutterFlowTheme.of(context).titleLarge.override(
+                                    fontFamily: 'Poppins',
+                                    color: FFAppState().accentColor ?? FlutterFlowTheme.of(context).primary,
+                                    letterSpacing: 0.0,
+                                  ),
                         ),
                         subtitle: Text(
                           FFLocalizations.of(context).getText(
@@ -286,8 +310,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                         ),
                         tileColor: FlutterFlowTheme.of(context).primaryText,
                         activeColor: FlutterFlowTheme.of(context).primaryText,
-                        activeTrackColor:
-                            FlutterFlowTheme.of(context).secondary,
+                        activeTrackColor: FFAppState().accentColor ?? FlutterFlowTheme.of(context).primary,
                         dense: false,
                         controlAffinity: ListTileControlAffinity.trailing,
                       ),
@@ -462,25 +485,109 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 24.0),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        logFirebaseEvent(
-                            'CHECKOUT_PROCEED_TO_CHECKOUT_BTN_ON_TAP');
-                        var shouldSetState = false;
-                        if (FFAppState().isPremium) {
-                          logFirebaseEvent('Button_bottom_sheet');
-                          Navigator.pop(context);
+                  FFButtonWidget(
+                    onPressed: () async {
+                      logFirebaseEvent(
+                          'CHECKOUT_PROCEED_TO_CHECKOUT_BTN_ON_TAP');
+                      var shouldSetState = false;
+                      if (FFAppState().isPremium) {
+                        logFirebaseEvent('Button_bottom_sheet');
+                        Navigator.pop(context);
+                        logFirebaseEvent('Button_alert_dialog');
+                        await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: const Text('You’re already Premium'),
+                              content: const Text(
+                                  'No need to upgrade. Enjoy the full array of features!'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: const Text('Ok'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        if (shouldSetState) setState(() {});
+                        return;
+                      } else {
+                        logFirebaseEvent('Button_stripe_payment');
+                        final paymentResponse = await processStripePayment(
+                          context,
+                          amount: (_model.switchListTileValue == false
+                                  ? 112.0
+                                  : 1074.0)
+                              .round(),
+                          currency: 'CAD',
+                          customerEmail: currentUserEmail,
+                          description: _model.switchListTileValue == true
+                              ? 'Snaplist Premium (Annual Subscription)'
+                              : 'Snaplist Premium (1 Month)',
+                          allowGooglePay: true,
+                          allowApplePay: true,
+                          themeStyle: ThemeMode.dark,
+                          buttonColor: FlutterFlowTheme.of(context).primary,
+                          buttonTextColor:
+                              FlutterFlowTheme.of(context).primaryText,
+                        );
+                        if (paymentResponse.paymentId == null &&
+                            paymentResponse.errorMessage != null) {
+                          showSnackbar(
+                            context,
+                            'Error: ${paymentResponse.errorMessage}',
+                          );
+                        }
+                        _model.paymentId = paymentResponse.paymentId ?? '';
+
+                        shouldSetState = true;
+                        if (_model.paymentId != null &&
+                            _model.paymentId != '') {
+                          await Future.wait([
+                            Future(() async {
+                              logFirebaseEvent('Button_backend_call');
+
+                              await PremiumRecord.collection
+                                  .doc()
+                                  .set(createPremiumRecordData(
+                                    user: currentUserReference,
+                                    isPremium: true,
+                                    createdOn: getCurrentTimestamp,
+                                  ));
+                            }),
+                            Future(() async {
+                              logFirebaseEvent('Button_navigate_to');
+
+                              context.goNamed(
+                                'HomePage',
+                                queryParameters: {
+                                  'upgraded': serializeParam(
+                                    true,
+                                    ParamType.bool,
+                                  ),
+                                }.withoutNulls,
+                                extra: <String, dynamic>{
+                                  kTransitionInfoKey: const TransitionInfo(
+                                    hasTransition: true,
+                                    transitionType: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 0),
+                                  ),
+                                },
+                              );
+                            }),
+                          ]);
+                          if (shouldSetState) setState(() {});
+                          return;
+                        } else {
                           logFirebaseEvent('Button_alert_dialog');
                           await showDialog(
                             context: context,
                             builder: (alertDialogContext) {
                               return AlertDialog(
-                                title: const Text('You’re already Premium'),
-                                content: const Text(
-                                    'No need to upgrade. Enjoy the full array of features!'),
+                                title: const Text('Payment Unsuccessful'),
+                                content: const Text('Please try again'),
                                 actions: [
                                   TextButton(
                                     onPressed: () =>
@@ -491,143 +598,36 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                               );
                             },
                           );
+                          logFirebaseEvent('Button_bottom_sheet');
+                          Navigator.pop(context);
                           if (shouldSetState) setState(() {});
                           return;
-                        } else {
-                          logFirebaseEvent('Button_stripe_payment');
-                          final paymentResponse = await processStripePayment(
-                            context,
-                            amount: (_model.switchListTileValue == false
-                                    ? 112.0
-                                    : 1074.0)
-                                .round(),
-                            currency: 'CAD',
-                            customerEmail: currentUserEmail,
-                            description: _model.switchListTileValue == true
-                                ? 'Snaplist Premium (Annual Subscription)'
-                                : 'Snaplist Premium (1 Month)',
-                            allowGooglePay: true,
-                            allowApplePay: true,
-                            themeStyle: ThemeMode.dark,
-                            buttonColor: FlutterFlowTheme.of(context).primary,
-                            buttonTextColor:
-                                FlutterFlowTheme.of(context).primaryText,
-                          );
-                          if (paymentResponse.paymentId == null &&
-                              paymentResponse.errorMessage != null) {
-                            showSnackbar(
-                              context,
-                              'Error: ${paymentResponse.errorMessage}',
-                            );
-                          }
-                          _model.paymentId = paymentResponse.paymentId ?? '';
-
-                          shouldSetState = true;
-                          if (_model.paymentId != null &&
-                              _model.paymentId != '') {
-                            await Future.wait([
-                              Future(() async {
-                                logFirebaseEvent('Button_backend_call');
-
-                                await PremiumRecord.collection
-                                    .doc()
-                                    .set(createPremiumRecordData(
-                                      user: currentUserReference,
-                                      isPremium: true,
-                                      createdOn: getCurrentTimestamp,
-                                    ));
-                              }),
-                              Future(() async {
-                                logFirebaseEvent('Button_navigate_to');
-
-                                context.goNamed(
-                                  'HomePage',
-                                  queryParameters: {
-                                    'upgraded': serializeParam(
-                                      true,
-                                      ParamType.bool,
-                                    ),
-                                  }.withoutNulls,
-                                  extra: <String, dynamic>{
-                                    kTransitionInfoKey: const TransitionInfo(
-                                      hasTransition: true,
-                                      transitionType: PageTransitionType.fade,
-                                      duration: Duration(milliseconds: 0),
-                                    ),
-                                  },
-                                );
-
-                                logFirebaseEvent('Button_alert_dialog');
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: const Text('Success!'),
-                                      content: const Text(
-                                          'Welcome to Snaplist Premium! Enjoy all features with unlimited usage :) '),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: const Text('Ok'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              }),
-                            ]);
-                            if (shouldSetState) setState(() {});
-                            return;
-                          } else {
-                            logFirebaseEvent('Button_alert_dialog');
-                            await showDialog(
-                              context: context,
-                              builder: (alertDialogContext) {
-                                return AlertDialog(
-                                  title: const Text('Payment Unsuccessful'),
-                                  content: const Text('Please try again'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(alertDialogContext),
-                                      child: const Text('Ok'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                            logFirebaseEvent('Button_bottom_sheet');
-                            Navigator.pop(context);
-                            if (shouldSetState) setState(() {});
-                            return;
-                          }
                         }
+                      }
 
-                        if (shouldSetState) setState(() {});
-                      },
-                      text: FFLocalizations.of(context).getText(
-                        'ncykyxew' /* Proceed to Checkout */,
-                      ),
-                      options: FFButtonOptions(
-                        width: double.infinity,
-                        height: 50.0,
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FFAppState().accentColor ?? FlutterFlowTheme.of(context).primary,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  fontFamily: 'Readex Pro',
-                                  color: Colors.white,
-                                  letterSpacing: 0.0,
-                                ),
-                        elevation: 2.0,
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
-                        ),
+                      if (shouldSetState) setState(() {});
+                    },
+                    text: FFLocalizations.of(context).getText(
+                      'ncykyxew' /* Proceed to Checkout */,
+                    ),
+                    options: FFButtonOptions(
+                      width: 240.0,
+                      height: 45.0,
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      iconPadding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FFAppState().accentColor ?? FlutterFlowTheme.of(context).primary,
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                fontFamily: 'Readex Pro',
+                                color: Colors.white,
+                                letterSpacing: 0.0,
+                              ),
+                      elevation: 2.0,
+                      borderSide: const BorderSide(
+                        color: Colors.transparent,
+                        width: 1.0,
                       ),
                     ),
                   ),

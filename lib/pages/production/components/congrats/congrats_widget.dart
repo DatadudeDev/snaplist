@@ -40,8 +40,6 @@ class _CongratsWidgetState extends State<CongratsWidget> {
     context.watch<FFAppState>();
 
     return Container(
-      width: 350.0,
-      height: 500.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
         image: DecorationImage(
@@ -85,6 +83,7 @@ class _CongratsWidgetState extends State<CongratsWidget> {
                             FlutterFlowTheme.of(context).headlineLarge.override(
                                   fontFamily: 'Poppins',
                                   color: Colors.white,
+                                  fontSize: 35.0,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -94,14 +93,18 @@ class _CongratsWidgetState extends State<CongratsWidget> {
                             const EdgeInsetsDirectional.fromSTEB(12.0, 5.0, 0.0, 0.0),
                         child: Text(
                           FFLocalizations.of(context).getText(
-                            '9xo4v3ew' /* You have successfully upgraded... */,
+                            '9xo4v3ew' /* Thank you for upgrading
+to Sna... */
+                            ,
                           ),
                           textAlign: TextAlign.center,
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     fontFamily: 'Readex Pro',
                                     color: Colors.white,
+                                    fontSize: 16.0,
                                     letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w800,
                                   ),
                         ),
                       ),
@@ -110,25 +113,28 @@ class _CongratsWidgetState extends State<CongratsWidget> {
                 ],
               ),
             ),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Image.asset(
-                'assets/images/IMG_0271-1712557987384.gif',
-                width: 250.0,
-                height: 250.0,
-                fit: BoxFit.cover,
+            Opacity(
+              opacity: 0.9,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.asset(
+                  'assets/images/fe3545469a6d65137b921656ae976c3e.gif',
+                  width: 250.0,
+                  height: 250.0,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 20.0, 0.0, 0.0),
               child: FFButtonWidget(
                 onPressed: () async {
-                  logFirebaseEvent('CONGRATS_COMP_CLOSE_BTN_ON_TAP');
+                  logFirebaseEvent('CONGRATS_COMP_LETS_GET_JAMMIN_BTN_ON_TAP');
                   logFirebaseEvent('Button_bottom_sheet');
                   Navigator.pop(context);
                 },
                 text: FFLocalizations.of(context).getText(
-                  '4ybtnlbj' /* Close */,
+                  '4ybtnlbj' /* Let's get Jammin' */,
                 ),
                 options: FFButtonOptions(
                   width: 160.0,
