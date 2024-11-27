@@ -1,32 +1,31 @@
+[![Project Banner](https://imgur.com/NJe4yHB.png)](https://snapli.st)
+
 # Snaplist
 
-A new Flutter project.
+### Overview
+Snaplist is an innovative app that leverages artificial intelligence to curate music tailored to your unique tastes and preferences. Whether you're exploring fresh beats or rediscovering old favorites, Snaplist ensures your playlist evolves with your mood and style.
 
-## Getting Started
+### Features
+- 🎵 **Personalized Playlists**: AI-driven recommendations crafted just for you.
+- 🌟 **Discover Mode**: Effortlessly uncover new music with intelligent suggestions.
+- 🛠️ **Custom Curation**: Fine-tune your playlist with customizable settings.
+- 📤 **Social Sharing**: Share your discoveries with friends and followers.
 
-FlutterFlow projects are built to run on the Flutter _stable_ release.
+### Download
 
-## Integration Tests
+Snaplist is available for both Android and iOS. Start your music journey today:
 
-To test on a real iOS / Android device, first connect the device and run the following command from the root of the project:
+- 📲 [Download for Android](https://play.google.com/store/apps/details?id=st.snapli.app)
+- 📱 [Download for iOS](https://apple.com)
 
-```bash
-flutter test integration_test/test.dart
-```
+### Getting Started
+1. Download Snaplist from the app store.
+2. Create an account or log in.
+3. Dive into a world of curated music and personalized playlists!
 
-To test on a web browser, first launch `chromedriver` as follows:
-```bash
-chromedriver --port=4444
-```
+For detailed information, visit the [official Snaplist website](https://snapli.st).
 
-Then from the root of the project, run the following command:
-```bash
-flutter drive \
-  --driver=test_driver/integration_test.dart \
-  --target=integration_test/test.dart \
-  -d chrome
-```
+### Support
+Need assistance or want to report an issue? We're here to help:
 
-Find more information about running Flutter integration tests [here](https://docs.flutter.dev/cookbook/testing/integration/introduction#5-run-the-integration-test).
-
-Refer to this guide for instructions on running the tests on [Firebase Test Lab](https://github.com/flutter/flutter/tree/main/packages/integration_test#firebase-test-lab).
+📧 [Contact Snaplist Support](mailto:support@snapli.st)
